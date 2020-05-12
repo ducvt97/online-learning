@@ -1,19 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Login from './src/components/Authentication/Login/login';
+import ForgetPassword from './src/components/Authentication/ForgetPassword/forget-password';
+import Register from './src/components/Authentication/Register/register';
+import ChangePassword from './src/components/Authentication/ChangePassword/change-password';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <ChangePassword />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: 'black',
+    },
 });
