@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import InputField from '../InputField/input-field';
-import CustomButton from '../CustomButton/custom-button';
+import { Button } from 'react-native-elements';
+
+import CommonStyles from '../../../globals/styles';
 
 const ForgetPassword = (props) => {
     return (
         <View style={styles.container}>
             <Text style={styles.description}>Enter your email address. We will send you a verification code.</Text>
             <InputField title="Email address" />
-            <CustomButton title="Send verification code" isNormal={true} />
+            <Button title="Send verification code" buttonStyle={CommonStyles.shortMarginVertical} />
         </View>
     )
 }
