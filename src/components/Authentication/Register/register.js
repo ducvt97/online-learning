@@ -7,7 +7,7 @@ import CommonStyles from '../../../globals/styles';
 
 const Register = (props) => {
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={[CommonStyles.generalContainer, styles.container]}>
             <InputField title="Full name" />
             <InputField title="Username" />
             <InputField title="Email address" />
@@ -22,9 +22,6 @@ export default Register;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 15,
-        marginTop: 50,
-        backgroundColor: "black"
+        marginTop: 20
     }
 });

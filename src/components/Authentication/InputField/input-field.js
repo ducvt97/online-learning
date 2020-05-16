@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
+import Colors from '../../../globals/constants/colors';
 
 const InputField = (props) => {
     return (
@@ -18,14 +19,14 @@ const styles = StyleSheet.create({
     },
     title: {
         marginBottom: 8,
-        color: "gainsboro",
+        color: Colors.gainsboro,
         fontSize: 16
     },
     input: {
         paddingHorizontal: 5,
         paddingVertical: 10,
         borderRadius: 5,
-        backgroundColor: "gainsboro",
+        backgroundColor: Colors.gainsboro,
         fontSize: 16
     }
 });
