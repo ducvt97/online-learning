@@ -16,14 +16,14 @@ const SectionBrowse = (props) => {
     }
 
     const renderSectionHeader = (title) => {
-        return title === "Paths" ? <SectionHeader title={title} rightButton="See all >" />
+        return title === "Paths" ? <SectionHeader title={title} rightButtonTitle="See all >" rightButtonTitleStyle={CommonStyles.titleColor} />
             : <SectionHeader title={title} />
     }
 
     return (
         <View style={styles.container}>
             <SectionList sections={props.data}
-                keyExtractor={(item) => item}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item)}
                 renderSectionHeader={({ section: { title } }) => renderSectionHeader(title)}
             />

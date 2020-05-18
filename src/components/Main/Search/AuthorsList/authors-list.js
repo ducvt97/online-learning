@@ -18,9 +18,9 @@ const AuthorsList = (props) => {
     )
 
     return (
-        <View style={props.style}>
+        <View style={[props.style, styles.container]}>
             <FlatList
-                keyExtractor={(item) => item}
+                keyExtractor={(item, index) => index.toString()}
                 data={props.data}
                 renderItem={renderItem}
             />
@@ -31,6 +31,9 @@ const AuthorsList = (props) => {
 export default AuthorsList;
 
 const styles = StyleSheet.create({
+    container: {
+        marginBottom: 40
+    },
     item: {
         backgroundColor: Colors.transparent
     }

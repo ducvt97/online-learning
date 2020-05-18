@@ -1,10 +1,11 @@
 const Colors = {
     transparent: "transparent",
-    dimGrey: "dimgrey",
-    gainsboro: "gainsboro",
     black: "black",
     white: "white",
     ghostWhite: "ghostwhite",
+    boldGrey: "#383838",
+    dimGrey: "dimgrey",
+    gainsboro: "gainsboro",
     dodgerBlue: "dodgerblue"
 };
 

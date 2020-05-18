@@ -3,8 +3,12 @@ import Colors from './constants/colors';
 
 const CommonStyles = StyleSheet.create({
     generalContainer: {
+        flex: 1,
         padding: 15,
         marginTop: 25,
+    },
+    flex: {
+        flex: 1
     },
     shortMarginVertical: {
         marginVertical: 10

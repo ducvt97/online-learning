@@ -2,14 +2,15 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { SearchBar } from 'react-native-elements';
-import Colors from '../../../globals/constants/colors';
 import SearchResults from './SearchResults/search-results';
 import SearchData from '../../../raw-data/search';
+import Colors from '../../../globals/constants/colors';
+import CommonStyles from '../../../globals/styles';
 
 
 const Search = (props) => {
     return (
-        <View>
+        <View style={CommonStyles.flex}>
             <SearchBar containerStyle={styles.searchContainer}
                 cancelButtonProps={{buttonStyle: styles.buttonCancel, color: Colors.white}}
                 platform="ios" placeholder="Search" showCancel={true}
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     searchContainer: {
         paddingHorizontal: 10,
         paddingTop: 30,
-        backgroundColor: Colors.dimGrey
+        backgroundColor: Colors.boldGrey
     },
     buttonCancel: {
         marginTop: 10,

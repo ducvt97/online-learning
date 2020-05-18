@@ -8,11 +8,14 @@ import Browse from './src/components/Main/Browse/browse';
 import Search from './src/components/Main/Search/search';
 
 import Colors from './src/globals/constants/colors';
+import ListCourses from './src/components/Courses/ListCourses/list-courses';
+import SearchData from './src/raw-data/search';
+import Download from './src/components/Main/Download/download';
 
 export default function App() {
     return (
         <View style={styles.container}>
-            <Search />
+            <Download />
         </View>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import CommonStyles from '../../../../globals/styles';
 import { ButtonGroup } from 'react-native-elements';
@@ -23,7 +23,7 @@ const SearchResults = (props) => {
     }
     
     return (
-        <ScrollView>
+        <View style={CommonStyles.flex}>
             <ButtonGroup buttons={tabs} onPress={pressTab} selectedIndex={selectedTab}
                 containerStyle={styles.tabButton}
                 textStyle={CommonStyles.fontWeightBold}
@@ -32,7 +32,7 @@ const SearchResults = (props) => {
                 disabledStyle={styles.disabledTab}
                 disabledTextStyle={styles.disabledText}
             />
-            <ScrollView style={styles.container}>
+            <View style={[styles.container, CommonStyles.flex]}>
                 {
                     selectedTab === 0 ? <TabAll data={props.data} />
                     : selectedTab === 1 ?
@@ -52,8 +52,8 @@ const SearchResults = (props) => {
                         </View>
                     : null
                 }
-            </ScrollView>
-        </ScrollView>
+            </View>
+        </View>
     )
 }
 
@@ -61,8 +61,7 @@ export default SearchResults;
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
-        paddingBottom: 90
+        padding: 15
     },
     tabButton: {
         backgroundColor: Colors.transparent,

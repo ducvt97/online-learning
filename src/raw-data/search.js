@@ -19,6 +19,48 @@ const SearchData = [
                         level: "Intermediate",
                         date: "Mar 3 2020",
                         rating: 5
+                    },
+                    {
+                        title: "Building Applications with React and Redux",
+                        author: "Cory House",
+                        level: "Intermediate",
+                        date: "Mar 3 2020",
+                        rating: 5
+                    },
+                    {
+                        title: "Building Applications with React and Redux",
+                        author: "Cory House",
+                        level: "Intermediate",
+                        date: "Mar 3 2020",
+                        rating: 5
+                    },
+                    {
+                        title: "Building Applications with React and Redux",
+                        author: "Cory House",
+                        level: "Intermediate",
+                        date: "Mar 3 2020",
+                        rating: 5
+                    },
+                    {
+                        title: "Building Applications with React and Redux",
+                        author: "Cory House",
+                        level: "Intermediate",
+                        date: "Mar 3 2020",
+                        rating: 5
+                    },
+                    {
+                        title: "Building Applications with React and Redux",
+                        author: "Cory House",
+                        level: "Intermediate",
+                        date: "Mar 3 2020",
+                        rating: 5
+                    },
+                    {
+                        title: "Building Applications with React and Redux",
+                        author: "Cory House",
+                        level: "Intermediate",
+                        date: "Mar 3 2020",
+                        rating: 5
                     }
                 ]
             } 

@@ -4,6 +4,7 @@ import { StyleSheet, View, SectionList } from 'react-native';
 import ListCourses from '../../../Courses/ListCourses/list-courses';
 import AuthorsList from '../AuthorsList/authors-list';
 import SectionHeader from '../../../common/section-header';
+import CommonStyles from '../../../../globals/styles';
 
 const TabAll = (props) => {
     const renderItem = (item) => {
@@ -14,12 +15,12 @@ const TabAll = (props) => {
     }
     
     return (
-        <View>
+        <View style={CommonStyles.flex}>
             <SectionList sections={props.data} stickySectionHeadersEnabled={true}
-                keyExtractor={(item) => item}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item)}
                 renderSectionHeader={({ section: { title, results } }) => (
-                    <SectionHeader title={title} rightButton={results + " results >"} />
+                    <SectionHeader title={title} rightButtonTitle={results + " results >"} />
                 )}
             />
         </View>

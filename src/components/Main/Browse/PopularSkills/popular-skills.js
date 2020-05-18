@@ -11,13 +11,13 @@ const PopularSkills = (props) => {
     return (
         <View>
             <FlatList style={styles.listContainer} horizontal={true} data={skills}
-                keyExtractor={item => item}
+                keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                 renderItem={({item}) => <Button title={item} buttonStyle={[CommonStyles.buttonListItem, styles.item]} titleStyle={CommonStyles.titleColor} />} 
             />
             <ScrollView horizontal={true}>
                 <FlatList style={styles.listContainer}  data={topics}
-                    keyExtractor={item => item}
+                    keyExtractor={(item, index) => index.toString()}
                     numColumns={Math.ceil(topics.length / 2)}
                     renderItem={({item}) => 
                         <Tile featured title={item}

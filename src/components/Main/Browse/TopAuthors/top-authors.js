@@ -6,7 +6,7 @@ import AvatarTitle from './AvatarTitle/avatar-title';
 const TopAuthors = (props) => {
     return (
         <View style={styles.container}>
-            <FlatList horizontal={true} keyExtractor={item => item}
+            <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
                 data={props.data} renderItem={({item}) => <AvatarTitle title={item} style={styles.item} />}
             />
         </View>

@@ -22,6 +22,6 @@ export default Register;
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20
+        marginTop: 40
     }
 });

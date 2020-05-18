@@ -7,7 +7,7 @@ const PathsSection = (props) => {
     return (
         <View>
             <FlatList style={styles.listContainer} horizontal={true} data={props.data}
-                keyExtractor={item => item}
+                keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                 renderItem={({item}) => <CourseBox style={styles.item} title={item.title} course={item.course} />} 
             />
