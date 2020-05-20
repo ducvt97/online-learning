@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-
-import CommonStyles from '../../../../globals/styles';
 import { ButtonGroup } from 'react-native-elements';
-import Colors from '../../../../globals/constants/colors';
+
 import TabAll from '../TabAll/tab-all';
 import ListCourses from '../../../Courses/ListCourses/list-courses';
 import SectionHeader from '../../../common/section-header';
 import AuthorsList from '../AuthorsList/authors-list';
+import CommonStyles from '../../../../globals/styles';
+import Colors from '../../../../globals/constants/colors';
 
 const SearchResults = (props) => {
     const [selectedTab, setSelectedTab] = useState(0);

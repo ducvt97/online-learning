@@ -2,9 +2,9 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { Tile } from 'react-native-elements';
 
+import SectionBrowse from './SectionBrowse/section-browse';
 import CommonStyles from '../../../globals/styles';
 import BrowseData from '../../../raw-data/browse';
-import SectionBrowse from './SectionBrowse/section-browse';
 
 const Browse = (props) => {
     return (

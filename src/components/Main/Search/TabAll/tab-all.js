@@ -13,7 +13,7 @@ const TabAll = (props) => {
             : item.type === 3 ? <AuthorsList style={styles.section} data={item.data} />
             : null;
     }
-    
+
     return (
         <View style={CommonStyles.flex}>
             <SectionList sections={props.data} stickySectionHeadersEnabled={true}

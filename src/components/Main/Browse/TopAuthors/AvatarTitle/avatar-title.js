@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { Avatar } from 'react-native-elements';
 
 import CommonStyles from '../../../../../globals/styles';
-import { Avatar } from 'react-native-elements';
 
 const AvatarTitle = (props) => {
     return (

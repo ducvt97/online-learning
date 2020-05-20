@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
+import { ListItem } from 'react-native-elements';
 
 import CommonStyles from '../../../../globals/styles';
 import Colors from '../../../../globals/constants/colors';
-import { ListItem } from 'react-native-elements';
 
 const AuthorsList = (props) => {
     renderItem = ({ item }) => (
@@ -13,7 +13,6 @@ const AuthorsList = (props) => {
             subtitle={item.courses + " courses"}
             leftAvatar={{ source: require("../../../../../assets/avatar.jpg") }}
             bottomDivider
-            chevron
         />
     )
 

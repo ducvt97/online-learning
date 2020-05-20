@@ -1,22 +1,23 @@
 import React from 'react';
 import { StyleSheet, View, SectionList } from 'react-native';
 
-import PopularSkills from '../PopularSkills/popular-skills';
-import TopAuthors from '../TopAuthors/top-authors';
-import SectionHeader from '../../../common/section-header';
 import ListCoursesHorizontal from '../../../Courses/ListCoursesHorizontal/list-courses-horizontal';
+import SectionHeader from '../../../common/section-header';
 import CommonStyles from '../../../../globals/styles';
 
-const SectionBrowse = (props) => {
+const SectionHome = (props) => {
     const renderItem = (item) => {
-        return item.type === 1 ? <PopularSkills data={item.data} />
+        return item.type === 1 ? <ListCoursesHorizontal data={item.data} />
             : item.type === 2 ? <ListCoursesHorizontal data={item.data} />
-            : item.type === 3 ? <TopAuthors data={item.data} />
+            : item.type === 3 ? <ListCoursesHorizontal data={item.data} />
+            : item.type === 4 ? <ListCoursesHorizontal data={item.data} />
             : null;
     }
 
-    const renderSectionHeader = (title) => {
-        return title === "Paths" ? <SectionHeader title={title} rightButtonTitle="See all >" rightButtonTitleStyle={CommonStyles.titleColor} />
+    const renderSectionHeader = (title, data) => {
+        console.log(data[0].data.length);
+        return data[0].data.length > 0 ? 
+            <SectionHeader title={title} rightButtonTitle="See all >" rightButtonTitleStyle={CommonStyles.titleColor} />
             : <SectionHeader title={title} />
     }
 
@@ -25,13 +26,13 @@ const SectionBrowse = (props) => {
             <SectionList sections={props.data}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item)}
-                renderSectionHeader={({ section: { title } }) => renderSectionHeader(title)}
+                renderSectionHeader={({ section: { title, data } }) => renderSectionHeader(title, data)}
             />
         </View>
     )
 }
 
-export default SectionBrowse;
+export default SectionHome;
 
 const styles = StyleSheet.create({
     container: {

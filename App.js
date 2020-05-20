@@ -11,11 +11,18 @@ import Colors from './src/globals/constants/colors';
 import ListCourses from './src/components/Courses/ListCourses/list-courses';
 import SearchData from './src/raw-data/search';
 import Download from './src/components/Main/Download/download';
+import Home from './src/components/Main/Home/home';
+import CourseDetail from './src/components/CourseDetail/course-detail';
+import Profile from './src/components/AccountManagement/Profile/profile';
+import Setting from './src/components/AccountManagement/Setting/setting';
+import StartScreen from './src/components/Others/StartScreen/start-screen';
+import SplashScreen from './src/components/Others/SplashScreen/splash-screen';
+import VerifyPassword from './src/components/Authentication/VerifyPassword/verify-password';
 
 export default function App() {
     return (
         <View style={styles.container}>
-            <Download />
+            <StartScreen />
         </View>
     );
 }

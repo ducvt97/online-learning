@@ -14,7 +14,7 @@ const CommonStyles = StyleSheet.create({
         marginVertical: 10
     },
     imageButtonBig: {
-        height: 100
+        height: 120
     },
     imageButtonSmall: {
         height: 70,
@@ -40,6 +40,13 @@ const CommonStyles = StyleSheet.create({
         minWidth: 60,
         maxHeight: 30,
         paddingHorizontal: 20,
+        backgroundColor: Colors.dimGrey
+    },
+    rating: {
+        marginTop: 5
+    },
+    divider: {
+        marginVertical: 10,
         backgroundColor: Colors.dimGrey
     }
 });
