@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 
 import CommonStyles from '../../globals/styles';
-import Colors from '../../globals/constants/colors';
+import { Colors } from '../../globals/constants';
 
 const Description = (props) => {
     const [extended, setExtended] = useState(false);

@@ -6,11 +6,12 @@ import TopAuthors from '../TopAuthors/top-authors';
 import SectionHeader from '../../../common/section-header';
 import ListCoursesHorizontal from '../../../Courses/ListCoursesHorizontal/list-courses-horizontal';
 import CommonStyles from '../../../../globals/styles';
+import { ScreenName } from '../../../../globals/constants';
 
 const SectionBrowse = (props) => {
     const renderItem = (item) => {
         return item.type === 1 ? <PopularSkills data={item.data} />
-            : item.type === 2 ? <ListCoursesHorizontal data={item.data} />
+            : item.type === 2 ? <ListCoursesHorizontal data={item.data} onPressItem={() => props.navigation.navigate(ScreenName.courseDetail)} />
             : item.type === 3 ? <TopAuthors data={item.data} />
             : null;
     }

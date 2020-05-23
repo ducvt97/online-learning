@@ -13,7 +13,11 @@ const PopularSkills = (props) => {
             <FlatList style={styles.listContainer} horizontal={true} data={skills}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => <Button title={item} buttonStyle={[CommonStyles.buttonListItem, styles.item]} titleStyle={CommonStyles.titleColor} />} 
+                renderItem={({item}) => 
+                    <Button title={item} buttonStyle={[CommonStyles.buttonListItem, styles.item]}
+                        titleStyle={[CommonStyles.titleColor, CommonStyles.fontSizeSmall]}
+                    />
+                } 
             />
             <ScrollView horizontal={true}>
                 <FlatList style={styles.listContainer}  data={topics}
@@ -30,7 +34,6 @@ const PopularSkills = (props) => {
                 />
             </ScrollView>
         </View>
-        
     )
 }
 

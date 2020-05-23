@@ -3,25 +3,25 @@ import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 import { Rating } from 'react-native-elements';
 
 import CommonStyles from '../../globals/styles';
-import Colors from '../../globals/constants/colors';
+import { Colors } from '../../globals/constants';
 
 const CourseBox = (props) => {
     data = props.data;
 
     return (
         <View style={props.style}>
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={props.onPress}>
                 <Image style={styles.image} source={require("../../../assets/react.png")} />
                 <View style={styles.descriptionContainer}>
-                    <Text style={[CommonStyles.titleColor, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]}>{data.title}</Text>
-                    {data.author ? <Text style={CommonStyles.textColor}>{data.author}</Text> : null}
-                    {data.course ? <Text style={CommonStyles.textColor}>{data.course} courses</Text> : null}
-                    <Text style={CommonStyles.textColor}>
+                    <Text style={[CommonStyles.titleColor, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
+                    {data.author ? <Text style={[CommonStyles.textColor, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.author}</Text> : null}
+                    {data.course ? <Text style={[CommonStyles.textColor, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.course} courses</Text> : null}
+                    <Text style={[CommonStyles.textColor, CommonStyles.fontSizeSmall]} numberOfLines={1}>
                         {data.level ? `${data.level} . ` : null}
                         {data.date ? `${data.date} . ` : null}
                         {data.duration ? `${data.duration}` : null}
                     </Text>
-                    {data.rating ? <Rating readonly tintColor={Colors.dimGrey} imageSize={20} startingValue={data.rating} fractions={1} /> : null}
+                    {data.rating ? <Rating readonly tintColor={Colors.dimGrey} imageSize={15} startingValue={data.rating} fractions={0.75} /> : null}
                 </View>
             </TouchableOpacity>
         </View>
@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginTop: 10,
-        width: 250,
-        height: 200,
+        width: 200,
+        height: 190,
         backgroundColor: Colors.dimGrey
     },
     image: {
-        width: 250,
+        width: 200,
         height: 100,
         resizeMode: 'stretch',
     },

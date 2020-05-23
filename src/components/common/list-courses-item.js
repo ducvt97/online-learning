@@ -3,13 +3,13 @@ import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 import { Rating } from 'react-native-elements';
 
 import CommonStyles from '../../globals/styles';
-import Colors from '../../globals/constants/colors';
+import { Colors } from '../../globals/constants';
 
 const ListCoursesItem = (props) => {
     const data = props.data;
     return (
         <View style={props.style}>
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={props.onPress}>
                 <Image style={styles.image} source={require("../../../assets/react.png")} />
                 <View style={styles.descriptionContainer}>
                     <Text style={[CommonStyles.titleColor, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]}>{data.title}</Text>
