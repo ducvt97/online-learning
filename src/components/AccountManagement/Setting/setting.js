@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, View } from 'react-native';
 import { ListItem, Divider } from 'react-native-elements';
 
 import CommonStyles from '../../../globals/styles';
-import Colors from '../../../globals/constants/colors';
+import { Colors } from '../../../globals/constants';
 
 const Setting = (props) => {
     const [isStreamingEnabled, setIsStreamingEnabled] = useState(false);

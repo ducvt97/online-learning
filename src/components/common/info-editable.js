@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import CommonStyles from '../../globals/styles';
 import { Text, Icon, Input } from 'react-native-elements';
-import Colors from '../../globals/constants/colors';
+import { Colors } from '../../globals/constants';
 
 const InfoEditable = (props) => {
     const [text, setText] = useState(props.text);

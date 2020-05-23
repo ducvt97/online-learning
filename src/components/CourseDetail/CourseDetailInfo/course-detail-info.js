@@ -6,7 +6,7 @@ import IconButton from '../../common/icon-button';
 import Description from '../../common/description';
 import ListCourses from '../../Courses/ListCourses/list-courses';
 import CommonStyles from '../../../globals/styles';
-import Colors from '../../../globals/constants/colors';
+import { Colors } from '../../../globals/constants';
 
 
 const CourseDetailInfo = (props) => {

@@ -1,25 +1,24 @@
 import { StyleSheet } from 'react-native';
-import Colors from './constants/colors';
+import { Colors } from './constants';
 
 const CommonStyles = StyleSheet.create({
+    // Some style for container
     generalContainer: {
         flex: 1,
         padding: 15,
-        marginTop: 25,
+        backgroundColor: Colors.black
+    },
+    searchTabContainer: {
+        paddingTop: 100
     },
     flex: {
         flex: 1
     },
+    // Standard margin verticle for component
     shortMarginVertical: {
         marginVertical: 10
     },
-    imageButtonBig: {
-        height: 120
-    },
-    imageButtonSmall: {
-        height: 70,
-        width: 200
-    },
+    // Style for text: color, font-weight, font-size
     titleColor: {
         color: Colors.white
     },
@@ -29,22 +28,48 @@ const CommonStyles = StyleSheet.create({
     fontWeightBold: {
         fontWeight: "bold"
     },
+    fontSizeSmall: {
+        fontSize: 12
+    },
     fontSizeAverage: {
         fontSize: 16
     },
     fontSizeBig: {
         fontSize: 20
     },
+    // Style for general header of App
+    navigationHeader: {
+        backgroundColor: Colors.boldGrey
+    },
+    // Standard style for input
+    input: {
+        marginBottom: 5,
+        paddingHorizontal: 5,
+        paddingVertical: 10,
+        borderRadius: 5,
+        backgroundColor: Colors.gainsboro,
+        fontSize: 16
+    },
+    // Styles for some button types
+    imageButtonBig: {
+        height: 120
+    },
+    imageButtonSmall: {
+        height: 70,
+        width: 200
+    },
     buttonListItem: {
         borderRadius: 15,
         minWidth: 60,
-        maxHeight: 30,
+        maxHeight: 34,
         paddingHorizontal: 20,
         backgroundColor: Colors.dimGrey
     },
+    // Style for rating component
     rating: {
         marginTop: 5
     },
+    // Style for list item's divider component
     divider: {
         marginVertical: 10,
         backgroundColor: Colors.dimGrey

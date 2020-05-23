@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import CommonStyles from '../../globals/styles';
-import Colors from '../../globals/constants/colors';
+import { Colors } from '../../globals/constants';
 
 const IconButton = (props) => {
     return (
