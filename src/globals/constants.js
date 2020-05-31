@@ -52,5 +52,6 @@ export const Colors = {
     boldGrey: "#383838",
     dimGrey: "dimgrey",
     gainsboro: "gainsboro",
-    dodgerBlue: "dodgerblue"
+    dodgerBlue: "dodgerblue",
+    red: "red"
 };

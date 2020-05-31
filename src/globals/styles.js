@@ -73,6 +73,11 @@ const CommonStyles = StyleSheet.create({
     divider: {
         marginVertical: 10,
         backgroundColor: Colors.dimGrey
+    },
+    // Style for validation text
+    validationText: {
+        color: Colors.red,
+        marginBottom: 5
     }
 });
 
