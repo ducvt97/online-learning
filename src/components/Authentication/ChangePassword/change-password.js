@@ -24,7 +24,7 @@ const ChangePassword = (props) => {
         }
     }, [status])
 
-    const renderValidation = (textInput, shouldDisplay, message) => {
+    const renderValidationText = (textInput, shouldDisplay, message) => {
         return textInput === "" && shouldDisplay ? <Text style={CommonStyles.validationText}>{message}</Text> : null;
     }
 
@@ -43,10 +43,10 @@ const ChangePassword = (props) => {
         <View style={[CommonStyles.generalContainer, styles.container]}>
             <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>New password</Text>
             <TextInput style={CommonStyles.input} secureTextEntry onChangeText={text => setNewPassword(text)} />
-            {renderValidation(newPassword, shouldDisplayValidationText, "New password cannot be empty")}
+            {renderValidationText(newPassword, shouldDisplayValidationText, "New password cannot be empty")}
             <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Verify new password</Text>
             <TextInput style={CommonStyles.input} secureTextEntry onChangeText={text => setVerifyNewPassword(text)} />
-            {renderValidation(verifyNewPassword, shouldDisplayValidationText, "Verify new password cannot be empty")}
+            {renderValidationText(verifyNewPassword, shouldDisplayValidationText, "Verify new password cannot be empty")}
             {renderChangePasswordStatus(status)}
             <Button title="Change password" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressChangePassword(newPassword, verifyNewPassword)} />
         </View>

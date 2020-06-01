@@ -16,7 +16,9 @@ const StartScreen = (props) => {
                 onPress={() => props.navigation.navigate(ScreenName.register)}
             />
             <Button title="Explore without sign in" type="outline" buttonStyle={CommonStyles.shortMarginVertical}
-                onPress={() => props.navigation.navigate(ScreenName.mainTab)}
+                onPress={() => props.navigation.navigate(ScreenName.mainTab, {
+                    screen: ScreenName.browseTab
+                })}
             />
         </View>
     )

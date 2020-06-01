@@ -10,16 +10,17 @@ const Login = (props) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState(null);
-    const [didUsernameFocus, setDidUsernameFocus] = useState(false);
-    const [didPasswordFocus, setDidPasswordFocus] = useState(false);
+    const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
 
     useEffect(() => {
         if (status && status.status === 200)
-            props.navigation.navigate(ScreenName.mainTab);
+            props.navigation.navigate(ScreenName.mainTab, {
+                screen: ScreenName.homeTab
+            });
     }, [status])
 
-    const renderValidationText = (textInput, didFocus, message) => {
-        return textInput === "" && didFocus ? <Text style={CommonStyles.validationText}>{message}</Text> : null;
+    const renderValidationText = (textInput, shouldDisplay, message) => {
+        return textInput === "" && shouldDisplay ? <Text style={CommonStyles.validationText}>{message}</Text> : null;
     }
 
     const renderLoginStatus = (status) => {
@@ -29,16 +30,18 @@ const Login = (props) => {
     const onPressLogin = (username, password) => {
         if (username != "" && password != "")
             setStatus(login(username, password));
+        else
+            setShouldDisplayValidationText(true);
     }
 
     return (
         <View style={[CommonStyles.generalContainer, styles.container]}>
             <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email or username</Text>
-            <TextInput style={CommonStyles.input} onEndEditing={() => setDidUsernameFocus(true)} onChangeText={text => setUsername(text)} />
-            {renderValidationText(username, didUsernameFocus, "Username cannot be empty")}
+            <TextInput style={CommonStyles.input} onChangeText={text => setUsername(text)} />
+            {renderValidationText(username, shouldDisplayValidationText, "Username cannot be empty")}
             <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Password</Text>
-            <TextInput style={CommonStyles.input} secureTextEntry onEndEditing={() => setDidPasswordFocus(true)} onChangeText={text => setPassword(text)} />
-            {renderValidationText(password, didPasswordFocus, "Password cannot be empty")}
+            <TextInput style={CommonStyles.input} secureTextEntry onChangeText={text => setPassword(text)} />
+            {renderValidationText(password, shouldDisplayValidationText, "Password cannot be empty")}
             {renderLoginStatus(status)}
             <Button title="Sign in" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressLogin(username, password)} />
             <Button title="Forget password" type="outline" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => props.navigation.navigate(ScreenName.forgetPassword)} />
