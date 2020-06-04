@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, SectionList } from 'react-native';
 
 import ListCoursesHorizontal from '../../../Courses/ListCoursesHorizontal/list-courses-horizontal';
 import SectionHeader from '../../../common/section-header';
-import CommonStyles from '../../../../globals/styles';
+
 import { ScreenName } from '../../../../globals/constants';
+import { ThemeContext } from '../../../../contexts/theme-context';
 
 const SectionHome = (props) => {
+    const {theme} = useContext(ThemeContext);
+
     const onPressListCoursesItem = () => {
         props.navigation.navigate(ScreenName.courseDetail);
     }
@@ -21,12 +24,13 @@ const SectionHome = (props) => {
 
     const renderSectionHeader = (title, data) => {
         return data[0].data.length > 0 ? 
-            <SectionHeader title={title} rightButtonTitle="See all >" rightButtonTitleStyle={CommonStyles.titleColor} />
-            : <SectionHeader title={title} />
+            <SectionHeader style={theme.background} title={title} titleStyle={theme.titleColor}
+                rightButtonTitle="See all >" rightButtonTitleStyle={theme.titleColor} />
+            : <SectionHeader style={theme.background} title={title} titleStyle={theme.titleColor} />
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, theme.background]}>
             <SectionList sections={props.data}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item)}

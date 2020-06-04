@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import CommonStyles from '../../../../globals/styles';
+import { CommonStyles } from '../../../../globals/styles';
 import { Colors } from '../../../../globals/constants';
+import { ThemeContext } from '../../../../contexts/theme-context';
 
 const AuthorsList = (props) => {
+    const {theme} = useContext(ThemeContext);
+
     const renderItem = ({ item }) => (
-        <ListItem containerStyle={styles.item} subtitleStyle={CommonStyles.textColor}
-            titleStyle={[CommonStyles.fontWeightBold, CommonStyles.titleColor]}
+        <ListItem containerStyle={styles.item} subtitleStyle={theme.textColor}
+            titleStyle={[CommonStyles.fontWeightBold, theme.titleColor]}
             title={item.name}
             subtitle={item.courses + " courses"}
             leftAvatar={{ source: require("../../../../../assets/avatar.jpg") }}

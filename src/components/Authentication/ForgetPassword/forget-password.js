@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import CommonStyles from '../../../globals/styles';
+import { CommonStyles } from '../../../globals/styles';
 import { Colors, ScreenName } from '../../../globals/constants';
 import { verifyCode } from '../../../core/services/authentication-services';
+import { ThemeContext } from '../../../contexts/theme-context';
 
 const ForgetPassword = (props) => {
     const [email, setEmail] = useState("");
@@ -13,6 +14,8 @@ const ForgetPassword = (props) => {
     const [isCodeSent, setIsCodeSent] = useState(false);
     const [countdown, setCountdown] = useState(null);
     const [status, setStatus] = useState(null);
+
+    const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
         this.timer = setInterval(() => setCountdown(countdown => countdown - 1), 1000);
@@ -48,18 +51,18 @@ const ForgetPassword = (props) => {
     }
 
     return !isCodeSent ? 
-        <View style={[CommonStyles.generalContainer, styles.container]}>
-            <Text style={styles.description}>Enter your email address. We will send you a verification code.</Text>
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email address</Text>
-            <TextInput style={CommonStyles.input} onEndEditing={() => setDidEmailFocus(true)} onChangeText={text => setEmail(text)} />
+        <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
+            <Text style={[styles.description, theme.titleColor]}>Enter your email address. We will send you a verification code.</Text>
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email address</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} onEndEditing={() => setDidEmailFocus(true)} onChangeText={text => setEmail(text)} />
             {renderValidation(email, didEmailFocus, "Email address cannot be empty")}
             <Button title="Send verification code" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressSendCode(email)} />
         </View>
         : <View style={[CommonStyles.generalContainer, styles.container]}>
-            <Text style={styles.description}>We have sent a verification code to your email. Please enter code to continue.</Text>
-            <Text style={styles.description}>Time left: {countdown} second(s)</Text>
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Veification code</Text>
-            <TextInput style={CommonStyles.input} onChangeText={text => setVerificationCode(text)} value={verificationCode} />
+            <Text style={[styles.description, theme.titleColor]}>We have sent a verification code to your email. Please enter code to continue.</Text>
+            <Text style={[styles.description, theme.titleColor]}>Time left: {countdown} second(s)</Text>
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Veification code</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setVerificationCode(text)} value={verificationCode} />
             {renderVerifyStatus(status)}
             <Button title="Verify" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => setStatus(verifyCode(verificationCode))} />
         </View>
@@ -74,6 +77,5 @@ const styles = StyleSheet.create({
     description: {
         marginBottom: 30,
         fontSize: 20,
-        color: Colors.ghostWhite
     }
 });

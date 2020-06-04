@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, ScrollView, Text, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import { CommonActions } from '@react-navigation/native';
 
-import CommonStyles from '../../../globals/styles';
+import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { register } from '../../../core/services/authentication-services';
+import { ThemeContext } from '../../../contexts/theme-context';
 
 const Register = (props) => {
     const [username, setUsername] = useState("");
@@ -15,6 +16,8 @@ const Register = (props) => {
     const [verifyPassword, setVerifyPassword] = useState("");
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
     const [status, setStatus] = useState(null);
+
+    const {theme} = useContext(ThemeContext)
 
     useEffect(() => {
         if (status && status.status === 200) {
@@ -43,21 +46,21 @@ const Register = (props) => {
     }
 
     return (
-        <ScrollView style={CommonStyles.generalContainer}>
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Username</Text>
-            <TextInput style={CommonStyles.input} onChangeText={text => setUsername(text)} />
+        <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Username</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setUsername(text)} />
             {renderValidationText(username, shouldDisplayValidationText, "Username cannot be empty")}
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email address</Text>
-            <TextInput style={CommonStyles.input} onChangeText={text => setEmail(text)} />
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email address</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setEmail(text)} />
             {renderValidationText(email, shouldDisplayValidationText, "Email cannot be empty")}
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Full name</Text>
-            <TextInput style={CommonStyles.input} onChangeText={text => setFullname(text)} />
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Full name</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setFullname(text)} />
             {renderValidationText(fullname, shouldDisplayValidationText, "Full name cannot be empty")}
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Password</Text>
-            <TextInput style={CommonStyles.input} secureTextEntry onChangeText={text => setPassword(text)} />
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Password</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setPassword(text)} />
             {renderValidationText(password, shouldDisplayValidationText, "Password cannot be empty")}
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Verify password again</Text>
-            <TextInput style={CommonStyles.input} secureTextEntry onChangeText={text => setVerifyPassword(text)} />
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Verify password again</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setVerifyPassword(text)} />
             {
                 password != "" && verifyPassword != "" && verifyPassword != password
                     ? renderValidationText(verifyPassword, shouldDisplayValidationText, "Verify password does not match password")

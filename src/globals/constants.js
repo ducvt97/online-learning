@@ -47,10 +47,13 @@ export const ScreenTitle = {
 export const Colors = {
     transparent: "transparent",
     black: "black",
+    dark: "#222222",
     white: "white",
+    light: "#eeeeee",
     ghostWhite: "ghostwhite",
     boldGrey: "#383838",
     dimGrey: "dimgrey",
+    darkGrey: "darkgrey",
     gainsboro: "gainsboro",
     dodgerBlue: "dodgerblue",
     red: "red"

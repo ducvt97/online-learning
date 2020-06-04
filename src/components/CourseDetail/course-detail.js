@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 
 import CourseDetailInfo from './CourseDetailInfo/course-detail-info';
 
-import CommonStyles from '../../globals/styles';
+import { CommonStyles } from '../../globals/styles';
 import CourseDetailData from '../../raw-data/course-detail';
 import { Colors } from '../../globals/constants';
 

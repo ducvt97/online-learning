@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import BrowseTab from './browse-tab';
 
-import CommonStyles from '../../../globals/styles';
-import { ScreenName, ScreenTitle, Colors } from '../../../globals/constants';
+import { ScreenName, ScreenTitle } from '../../../globals/constants';
+import { ThemeContext } from '../../../contexts/theme-context';
 
 const BrowseTabStack = createStackNavigator();
 
 const BrowseTabNavigation = (props) => {
+    const {theme} = useContext(ThemeContext)
     return (
         <BrowseTabStack.Navigator initialRouteName={ScreenName.browseTab}
-            screenOptions={{ headerStyle: CommonStyles.navigationHeader,
-                headerTintColor: Colors.white
+            screenOptions={{ headerStyle: theme.navigationHeader,
+                headerTintColor: theme.tintColor
             }}
         >
             <BrowseTabStack.Screen name={ScreenName.browseTab} component={BrowseTab} options={{ headerTitle: ScreenTitle.browseTab }} />

@@ -1,5 +1,5 @@
 export const login = (username, password) => {
-    return username === "admin" && password === "password" ? { status: 200, message: "Login successfully" }
+    return username === "admin" && password === "password" ? { status: 200, message: "Login successfully", user: {username: "admin", fullname: "Administrator"} }
         : { status: 404, message: "Username and password are not correct" }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -12,19 +12,19 @@ import MainTabNavigation from './src/components/MainTab/main-tab-navigation';
 import CourseDetail from './src/components/CourseDetail/course-detail';
 
 import { ScreenName, ScreenTitle } from './src/globals/constants';
-import CommonStyles from './src/globals/styles';
-import { Colors } from './src/globals/constants';
-
+import { AuthenticationProvider } from './src/contexts/authentication-context';
+import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
 
 const MainStack = createStackNavigator();
 
 const MainNavigation = () => {
+    const {theme} = useContext(ThemeContext);
+
     return (
         <MainStack.Navigator initialRouteName={ScreenName.splashScreen}
-            screenOptions={{ headerStyle: CommonStyles.navigationHeader,
-                headerTintColor: Colors.white
-            }}
-        >
+            screenOptions={{ headerStyle: theme.navigationHeader,
+                headerTintColor: theme.tintColor
+        }}>
             <MainStack.Screen name={ScreenName.splashScreen} component={SplashScreen} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.startScreen} component={StartScreen} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.login} component={Login} options={{ title: ScreenTitle.login }} />
@@ -39,8 +39,12 @@ const MainNavigation = () => {
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <MainNavigation />
-        </NavigationContainer>
+        <AuthenticationProvider>
+            <ThemeProvider>
+                <NavigationContainer>
+                    <MainNavigation />
+                </NavigationContainer>
+            </ThemeProvider>
+        </AuthenticationProvider>
     );
 }

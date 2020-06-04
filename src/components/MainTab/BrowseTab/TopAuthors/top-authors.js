@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 
 import AvatarTitle from './AvatarTitle/avatar-title';
+import { ThemeContext } from '../../../../contexts/theme-context';
 
 const TopAuthors = (props) => {
+    const {theme} = useContext(ThemeContext)
     return (
         <View style={styles.container}>
             <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
-                data={props.data} renderItem={({item}) => <AvatarTitle title={item} style={styles.item} />}
+                data={props.data} renderItem={({item}) => <AvatarTitle title={item} style={styles.item} titleStyle={theme.titleColor} />}
             />
         </View>
     )

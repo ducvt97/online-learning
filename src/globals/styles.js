@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { Colors } from './constants';
 
-const CommonStyles = StyleSheet.create({
+export const CommonStyles = StyleSheet.create({
     // Some style for container
     generalContainer: {
         flex: 1,
         padding: 15,
-        backgroundColor: Colors.black
+        // backgroundColor: Colors.black
     },
     searchTabContainer: {
         paddingTop: 100
@@ -47,8 +47,8 @@ const CommonStyles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 10,
         borderRadius: 5,
-        backgroundColor: Colors.gainsboro,
-        fontSize: 16
+        fontSize: 16,
+        borderWidth: 1.2
     },
     // Styles for some button types
     imageButtonBig: {
@@ -81,4 +81,33 @@ const CommonStyles = StyleSheet.create({
     }
 });
 
-export default CommonStyles;
+// Some style for container
+export const containerStyle = {
+    generalContainer: {
+        flex: 1,
+        padding: 15,
+        backgroundColor: Colors.black
+    },
+    searchTabContainer: {
+        paddingTop: 100
+    },
+    flex: {
+        flex: 1
+    }
+}
+
+// Style for text: font-weight, font-size (text color is defined in theme-context)
+export const textStyles = {
+    fontWeightBold: {
+        fontWeight: "bold"
+    },
+    fontSizeSmall: {
+        fontSize: 12
+    },
+    fontSizeAverage: {
+        fontSize: 16
+    },
+    fontSizeBig: {
+        fontSize: 20
+    }
+}

@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 
-import CommonStyles from '../../../globals/styles';
+import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { verifyPassword } from '../../../core/services/authentication-services';
+import { ThemeContext } from '../../../contexts/theme-context';
 
 const VerifyPassword = (props) => {
     const [password, setPassword] = useState("");
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
     const [status, setStatus] = useState(null);
+
+    const {theme} = useContext(ThemeContext)
 
     useEffect(() => {
         if (status && status.status === 200) {
@@ -33,9 +36,9 @@ const VerifyPassword = (props) => {
     }
 
     return (
-        <View style={[CommonStyles.generalContainer, styles.container]}>
-            <Text style={[CommonStyles.textColor, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>Enter your old password</Text>
-            <TextInput style={CommonStyles.input} secureTextEntry onChangeText={text => setPassword(text)} />
+        <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
+            <Text style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>Enter your old password</Text>
+            <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setPassword(text)} />
             {renderValidationText(password, shouldDisplayValidationText, "Password cannot be empty")}
             {renderVerifyPasswordStatus(status)}
             <Button title="Verify" buttonStyle={CommonStyles.shortMarginVertical}

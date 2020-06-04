@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
-import { Colors, ScreenName } from '../../../../globals/constants';
+import { ScreenName } from '../../../../globals/constants';
+import { ThemeContext } from '../../../../contexts/theme-context';
 
 const SearchHeader = (props) => {
-    const [searchText, setSearchText] = useState(props.route.params ? props.route.params.searchText : "");
+    const [searchText, setSearchText] = useState("");
+    const {theme} = useContext(ThemeContext);
+
+    useEffect(() => {
+        props.navigation.setParams({searchText: searchText});
+    }, [])
 
     const onChangeText = (text) => {
         setSearchText(searchText => text);
         if (props.route.name === ScreenName.searchResultsTabNavigation) {
-            props.navigation.navigate(ScreenName.searchResults, {searchText: text});
+            props.navigation.navigate(ScreenName.searchResults, {searchText: searchText});
         } else {
             props.navigation.setParams({searchText: searchText});
         }
@@ -27,8 +33,8 @@ const SearchHeader = (props) => {
 
     return (
         <View >
-            <SearchBar containerStyle={styles.searchContainer} autoFocus
-                cancelButtonProps={{buttonStyle: styles.buttonCancel, color: Colors.white}}
+            <SearchBar containerStyle={[styles.searchContainer, theme.navigationHeader]} autoFocus
+                cancelButtonProps={{buttonStyle: styles.buttonCancel, buttonTextStyle: theme.textColor}}
                 platform="ios" placeholder="Search" showCancel={true}
                 onChangeText={(text) => onChangeText(text)}
                 onCancel={onClear}
@@ -45,7 +51,6 @@ const styles = StyleSheet.create({
     searchContainer: {
         paddingHorizontal: 10,
         paddingTop: 30,
-        backgroundColor: Colors.boldGrey
     },
     buttonCancel: {
         marginTop: 10,
