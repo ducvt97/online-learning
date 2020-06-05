@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const authentications = {
+const authentications = {
     authenticated: false,
     user: null
 }

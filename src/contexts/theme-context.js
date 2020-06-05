@@ -55,7 +55,7 @@ const ThemeProvider = (props) => {
             setTheme(themes.light);
     }
 
-    return <ThemeContext.Provider value={{theme, toggleTheme}}>
+    return <ThemeContext.Provider value={{theme, setTheme}}>
         {props.children}
     </ThemeContext.Provider>
 }

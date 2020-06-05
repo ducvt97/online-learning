@@ -10,6 +10,7 @@ import StartScreen from './src/components/Others/StartScreen/start-screen';
 import SplashScreen from './src/components/Others/SplashScreen/splash-screen';
 import MainTabNavigation from './src/components/MainTab/main-tab-navigation';
 import CourseDetail from './src/components/CourseDetail/course-detail';
+import Theme from './src/components/AccountManagement/Setting/Theme/theme';
 
 import { ScreenName, ScreenTitle } from './src/globals/constants';
 import { AuthenticationProvider } from './src/contexts/authentication-context';
@@ -30,9 +31,10 @@ const MainNavigation = () => {
             <MainStack.Screen name={ScreenName.login} component={Login} options={{ title: ScreenTitle.login }} />
             <MainStack.Screen name={ScreenName.register} component={Register} options={{ title: ScreenTitle.register }} />
             <MainStack.Screen name={ScreenName.forgetPassword} component={ForgetPassword} options={{ title: ScreenTitle.forgetPassword }} />
-            <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: ScreenTitle.changePassword  }} />
+            <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: ScreenTitle.changePassword }} />
             <MainStack.Screen name={ScreenName.mainTab} component={MainTabNavigation} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
+            <MainStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
         </MainStack.Navigator>
     )
 }

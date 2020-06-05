@@ -3,9 +3,9 @@ import { StyleSheet, ScrollView, View } from 'react-native';
 import { ListItem, Divider } from 'react-native-elements';
 
 import { CommonStyles } from '../../../globals/styles';
-import { Colors } from '../../../globals/constants';
+import { Colors, ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
-import { AuthenticationContext, authentications } from '../../../contexts/authentication-context';
+import { AuthenticationContext } from '../../../contexts/authentication-context';
 
 const Setting = (props) => {
     const [isStreamingEnabled, setIsStreamingEnabled] = useState(false);
@@ -46,7 +46,7 @@ const Setting = (props) => {
                         <Divider style={CommonStyles.divider} />
                     </View>
                 : null}
-                <ListItem title="Theme" titleStyle={[theme.titleColor, CommonStyles.fontSizeAverage]} containerStyle={styles.item} chevron />
+                <ListItem title="Theme" titleStyle={[theme.titleColor, CommonStyles.fontSizeAverage]} containerStyle={styles.item} onPress={()=>props.navigation.navigate(ScreenName.theme)} chevron />
                 <Divider style={CommonStyles.divider} />
                 <ListItem title="About" titleStyle={[theme.titleColor, CommonStyles.fontSizeAverage]} containerStyle={styles.item} chevron />
                 <Divider style={CommonStyles.divider} />
