@@ -25,7 +25,7 @@ const SearchResultsTabNavigation = () => {
                 activeTintColor: Colors.dodgerBlue,
                 inactiveTintColor: theme.inactiveTintColor,
                 style: theme.navigationHeader,
-                labelStyle: [CommonStyles.fontSizeSmall, CommonStyles.fontWeightBold]
+                labelStyle: [CommonStyles.fontSizeSmall, CommonStyles.fontWeightBold, {marginHorizontal: -5}]
             }}
         >
             <SearchResultsTab.Screen name={ScreenName.searchAllTab} component={SearchAllTab}

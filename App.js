@@ -15,6 +15,7 @@ import Theme from './src/components/AccountManagement/Setting/Theme/theme';
 import { ScreenName, ScreenTitle } from './src/globals/constants';
 import { AuthenticationProvider } from './src/contexts/authentication-context';
 import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
+import { CoursesProvider } from './src/contexts/courses-context';
 
 const MainStack = createStackNavigator();
 
@@ -43,9 +44,11 @@ export default function App() {
     return (
         <AuthenticationProvider>
             <ThemeProvider>
-                <NavigationContainer>
-                    <MainNavigation />
-                </NavigationContainer>
+                <CoursesProvider>
+                    <NavigationContainer>
+                        <MainNavigation />
+                    </NavigationContainer>
+                </CoursesProvider>
             </ThemeProvider>
         </AuthenticationProvider>
     );

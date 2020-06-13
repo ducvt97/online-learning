@@ -6,16 +6,18 @@ import SectionHeader from '../../../common/section-header';
 
 import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
+import { CoursesContext } from '../../../../contexts/courses-context';
 
 const SectionHome = (props) => {
     const {theme} = useContext(ThemeContext);
+    const {courses} = useContext(CoursesContext);
 
     const onPressListCoursesItem = () => {
         props.navigation.navigate(ScreenName.courseDetail);
     }
 
     const renderItem = (item) => {
-        return item.type === 1 ? <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />
+        return item.type === 1 ? <ListCoursesHorizontal data={courses} navigation={props.navigation} screenName={ScreenName.courseDetail} onPressItem={onPressListCoursesItem} />
             : item.type === 2 ? <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />
             : item.type === 3 ? <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />
             : item.type === 4 ? <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />

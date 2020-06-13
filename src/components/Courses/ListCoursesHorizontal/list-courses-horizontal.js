@@ -4,12 +4,16 @@ import { StyleSheet, FlatList, View } from 'react-native';
 import CourseBox from '../../common/course-box';
 
 const ListCoursesHorizontal = (props) => {
+    const onPressItem = (courseId) => {
+        props.navigation.navigate(props.screenName, {courseId: courseId});
+    }
+
     return (
         <View style={styles.container}>
             <FlatList style={props.style} horizontal={true} data={props.data}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => <CourseBox style={styles.item} data={item} onPress={props.onPressItem} />}
+                renderItem={({item}) => <CourseBox style={styles.item} data={item} navigation={props.navigation} onPress={() => onPressItem(item.id)} />}
             />
         </View>
     )

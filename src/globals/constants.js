@@ -10,6 +10,8 @@ export const ScreenName = {
     setting: "Setting",
     theme: "Theme",
     courseDetail: "CourseDetail",
+    contentsTab: "ContentsTab",
+    transcriptTab: "TranscriptTab",
     mainTab: "MainTab",
     homeTabNavigation: "HomeTabNavigation",
     homeTab: "HomeTab",
@@ -36,6 +38,8 @@ export const ScreenTitle = {
     setting: "Setting",
     theme: "Theme",
     courseDetail: "Course Detail",
+    contentsTab: "Contents",
+    transcriptTab: "Transcript",
     homeTab: "Home",
     downloadTab: "Download",
     browseTab: "Browse",
@@ -58,5 +62,6 @@ export const Colors = {
     darkGrey: "darkgrey",
     gainsboro: "gainsboro",
     dodgerBlue: "dodgerblue",
-    red: "red"
+    red: "red",
+    green: "green"
 };

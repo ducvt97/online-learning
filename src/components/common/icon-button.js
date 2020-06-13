@@ -6,9 +6,9 @@ import { Colors } from '../../globals/constants';
 const IconButton = (props) => {
     const theme = props.theme;
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={props.onPress}>
             <Icon reverse type={props.type} name={props.name} color={Colors.dimGrey} reverseColor={Colors.white} />
-            <Text style={[theme ? theme.titleColor : null, styles.title]}>{props.title}</Text>
+            <Text style={theme ? theme.titleColor : null}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

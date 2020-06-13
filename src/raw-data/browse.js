@@ -9,7 +9,7 @@ const BrowseData = [
                     topics: ["Conferences", "<Software>", "Bussiness", "Creative", "IT", "Design",
                     "Security", "Architecture", "Data", "Certification"]
                 }
-            } 
+            }
         ]
     },
     {

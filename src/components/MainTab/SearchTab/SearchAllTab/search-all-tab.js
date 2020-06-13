@@ -27,7 +27,7 @@ const SearchAllTab = (props) => {
 
     return (
         <View style={[CommonStyles.generalContainer, theme.background]}>
-            <SectionList sections={data} stickySectionHeadersEnabled={true}
+            <SectionList sections={data} stickySectionHeadersEnabled
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item)}
                 renderSectionHeader={({ section: { title, results } }) => (
