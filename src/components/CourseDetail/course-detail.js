@@ -41,7 +41,7 @@ const TopTabBarNavigation = (props) => {
 }
 
 const CourseDetail = (props) => {
-    const courseId = props.route.params.courseId;
+    const courseId = props.route.params.itemId;
     const course = getCourseById(courseId);
     
     const {theme} = useContext(ThemeContext);

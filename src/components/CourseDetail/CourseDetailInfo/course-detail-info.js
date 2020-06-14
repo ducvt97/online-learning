@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { ListItem, Rating, Divider, Icon } from 'react-native-elements';
 
-import IconButton from '../../common/icon-button';
 import Description from '../../common/description';
 
 import { CommonStyles } from '../../../globals/styles';
@@ -13,12 +12,18 @@ import { Colors } from '../../../globals/constants';
 const CourseDetailInfo = (props) => {
     const course = props.data;
     const {theme} = useContext(ThemeContext);
-    const {toggleBookmarkedCourse} = useContext(CoursesContext);
+    const {toggleBookmarkCourse, toggleDownloadCourse} = useContext(CoursesContext);
     const [bookmarked, setBookmarked] = useState(course.bookmarked);
+    const [downloaded, setDownloaded] = useState(course.downloaded);
 
     const onPressBookmark = (courseId) => {
-        toggleBookmarkedCourse(courseId);
+        toggleBookmarkCourse(courseId);
         setBookmarked(!bookmarked);
+    }
+
+    const onPressDownload = (courseId) => {
+        toggleDownloadCourse(courseId);
+        setDownloaded(!downloaded);
     }
 
     return (
@@ -44,7 +49,7 @@ const CourseDetailInfo = (props) => {
                     <Icon reverse name="cast" color={Colors.dimGrey} reverseColor={Colors.white} />
                     <Text style={theme.titleColor}>Add to channel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.iconButton}>
+                <TouchableOpacity style={styles.iconButton} onPress={() => onPressDownload(course.id)}>
                     <Icon reverse type="font-awesome" name="download" color={Colors.dimGrey} reverseColor={Colors.white} />
                     <Text style={theme.titleColor}>{course.downloaded ? "Downloaded" : "Download"}</Text>
                 </TouchableOpacity>

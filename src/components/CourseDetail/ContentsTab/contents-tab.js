@@ -11,12 +11,11 @@ const ContentsTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
     const onPressActionButton = (title) => {
-        Alert.alert("", title,
-            [
-                { text: "Download", onPress: () => alert("Feature not support!!") },
-                { text: "Share", onPress: ()=> Share.share({ message: `Share "${title}"` })},
-                { text: "Cancel", style: "cancel"}
-            ])
+        Alert.alert("", title, [
+            { text: "Download", onPress: () => alert("Feature not support!!") },
+            { text: "Share", onPress: ()=> Share.share({ message: `Share "${title}"` })},
+            { text: "Cancel", style: "cancel"}
+        ])
     }
 
     const renderSectionHeader = (title, duration, downloaded, theme) => {

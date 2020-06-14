@@ -11,7 +11,7 @@ const ListCourses = (props) => {
             <FlatList style={props.style} data={props.data}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => <ListCoursesItem data={item} onPress={props.onPressItem} theme={props.theme} />}
+                renderItem={({item}) => <ListCoursesItem data={item} onPress={() => props.onPressItem(props.screenName, item.id)} theme={props.theme} />}
                 ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
             />
         </View>
