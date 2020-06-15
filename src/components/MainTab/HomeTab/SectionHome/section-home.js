@@ -3,12 +3,12 @@ import { StyleSheet, View, SectionList } from 'react-native';
 
 import ListCoursesHorizontal from '../../../Courses/ListCoursesHorizontal/list-courses-horizontal';
 import SectionHeader from '../../../common/section-header';
+import ListEmptyView from '../../../common/list-empty-view';
 
 import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { CoursesContext } from '../../../../contexts/courses-context';
 import { getBookmarkedCourses } from '../../../../core/services/courses-services';
-import ListEmptyView from '../../../common/list-empty-view';
 
 const SectionHome = (props) => {
     const {theme} = useContext(ThemeContext);
@@ -60,15 +60,13 @@ const SectionHome = (props) => {
             : <SectionHeader style={theme.background} title={title} titleStyle={theme.titleColor} />
     }
 
-    return (
-        <View style={[styles.container, theme.background]}>
-            <SectionList sections={section}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => renderItem(item)}
-                renderSectionHeader={({ section: { title, data } }) => renderSectionHeader(title, data)}
-            />
-        </View>
-    )
+    return <View style={[styles.container, theme.background]}>
+        <SectionList sections={section}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => renderItem(item)}
+            renderSectionHeader={({ section: { title, data } }) => renderSectionHeader(title, data)}
+        />
+    </View>
 }
 
 export default SectionHome;

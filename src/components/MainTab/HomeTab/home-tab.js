@@ -4,7 +4,6 @@ import { Tile, Icon, Avatar } from 'react-native-elements';
 
 import SectionHome from './SectionHome/section-home';
 import { CommonStyles } from '../../../globals/styles';
-import HomeData from '../../../raw-data/home';
 import { ScreenName, Colors } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 
@@ -20,7 +19,7 @@ const HomeTab = (props) => {
                 containerStyle={styles.headerButton} onPress={() => props.navigation.navigate(ScreenName.profile)}
             />
         });
-    }, []);
+    }, [{...theme}]);
 
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
@@ -31,7 +30,7 @@ const HomeTab = (props) => {
                 containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
                 imageContainerStyle={CommonStyles.imageButtonBig}
             />
-            <SectionHome data={HomeData} navigation={props.navigation} />
+            <SectionHome navigation={props.navigation} />
         </ScrollView>
     )
 }

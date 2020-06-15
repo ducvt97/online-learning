@@ -4,7 +4,6 @@ import { Tile } from 'react-native-elements';
 
 import SectionBrowse from './SectionBrowse/section-browse';
 import { CommonStyles } from '../../../globals/styles';
-import BrowseData from '../../../raw-data/browse';
 import { Colors } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 
@@ -12,7 +11,7 @@ const BrowseTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
     return (
-        <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
+        <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled>
             <Tile featured title={"NEW RELEASE"}
                 imageSrc={require("../../../../assets/bg.jpg")}
                 titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
@@ -25,7 +24,7 @@ const BrowseTab = (props) => {
                 containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
                 imageContainerStyle={CommonStyles.imageButtonBig}
             />
-            <SectionBrowse data={BrowseData} navigation={props.navigation} />
+            <SectionBrowse {...props} />
         </ScrollView>
     )
 }

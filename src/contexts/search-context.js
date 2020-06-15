@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { coursesData } from '../raw-data/courses';
+import { authorsData } from '../raw-data/authors';
 
 const searchTextResult = ["react", "react-native", "reactjs", "react-redux"];
 const search = {
@@ -9,7 +10,7 @@ const search = {
     searchResult: {
         courses: coursesData,
         paths: [],
-        authors: []
+        authors: authorsData
     }
 }
 

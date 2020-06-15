@@ -13,12 +13,16 @@ import { SearchContext } from '../../../../contexts/search-context';
 const SearchCoursesTab = (props) => {
     const {theme} = useContext(ThemeContext);
     const {searches} = useContext(SearchContext);
+
+    const onPressListItem = (screenName, itemId) => {
+        props.navigation.navigate(screenName, {itemId: itemId});
+    }
     
     return (
         <View style={[CommonStyles.generalContainer, theme.background]}>
             {props.data.length > 0 ? <SectionHeader title={props.data.length + " Results"} titleStyle={theme.titleColor} />
                 : <NotFoundView theme={theme} showIcon subtitle={`We couldn't find any matches for "${searches.currentSearchText}"`} />}
-            <ListCourses data={props.data} theme={theme} onPressItem={() => props.navigation.navigate(ScreenName.courseDetail)} />
+            <ListCourses data={props.data} theme={theme} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />
         </View>
     )
 }

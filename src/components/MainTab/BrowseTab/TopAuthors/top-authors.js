@@ -5,11 +5,14 @@ import AvatarTitle from './AvatarTitle/avatar-title';
 import { ThemeContext } from '../../../../contexts/theme-context';
 
 const TopAuthors = (props) => {
-    const {theme} = useContext(ThemeContext)
+    const {theme} = useContext(ThemeContext);
+
     return (
         <View style={styles.container}>
             <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
-                data={props.data} renderItem={({item}) => <AvatarTitle title={item} style={styles.item} titleStyle={theme.titleColor} />}
+                data={props.data} renderItem={({item}) => 
+                    <AvatarTitle title={item.name} style={styles.item} titleStyle={theme.titleColor} 
+                        onPressItem={props.onPressItem} screenName={props.screenName} itemId={item.id} />}
             />
         </View>
     )

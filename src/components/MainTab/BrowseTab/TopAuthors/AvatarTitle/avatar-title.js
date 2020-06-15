@@ -7,7 +7,7 @@ import { CommonStyles } from '../../../../../globals/styles';
 const AvatarTitle = (props) => {
     return (
         <View style={[props.style, styles.container]}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.onPressItem(props.screenName, props.itemId)}>
                 <Avatar rounded source={require("../../../../../../assets/avatar.jpg")} size="large" />
                 <Text style={[props.titleStyle, CommonStyles.fontSizeAverage, styles.title]}>{props.title}</Text>
             </TouchableOpacity>

@@ -11,12 +11,14 @@ import SplashScreen from './src/components/Others/SplashScreen/splash-screen';
 import MainTabNavigation from './src/components/MainTab/main-tab-navigation';
 import CourseDetail from './src/components/CourseDetail/course-detail';
 import Theme from './src/components/AccountManagement/Setting/Theme/theme';
+import AuthorDetail from './src/components/AuthorDetail/author-detail';
 
 import { ScreenName, ScreenTitle } from './src/globals/constants';
 import { AuthenticationProvider } from './src/contexts/authentication-context';
 import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
 import { CoursesProvider } from './src/contexts/courses-context';
 import { SearchProvider } from './src/contexts/search-context';
+import { AuthorsProvider } from './src/contexts/authors-context';
 
 const MainStack = createStackNavigator();
 
@@ -36,6 +38,7 @@ const MainNavigation = () => {
             <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: ScreenTitle.changePassword }} />
             <MainStack.Screen name={ScreenName.mainTab} component={MainTabNavigation} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
+            <MainStack.Screen name={ScreenName.authorDetail} component={AuthorDetail} options={{ title: ScreenTitle.authorDetail }} />
             <MainStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
         </MainStack.Navigator>
     )
@@ -47,9 +50,11 @@ export default function App() {
             <ThemeProvider>
                 <CoursesProvider>
                     <SearchProvider>
-                        <NavigationContainer>
-                            <MainNavigation />
-                        </NavigationContainer>
+                        <AuthorsProvider>
+                            <NavigationContainer>
+                                <MainNavigation />
+                            </NavigationContainer>
+                        </AuthorsProvider>
                     </SearchProvider>
                 </CoursesProvider>
             </ThemeProvider>

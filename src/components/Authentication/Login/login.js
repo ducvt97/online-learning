@@ -24,11 +24,14 @@ const Login = (props) => {
                     onPress={()=> {props.navigation.navigate(ScreenName.setting)}}
                 />
             });
-    }, []);
+    }, [{...theme}]);
 
     useEffect(() => {
         if (status && status.status === 200)
-            props.navigation.navigate(ScreenName.mainTab, { screen: ScreenName.homeTab });
+            if (props.isInHomeTab)
+                props.navigation.navigate(ScreenName.homeTab);
+            else
+                props.navigation.navigate(ScreenName.mainTab);
     }, [status]);
 
     const renderValidationText = (textInput, shouldDisplay, message) => {

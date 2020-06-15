@@ -17,23 +17,37 @@ const SearchAllTab = (props) => {
     const section = [
         {
             title: "Courses",
-            results: props.data.courses.length,
             data: [{ type: 1, data: props.data.courses }]
         },
         {
             title: "Paths",
-            results: props.data.paths.length,
             data: [{ type: 2, data: props.data.paths }]
         },
         {
             title: "Authors",
-            results: props.data.authors.length,
             data: [{ type: 3, data: props.data.authors }]
         }
     ];
 
     const onPressListItem = (screenName, itemId) => {
         props.navigation.navigate(screenName, {itemId: itemId});
+    }
+
+    const onPressHeaderButton = (type) => {
+        if (type === 1)
+            return props.navigation.jumpTo(ScreenName.searchCoursesTab);
+        else if (type === 2)
+            return props.navigation.jumpTo(ScreenName.searchPathsTab);
+        else if (type === 3)
+            return props.navigation.jumpTo(ScreenName.searchAuthorsTab);
+    }
+
+    const renderSectionHeader = (title, data) => {
+        const dataLength = data[0].data.length;
+        return data[0].data.length > 0 ? 
+            <SectionHeader style={theme.background} title={title} titleStyle={theme.titleColor} rightButtonTitle={dataLength + " results >"}
+                onPressRightButton={() => onPressHeaderButton(data[0].type)} rightButtonTitleStyle={theme.titleColor} />
+            : <SectionHeader style={theme.background} title={title} titleStyle={theme.titleColor} />
     }
 
     const renderItem = (item) => {
@@ -43,21 +57,17 @@ const SearchAllTab = (props) => {
         : item.type === 2 ?
             <ListCourses data={item.data} theme={theme} onPressItem={onPressListItem} />
         : item.type === 3 ?
-            <AuthorsList data={item.data} onPressItem={onPressListItem} />
+            <AuthorsList screenName={ScreenName.authorDetail} data={item.data} onPressItem={onPressListItem} />
         : null;
     }
 
-    return (
-        <View style={[CommonStyles.generalContainer, theme.background]}>
+    return <View style={[CommonStyles.generalContainer, theme.background]}>
             <SectionList sections={section} stickySectionHeadersEnabled
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item)}
-                renderSectionHeader={({ section: { title, results } }) => (
-                    <SectionHeader style={theme.background} title={title} titleStyle={theme.titleColor} rightButtonTitle={results > 0 ? results + " results >" : null} />
-                )}
+                renderSectionHeader={({ section: { title, data } }) => renderSectionHeader(title, data)}
             />
         </View>
-    )
 }
 
 export default SearchAllTab;

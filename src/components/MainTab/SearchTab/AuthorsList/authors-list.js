@@ -16,6 +16,7 @@ const AuthorsList = (props) => {
             subtitle={item.courses + " courses"}
             leftAvatar={{ source: require("../../../../../assets/avatar.jpg") }}
             bottomDivider
+            onPress={() => props.onPressItem(props.screenName, item.id)}
         />
     )
 
