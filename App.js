@@ -16,6 +16,7 @@ import { ScreenName, ScreenTitle } from './src/globals/constants';
 import { AuthenticationProvider } from './src/contexts/authentication-context';
 import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
 import { CoursesProvider } from './src/contexts/courses-context';
+import { SearchProvider } from './src/contexts/search-context';
 
 const MainStack = createStackNavigator();
 
@@ -45,9 +46,11 @@ export default function App() {
         <AuthenticationProvider>
             <ThemeProvider>
                 <CoursesProvider>
-                    <NavigationContainer>
-                        <MainNavigation />
-                    </NavigationContainer>
+                    <SearchProvider>
+                        <NavigationContainer>
+                            <MainNavigation />
+                        </NavigationContainer>
+                    </SearchProvider>
                 </CoursesProvider>
             </ThemeProvider>
         </AuthenticationProvider>

@@ -8,7 +8,11 @@ const SectionHeader = (props) => {
     return (
         <View style={[props.style, styles.container]}>
             <Text style={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, props.titleStyle]}>{props.title}</Text>
-            {props.rightButtonTitle ? <Button type="clear" title={props.rightButtonTitle} titleStyle={[props.rightButtonTitleStyle, CommonStyles.fontSizeAverage]} /> : null}
+            {props.rightButtonTitle ? 
+                <Button type="clear" title={props.rightButtonTitle} 
+                    titleStyle={[props.rightButtonTitleStyle, CommonStyles.fontSizeAverage]} 
+                    onPress={props.onPressRightButton}/> 
+            : null}
         </View>
     )
 }

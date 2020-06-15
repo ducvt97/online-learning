@@ -12,12 +12,15 @@ import SearchHeader from './SearchHeader/search-header';
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName, ScreenTitle, Colors } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { SearchContext } from '../../../contexts/search-context';
 
 const SearchTab = createStackNavigator();
 const SearchResultsTab = createMaterialTopTabNavigator();
 
-const SearchResultsTabNavigation = () => {
+const SearchResultsTabNavigation = (props) => {
     const {theme} = useContext(ThemeContext);
+    const {searches} = useContext(SearchContext);
+    const data = searches.searchResult;
 
     return (
         <SearchResultsTab.Navigator initialRouteName={ScreenName.searchAllTab}
@@ -28,35 +31,39 @@ const SearchResultsTabNavigation = () => {
                 labelStyle: [CommonStyles.fontSizeSmall, CommonStyles.fontWeightBold, {marginHorizontal: -5}]
             }}
         >
-            <SearchResultsTab.Screen name={ScreenName.searchAllTab} component={SearchAllTab}
+            <SearchResultsTab.Screen name={ScreenName.searchAllTab}
                 options={{ headerShown: false,
                     tabBarLabel: ScreenTitle.searchAllTab
-                }}
-            />
-            <SearchResultsTab.Screen name={ScreenName.searchCoursesTab} component={SearchCoursesTab}
+            }}>
+                {props => <SearchAllTab {...props} data={data} />}
+            </SearchResultsTab.Screen>
+            <SearchResultsTab.Screen name={ScreenName.searchCoursesTab}
                 options={{ headerShown: false,
                     tabBarLabel: ScreenTitle.searchCoursesTab
-                }}
-            />
-            <SearchResultsTab.Screen name={ScreenName.searchPathsTab} component={SearchPathsTab}
+            }}>
+                {props => <SearchCoursesTab {...props} data={data.courses} />}
+            </SearchResultsTab.Screen>
+            <SearchResultsTab.Screen name={ScreenName.searchPathsTab}
                 options={{ headerShown: false,
                     tabBarLabel: ScreenTitle.searchPathsTab
-                }}
-            />
-            <SearchResultsTab.Screen name={ScreenName.searchAuthorsTab} component={SearchAuthorsTab}
+            }}>
+                {props => <SearchPathsTab {...props} data={data.paths} />}
+            </SearchResultsTab.Screen>
+            <SearchResultsTab.Screen name={ScreenName.searchAuthorsTab}
                 options={{ headerShown: false,
                     tabBarLabel: ScreenTitle.searchAuthorsTab
-                }}
-            />
+            }}>
+                {props => <SearchAuthorsTab {...props} data={data.authors} />}
+            </SearchResultsTab.Screen>
         </SearchResultsTab.Navigator>
     )
 }
 
 const SearchTabNavigation = (props) => {
     return (
-        <SearchTab.Navigator initialRouteName={ScreenName.searchResults} 
+        <SearchTab.Navigator initialRouteName={ScreenName.searchResults} p
             screenOptions={({ navigation, route }) => ({
-                header: () => <SearchHeader navigation={navigation} route={route} />,
+                header: () => <SearchHeader navigation={navigation} route={route} />
         })}>
             <SearchTab.Screen name={ScreenName.searchResults} component={SearchResults} />
             <SearchTab.Screen name={ScreenName.searchResultsTabNavigation} component={SearchResultsTabNavigation} />

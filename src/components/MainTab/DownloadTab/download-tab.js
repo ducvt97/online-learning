@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import SearchData from '../../../raw-data/search';
 import ListCourses from '../../Courses/ListCourses/list-courses';
 import SectionHeader from '../../common/section-header';
 import { CommonStyles } from '../../../globals/styles';
