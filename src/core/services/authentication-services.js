@@ -1,6 +1,22 @@
-export const login = (username, password) => {
-    return username === "admin" && password === "password" ? { status: 200, message: "Login successfully", user: {username: "admin", fullname: "Administrator"} }
-        : { status: 404, message: "Username and password are not correct" }
+export const login = (accounts, usernameOrEmail, password) => {
+    let account = null;
+    for (let i = 0; i < accounts.length; i++) {
+        if (accounts[i].username === usernameOrEmail || accounts[i].email === usernameOrEmail)
+            account = accounts[i];
+    }
+    if (account) {
+        return account.password === password ? { status: 200, message: "Login successfully", user: account }
+            : { status: 404, message: "Password is not correct" };
+    }
+    return { status: 404, message: "Username or Email doesn't exist" }
+}
+
+export const verifyEmail = (accounts, email) => {
+    for (let i = 0; i < accounts.length; i++) {
+        if (accounts[i].email === email)
+            return { status: 200, message: "Email correct" };
+    }
+    return { status: 404, message: "Email doesn't exist" };
 }
 
 export const verifyCode = (code) => {
@@ -8,22 +24,7 @@ export const verifyCode = (code) => {
         : { status: 404, message: "Verification code not correct" }
 }
 
-export const changePassword = (newPassword, verifyNewPassword) => {
-    return newPassword === verifyNewPassword ? { status: 200, message: "Password changed successfully" }
-        : { status: 404, message: "Veify new password does not match your new password" }
-}
-
-export const register = (username, email, fullname, password) => {
-    if (username === "" || email === ""  || fullname === ""  || password === ""){
-        if (username === "admin")
-            return { status: 404, message: "Username already exist" }
-        else
-            return { status: 200, message: "Register successfully" }
-    }
-    return { status: 404, message: "Register failed. Some requirements not meet" }
-}
-
-export const verifyPassword = (password) => {
-    return password === "password" ? { status: 200, message: "Verify successfully" }
+export const verifyPassword = (currentUser, password) => {
+    return currentUser.password === password ? { status: 200, message: "Verify successfully" }
         : { status: 404, message: "Password is not correct" }
 }

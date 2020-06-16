@@ -19,7 +19,7 @@ const Setting = (props) => {
     return (
         <View style={[CommonStyles.generalContainer, theme.background]}>
             <ScrollView>
-                {authentication.isAuthenticated ? 
+                {authentication.authenticated ? 
                     <View>
                         <ListItem title="Notifications" titleStyle={[theme.titleColor, CommonStyles.fontSizeAverage]}
                         containerStyle={styles.item} chevron

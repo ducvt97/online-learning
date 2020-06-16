@@ -3,9 +3,10 @@ import { StyleSheet, View, Text, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { CommonStyles } from '../../../globals/styles';
-import { Colors, ScreenName } from '../../../globals/constants';
-import { verifyCode } from '../../../core/services/authentication-services';
+import { ScreenName } from '../../../globals/constants';
+import { verifyCode, verifyEmail } from '../../../core/services/authentication-services';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { AccountsContext } from '../../../contexts/accounts-context';
 
 const ForgetPassword = (props) => {
     const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ const ForgetPassword = (props) => {
     const [status, setStatus] = useState(null);
 
     const {theme} = useContext(ThemeContext);
+    const {accounts} = useContext(AccountsContext);
 
     useEffect(() => {
         this.timer = setInterval(() => setCountdown(countdown => countdown - 1), 1000);
@@ -29,8 +31,8 @@ const ForgetPassword = (props) => {
     }, [countdown])
 
     useEffect(() => {
-        if (status && status.status === 200)
-            props.navigation.navigate(ScreenName.changePassword);
+        if (status && status.status === 200 && !status.message.includes("Email"))
+            props.navigation.navigate(ScreenName.changePassword, {email: email});
     }, [status])
 
     const renderValidation = (textInput, didFocus, message) => {
@@ -38,13 +40,19 @@ const ForgetPassword = (props) => {
     }
 
     const renderVerifyStatus = (status) => {
-        return !status ? null : <Text style={CommonStyles.validationText}>{status.message}</Text>
+        return status ? isCodeSent && status.message.includes("Email") ? null
+            : <Text style={CommonStyles.validationText}>{status.message}</Text>
+        : null;
     }
 
     const onPressSendCode = (email) => {
         if (email != "") {
-            setIsCodeSent(true);
-            setCountdown(120);
+            const status = verifyEmail(accounts, email);
+            if (status.status === 200) {
+                setIsCodeSent(true);
+                setCountdown(120);
+            } else
+                setStatus(status);
         } else {
             setDidEmailFocus(true);
         }
@@ -56,6 +64,7 @@ const ForgetPassword = (props) => {
             <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email address</Text>
             <TextInput style={[CommonStyles.input, theme.inputBackground]} onEndEditing={() => setDidEmailFocus(true)} onChangeText={text => setEmail(text)} />
             {renderValidation(email, didEmailFocus, "Email address cannot be empty")}
+            {renderVerifyStatus(status)}
             <Button title="Send verification code" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressSendCode(email)} />
         </View>
         : <View style={[CommonStyles.generalContainer, styles.container]}>

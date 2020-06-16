@@ -7,6 +7,7 @@ import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { register } from '../../../core/services/authentication-services';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { AccountsContext } from '../../../contexts/accounts-context';
 
 const Register = (props) => {
     const [username, setUsername] = useState("");
@@ -17,7 +18,8 @@ const Register = (props) => {
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
     const [status, setStatus] = useState(null);
 
-    const {theme} = useContext(ThemeContext)
+    const {theme} = useContext(ThemeContext);
+    const {registerNewAccount} = useContext(AccountsContext);
 
     useEffect(() => {
         if (status && status.status === 200) {
@@ -42,7 +44,7 @@ const Register = (props) => {
         if (username === "" || email === ""  || fullname === ""  || password === ""  || verifyPassword === "")
             setShouldDisplayValidationText(true);
         else
-            setStatus(register(username, email, fullname, password));
+            setStatus(registerNewAccount(username, email, fullname, password));
     }
 
     return (

@@ -6,6 +6,7 @@ import Setting from '../../AccountManagement/Setting/setting';
 import Profile from '../../AccountManagement/Profile/profile';
 import VerifyPassword from '../../Authentication/VerifyPassword/verify-password';
 import Login from '../../Authentication/Login/login';
+import Theme from '../../AccountManagement/Setting/Theme/theme';
 
 import { ScreenName, ScreenTitle } from '../../../globals/constants';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
@@ -29,6 +30,7 @@ const HomeTabNavigation = (props) => {
             <HomeTabStack.Screen name={ScreenName.setting} component={Setting} options={{ headerTitle: ScreenTitle.setting }} />
             <HomeTabStack.Screen name={ScreenName.profile} component={Profile} options={{ headerTitle: ScreenTitle.profile }} />
             <HomeTabStack.Screen name={ScreenName.verifyPassword} component={VerifyPassword} />
+            <HomeTabStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
         </HomeTabStack.Navigator>
     )
 }

@@ -47,7 +47,7 @@ const SectionHome = (props) => {
             <ListCoursesHorizontal data={item.data} screenName={ScreenName.pathDetail} onPressItem={onPressListItem} />
             : <ListEmptyView theme={theme} icon={{name: "extension", size: 30}} content="Use paths to have an overview in a field." />
         : item.type === 3 ? item.data.length > 0 ?
-            <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />
+            <ListCoursesHorizontal data={item.data} onPressItem={onPressListItem} />
             : <ListEmptyView theme={theme} icon={{name: "cast", size: 30}} content="Use channels to save, organize, and share content to accomplish your learning objectives." />
         : item.type === 4 ? item.data.length > 0 ?
             <ListCoursesHorizontal data={item.data} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />

@@ -7,6 +7,7 @@ import { ScreenName, ScreenTitle } from '../../../globals/constants';
 import { login } from '../../../core/services/authentication-services';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { AccountsContext } from '../../../contexts/accounts-context';
 
 const Login = (props) => {
     const [username, setUsername] = useState("");
@@ -14,6 +15,7 @@ const Login = (props) => {
     const [status, setStatus] = useState(null);
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
 
+    const {accounts} = useContext(AccountsContext);
     const {setAuthenticated, setUser} = useContext(AuthenticationContext);
     const {theme} = useContext(ThemeContext);
 
@@ -44,7 +46,7 @@ const Login = (props) => {
 
     const onPressLogin = (username, password, setAuthenticated, setUser) => {
         if (username != "" && password != "") {
-            const loginStatus = login(username, password);
+            const loginStatus = login(accounts, username, password);
             if (loginStatus.status === 200){
                 setAuthenticated(true);
                 setUser(loginStatus.user);
@@ -56,7 +58,7 @@ const Login = (props) => {
 
     return (
         <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
-            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email or username</Text>
+            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Username or Email</Text>
             <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setUsername(text)} />
             {renderValidationText(username, shouldDisplayValidationText, "Username cannot be empty")}
             <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Password</Text>

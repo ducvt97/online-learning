@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text, ScrollView, SectionList } from 'react-native';
+import { Text, ScrollView, SectionList } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 
 import Description from '../common/description';
@@ -7,7 +7,7 @@ import ListCourses from '../Courses/ListCourses/list-courses';
 
 import { CommonStyles } from '../../globals/styles';
 import { ThemeContext } from '../../contexts/theme-context';
-import { ScreenName, Colors } from '../../globals/constants';
+import { ScreenName } from '../../globals/constants';
 import { PathsContext } from '../../contexts/paths-context';
 
 const PathDetail = (props) => {
@@ -28,30 +28,21 @@ const PathDetail = (props) => {
 
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled >
-            <ListItem containerStyle={styles.listItem} subtitleStyle={theme.textColor}
+            <ListItem containerStyle={theme.background} subtitleStyle={theme.textColor}
                 titleStyle={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}
                 title={path.title}
                 subtitle={`${path.numberOfCourses} courses   ${path.duration}`}
                 leftAvatar={{ source: require("../../../assets/avatar.jpg") }}
             />
             <Description style={theme.textColor} content={path.description} />
-            <View>
             <SectionList sections={section} stickySectionHeadersEnabled
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => <ListCourses data={item} theme={theme} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />}
-                renderSectionHeader={({ section: { title } }) => <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{title}</Text>}
+                renderSectionHeader={({ section: { title } }) => <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, theme.background]}>{title}</Text>}
                 ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
             />
-            </View>
-            
         </ScrollView>
     )
 }
 
 export default PathDetail;
-
-const styles = StyleSheet.create({
-    listItem: {
-        backgroundColor: Colors.transparent
-    }
-});

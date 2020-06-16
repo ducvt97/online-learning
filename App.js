@@ -10,7 +10,6 @@ import StartScreen from './src/components/Others/StartScreen/start-screen';
 import SplashScreen from './src/components/Others/SplashScreen/splash-screen';
 import MainTabNavigation from './src/components/MainTab/main-tab-navigation';
 import CourseDetail from './src/components/CourseDetail/course-detail';
-import Theme from './src/components/AccountManagement/Setting/Theme/theme';
 import AuthorDetail from './src/components/AuthorDetail/author-detail';
 
 import { ScreenName, ScreenTitle } from './src/globals/constants';
@@ -21,6 +20,7 @@ import { SearchProvider } from './src/contexts/search-context';
 import { AuthorsProvider } from './src/contexts/authors-context';
 import { PathsProvider } from './src/contexts/paths-context';
 import PathDetail from './src/components/PathDetail/path-detail';
+import { AccountsProvider } from './src/contexts/accounts-context';
 
 const MainStack = createStackNavigator();
 
@@ -42,27 +42,28 @@ const MainNavigation = () => {
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.authorDetail} component={AuthorDetail} options={{ title: ScreenTitle.authorDetail }} />
             <MainStack.Screen name={ScreenName.pathDetail} component={PathDetail} options={{ title: ScreenTitle.pathDetail }} />
-            <MainStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
         </MainStack.Navigator>
     )
 }
 
 export default function App() {
     return (
-        <AuthenticationProvider>
-            <ThemeProvider>
-                <CoursesProvider>
-                    <SearchProvider>
-                        <AuthorsProvider>
-                            <PathsProvider>
-                                <NavigationContainer>
-                                    <MainNavigation />
-                                </NavigationContainer>
-                            </PathsProvider>
-                        </AuthorsProvider>
-                    </SearchProvider>
-                </CoursesProvider>
-            </ThemeProvider>
-        </AuthenticationProvider>
+        <AccountsProvider>
+            <AuthenticationProvider>
+                <ThemeProvider>
+                    <CoursesProvider>
+                        <SearchProvider>
+                            <AuthorsProvider>
+                                <PathsProvider>
+                                    <NavigationContainer>
+                                        <MainNavigation />
+                                    </NavigationContainer>
+                                </PathsProvider>
+                            </AuthorsProvider>
+                        </SearchProvider>
+                    </CoursesProvider>
+                </ThemeProvider>
+            </AuthenticationProvider>
+        </AccountsProvider>
     );
 }

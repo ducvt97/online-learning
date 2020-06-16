@@ -6,13 +6,15 @@ import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { verifyPassword } from '../../../core/services/authentication-services';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { AuthenticationContext } from '../../../contexts/authentication-context';
 
 const VerifyPassword = (props) => {
     const [password, setPassword] = useState("");
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
     const [status, setStatus] = useState(null);
 
-    const {theme} = useContext(ThemeContext)
+    const {theme} = useContext(ThemeContext);
+    const {authentication} = useContext(AuthenticationContext);
 
     useEffect(() => {
         if (status && status.status === 200) {
@@ -32,7 +34,7 @@ const VerifyPassword = (props) => {
         if (password === "")
             setShouldDisplayValidationText(true);
         else
-            setStatus(verifyPassword(password));
+            setStatus(verifyPassword(authentication.user, password));
     }
 
     return (

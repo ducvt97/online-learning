@@ -16,9 +16,13 @@ const InfoEditable = (props) => {
         setDraftText(draftText => text);
     }
 
-    const onPressSaveButton = () => {
-        setIsEditing(isEditing => !isEditing);
-        setText(text => draftText);
+    const onPressSaveButton = (onSave) => {
+        const status = onSave(draftText);
+        if (status.status === 200) {
+            setIsEditing(isEditing => !isEditing);
+            setText(text => draftText);
+        }
+        alert(status.message);
     }
 
     const onPressCancelButton = () => {
@@ -34,7 +38,7 @@ const InfoEditable = (props) => {
         <View style={[props.style, styles.container]}>
             <Input multiline autoFocus value={draftText} containerStyle={styles.input} inputStyle={theme ? theme.titleColor : null} onChangeText={(text) => onChangetext(text)} />
             <View style={[styles.row, styles.buttonGroup]}>
-                <Icon name="save" color={Colors.gainsboro} containerStyle={styles.button} onPress={() => onPressSaveButton()} />
+                <Icon name="save" color={Colors.gainsboro} containerStyle={styles.button} onPress={() => onPressSaveButton(props.onSave)} />
                 <Icon name="cancel" color={Colors.gainsboro} containerStyle={styles.button} onPress={() => onPressCancelButton()} />
             </View>
             
