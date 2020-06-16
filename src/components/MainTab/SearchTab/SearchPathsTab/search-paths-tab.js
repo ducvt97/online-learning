@@ -8,6 +8,7 @@ import NotFoundView from '../NotFoundView/not-found-view';
 import { CommonStyles } from '../../../../globals/styles';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { SearchContext } from '../../../../contexts/search-context';
+import { ScreenName } from '../../../../globals/constants';
 
 const SearchPathsTab = (props) => {
     const {theme} = useContext(ThemeContext);
@@ -21,7 +22,7 @@ const SearchPathsTab = (props) => {
         <View style={[CommonStyles.generalContainer, theme.background]}>
             {props.data.length > 0 ? <SectionHeader title={props.data.length + " Results"} titleStyle={theme.titleColor} />
                 : <NotFoundView theme={theme} showIcon subtitle={`We couldn't find any matches for "${searches.currentSearchText}"`} />}
-            <ListCourses data={props.data} theme={theme} screenName="" onPressItem={onPressListItem} />
+            <ListCourses data={props.data} theme={theme} screenName={ScreenName.pathDetail} onPressItem={onPressListItem} />
         </View>
     )
 }

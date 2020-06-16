@@ -55,7 +55,7 @@ const SearchAllTab = (props) => {
         : item.type === 1 ?
             <ListCourses screenName={ScreenName.courseDetail} data={item.data} theme={theme} onPressItem={onPressListItem} />
         : item.type === 2 ?
-            <ListCourses data={item.data} theme={theme} onPressItem={onPressListItem} />
+            <ListCourses data={item.data} screenName={ScreenName.pathDetail} theme={theme} onPressItem={onPressListItem} />
         : item.type === 3 ?
             <AuthorsList screenName={ScreenName.authorDetail} data={item.data} onPressItem={onPressListItem} />
         : null;

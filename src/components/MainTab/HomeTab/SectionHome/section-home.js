@@ -9,10 +9,12 @@ import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { CoursesContext } from '../../../../contexts/courses-context';
 import { getBookmarkedCourses } from '../../../../core/services/courses-services';
+import { PathsContext } from '../../../../contexts/paths-context';
 
 const SectionHome = (props) => {
     const {theme} = useContext(ThemeContext);
     const {courses} = useContext(CoursesContext);
+    const {paths} = useContext(PathsContext);
 
     const section = [
         {
@@ -21,7 +23,7 @@ const SectionHome = (props) => {
         },
         {
             title: "My Paths",
-            data: [{ type: 2, data: []}]
+            data: [{ type: 2, data: paths}]
         },
         {
             title: "My channels",
@@ -42,7 +44,7 @@ const SectionHome = (props) => {
             <ListCoursesHorizontal data={item.data} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />
             : <ListEmptyView theme={theme} icon={{name: "school", size: 30}} content="Start learning to improve your skills." />
         : item.type === 2 ? item.data.length > 0 ?
-            <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />
+            <ListCoursesHorizontal data={item.data} screenName={ScreenName.pathDetail} onPressItem={onPressListItem} />
             : <ListEmptyView theme={theme} icon={{name: "extension", size: 30}} content="Use paths to have an overview in a field." />
         : item.type === 3 ? item.data.length > 0 ?
             <ListCoursesHorizontal data={item.data} onPressItem={onPressListCoursesItem} />

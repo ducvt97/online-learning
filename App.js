@@ -19,6 +19,8 @@ import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
 import { CoursesProvider } from './src/contexts/courses-context';
 import { SearchProvider } from './src/contexts/search-context';
 import { AuthorsProvider } from './src/contexts/authors-context';
+import { PathsProvider } from './src/contexts/paths-context';
+import PathDetail from './src/components/PathDetail/path-detail';
 
 const MainStack = createStackNavigator();
 
@@ -39,6 +41,7 @@ const MainNavigation = () => {
             <MainStack.Screen name={ScreenName.mainTab} component={MainTabNavigation} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.authorDetail} component={AuthorDetail} options={{ title: ScreenTitle.authorDetail }} />
+            <MainStack.Screen name={ScreenName.pathDetail} component={PathDetail} options={{ title: ScreenTitle.pathDetail }} />
             <MainStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
         </MainStack.Navigator>
     )
@@ -51,9 +54,11 @@ export default function App() {
                 <CoursesProvider>
                     <SearchProvider>
                         <AuthorsProvider>
-                            <NavigationContainer>
-                                <MainNavigation />
-                            </NavigationContainer>
+                            <PathsProvider>
+                                <NavigationContainer>
+                                    <MainNavigation />
+                                </NavigationContainer>
+                            </PathsProvider>
                         </AuthorsProvider>
                     </SearchProvider>
                 </CoursesProvider>

@@ -21,7 +21,7 @@ const PopularSkills = (props) => {
                 } 
             />
             <ScrollView horizontal={true}>
-                <FlatList style={styles.listContainer}  data={topics}
+                <FlatList style={styles.listContainer}  data={topics} scrollEnabled={false}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={Math.ceil(topics.length / 2)}
                     renderItem={({item}) => 

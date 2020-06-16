@@ -9,10 +9,12 @@ import ListCoursesHorizontal from '../../../Courses/ListCoursesHorizontal/list-c
 import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { AuthorsContext } from '../../../../contexts/authors-context';
+import { PathsContext } from '../../../../contexts/paths-context';
 
 const SectionBrowse = (props) => {
     const {theme} = useContext(ThemeContext);
     const {authors} = useContext(AuthorsContext);
+    const {paths} = useContext(PathsContext);
 
     const section = [
         {
@@ -25,7 +27,7 @@ const SectionBrowse = (props) => {
         },
         {
             title: "Paths",
-            data: [{ type: 2, data: [] }]
+            data: [{ type: 2, data: paths }]
         },
         {
             title: "Top Authors",
@@ -39,7 +41,7 @@ const SectionBrowse = (props) => {
 
     const renderItem = (item) => {
         return item.type === 1 ? <PopularSkills data={item.data} />
-            : item.type === 2 ? <ListCoursesHorizontal data={item.data} onPressItem={onPressListItem} />
+            : item.type === 2 ? <ListCoursesHorizontal data={item.data} screenName={ScreenName.pathDetail} onPressItem={onPressListItem} />
             : item.type === 3 ? <TopAuthors data={item.data} screenName={ScreenName.authorDetail} onPressItem={onPressListItem} />
             : null;
     }
