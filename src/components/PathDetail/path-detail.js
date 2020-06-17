@@ -32,7 +32,7 @@ const PathDetail = (props) => {
                 titleStyle={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}
                 title={path.title}
                 subtitle={`${path.numberOfCourses} courses   ${path.duration}`}
-                leftAvatar={{ source: require("../../../assets/avatar.jpg") }}
+                leftAvatar={{ source: path.image }}
             />
             <Description style={theme.textColor} content={path.description} />
             <SectionList sections={section} stickySectionHeadersEnabled

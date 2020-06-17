@@ -6,6 +6,7 @@ export const pathsData = [
         title: "Angular",
         numberOfCourses: 14,
         duration: "53 hours",
+        image: require("../../assets/images/paths/1.png"),
         description: "Angular is a complete JavaScript framework for creating dynamic and interactive applications in HTML. Aside from " +
             "being one of the hottest frameworks on the web, Angular is easy to learn yet powerful enough to help you develop complex " +
             "single-page web applications. This path includes content covering Angular 2 and beyond. For the original version, see " +
@@ -22,6 +23,7 @@ export const pathsData = [
         title: "React",
         numberOfCourses: 12,
         duration: "42 hours",
+        image: require("../../assets/images/paths/2.png"),
         description: "React is a JavaScript library, developed in 2013 by Jordan Walke of Facebook. You'll find React is both very " +
             "popular (it's the 5th most starred JS library on Github) and used on major sites including Facebook, Netflix, and Khan " +
             "Academy. You'll love the flexibility of using React with your favorite web technologies (except for jQuery!), and this " +
@@ -39,6 +41,7 @@ export const pathsData = [
         title: "Node.js",
         numberOfCourses: 11,
         duration: "31 hours",
+        image: require("../../assets/images/paths/3.png"),
         description: "Node.js is a JavaScript runtime that uses a non-blocking I/O model that makes it lightweight, efficient and " +
             "very popular among JavaScript developers who also need to write server-side code. If you need any proof that Node.js " +
             "can help scale your application, look no further than examples like Netflix, Paypal and Uber, which are currently using " +

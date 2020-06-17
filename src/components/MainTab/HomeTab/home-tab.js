@@ -6,16 +6,18 @@ import SectionHome from './SectionHome/section-home';
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName, Colors } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { AuthenticationContext } from '../../../contexts/authentication-context';
 
 const HomeTab = (props) => {
     const {theme} = useContext(ThemeContext);
+    const {authentication} = useContext(AuthenticationContext);
 
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
             headerLeft: () => <Icon name="settings" color={theme.tintColor} size={30} containerStyle={styles.headerButton} 
                 onPress={()=> {props.navigation.navigate(ScreenName.setting)}}
             />,
-            headerRight: () => <Avatar rounded source={require("../../../../assets/avatar.jpg")} size="small" 
+            headerRight: () => <Avatar rounded source={authentication.user.image} size="small"
                 containerStyle={styles.headerButton} onPress={() => props.navigation.navigate(ScreenName.profile)}
             />
         });

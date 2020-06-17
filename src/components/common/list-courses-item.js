@@ -12,7 +12,7 @@ const ListCoursesItem = (props) => {
     return (
         <View style={props.style}>
             <TouchableOpacity style={styles.container} onPress={props.onPress} activeOpacity={props.noActiveOpacity ? 1 : 0.4}>
-                <Image style={styles.image} source={require("../../../assets/react.png")} />
+                <Image style={[styles.image, {backgroundColor: theme.tintColor}]} source={data.image} />
                 <View style={styles.descriptionContainer}>
                     <Text style={[theme ? theme.titleColor: {}, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
                     {data.author ? <Text style={theme ? theme.textColor : {}}>{data.author}</Text> : null}

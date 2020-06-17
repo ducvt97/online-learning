@@ -18,13 +18,13 @@ const ContentsTab = (props) => {
         ])
     }
 
-    const renderSectionHeader = (title, duration, downloaded, theme) => {
+    const renderSectionHeader = (section, theme) => {
         return (
             <View style={[theme.background, styles.container]}>
                 <View style={[styles.sectionHeader, CommonStyles.shortMarginVertical]}>
-                    <ListCoursesItem style={[{flex: 4}, theme.background]} theme={theme} noActiveOpacity title={title} data={{title: title, duration: duration}}  />
+                    <ListCoursesItem style={[{flex: 4}, theme.background]} theme={theme} noActiveOpacity data={section}  />
                     <View style={[styles.shortMarginLeft, {flexDirection: "row", flex: 1}]}>
-                        {downloaded ? <Icon name="arrow-circle-down" type="font-awesome" containerStyle={styles.shortMarginLeft} color={theme.tintColor}/> : null}
+                        {section.downloaded ? <Icon name="arrow-circle-down" type="font-awesome" containerStyle={styles.shortMarginLeft} color={theme.tintColor}/> : null}
                         <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig, styles.shortMarginLeft]} 
                             onPress={() => onPressActionButton(title)}>...</Text>
                     </View>
@@ -48,7 +48,7 @@ const ContentsTab = (props) => {
             <SectionList sections={props.data} stickySectionHeadersEnabled
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => renderItem(item, theme)}
-                renderSectionHeader={({ section: { title, duration, downloaded } }) => renderSectionHeader(title, duration, downloaded, theme)}
+                renderSectionHeader={({ section }) => renderSectionHeader(section, theme)}
                 ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
             />
         </ScrollView>

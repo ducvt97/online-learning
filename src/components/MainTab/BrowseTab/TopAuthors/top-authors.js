@@ -11,7 +11,7 @@ const TopAuthors = (props) => {
         <View style={styles.container}>
             <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
                 data={props.data} renderItem={({item}) => 
-                    <AvatarTitle title={item.name} style={styles.item} titleStyle={theme.titleColor} 
+                    <AvatarTitle title={item.name} style={styles.item} titleStyle={theme.titleColor} imageSrc={item.image}
                         onPressItem={props.onPressItem} screenName={props.screenName} itemId={item.id} />}
             />
         </View>

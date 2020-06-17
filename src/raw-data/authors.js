@@ -5,6 +5,7 @@ export const authorsData = [
         organization: "OnlineLearning Author",
         courses: 23,
         followed: false,
+        image: require("../../assets/images/authors/1.jpg"),
         description: "Jim Cooper is a software developer at Onlinelearning, with more than 20 years of software development experience. " +
             "He has a passion for Agile processes, especially lean software development. Jim has been developing production Angular " +
             "apps since before Angular version 1.0. Jim has over 10 years of TDD and pair programming experience which has contributed " +
@@ -22,6 +23,7 @@ export const authorsData = [
         organization: "OnlineLearning Author",
         courses: 18,
         followed: false,
+        image: require("../../assets/images/authors/2.jpg"),
         description: "Samer Buna is a polyglot coder with years of practical experience in designing, implementing, and testing software, " +
             "including web and mobile applications development, API design, functional programming, optimization, system administration, " +
             "databases, and scalability. Samer worked in several industries including real estate, government, education, and publications. " +
@@ -40,6 +42,7 @@ export const authorsData = [
         organization: "OnlineLearning Author",
         courses: 20,
         followed: false,
+        image: require("../../assets/images/authors/3.jpg"),
         description: "Scott Allen has worked on everything from 8-bit embedded devices to large scale web sites during his 15+ years in " +
             "commercial software development. Since 2001, Scott has focused on server-side and web technologies, like ASP.NET, AJAX, " +
             "Windows Workflow, Silverlight, and LINQ. Scott is also a speaker at national conferences like VSLive!, as well as code camps " +

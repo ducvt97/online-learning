@@ -54,7 +54,7 @@ const CourseDetail = (props) => {
             shouldPlay isLooping style={styles.video} useNativeControls
         />
         <ScrollView nestedScrollEnabled>
-            <CourseDetailInfo data={course} />
+            <CourseDetailInfo {...props} data={course} />
             <TopTabBarNavigation theme={theme} contents={course.contents} transcript={course.transcript} />
         </ScrollView>
     </View>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     video: {
-        height: 150
+        height: 200
     },
     backButton: {
         position: "absolute",

@@ -42,7 +42,7 @@ const Profile = (props) => {
     return <ScrollView style={theme.background}>
         <View style={[CommonStyles.generalContainer, theme.background]}>
             <View style={styles.container}>
-                <Avatar rounded showAccessory source={require("../../../../assets/avatar.jpg")} size="xlarge" />
+                <Avatar rounded showAccessory source={user.image} size="xlarge" />
                 <InfoEditable style={CommonStyles.shortMarginVertical} big={true} text={user.fullName} titleStyle={theme.titleColor} 
                     tintColor={theme.tintColor} onSave={changeFullName} />
                 <View style={[CommonStyles.shortMarginVertical, styles.rowContainer]}>

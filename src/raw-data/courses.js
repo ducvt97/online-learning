@@ -3,12 +3,14 @@ export const coursesData = [
         id: 1,
         title: "Angular Best Practices",
         author: "Jim Cooper",
+        authorId: 1,
         level: "Intermediate",
         date: "Apr 20 2020",
         duration: "2h",
         rating: 4.5,
         bookmarked: false,
         downloaded: false,
+        image: require("../../assets/images/courses/1.png"),
         description: "It's easy to create simple application in Angular, but once you start building larger, more complex applications, " +
             "you can quickly run into legibility, scalability, and performance issues if you're not careful. In this course, you'll learn " +
             "best practices in Angular. First, you'll discover the Angular project and folder organization. Next, you'll explore " +
@@ -21,6 +23,7 @@ export const coursesData = [
                 title: "Course Overview",
                 duration: "1:30",
                 downloaded: true,
+                image: require("../../assets/images/courses/1.png"),
                 data: [
                     {
                         title: "Course Overview",
@@ -32,6 +35,7 @@ export const coursesData = [
                 title: "Getting Started with Angular",
                 duration: "22:03",
                 downloaded: true,
+                image: require("../../assets/images/courses/1.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -63,6 +67,7 @@ export const coursesData = [
                 title: "General Coding Best Practices",
                 duration: "14:47",
                 downloaded: true,
+                image: require("../../assets/images/courses/1.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -94,6 +99,7 @@ export const coursesData = [
                 title: "Angular Module Organization",
                 duration: "12:37",
                 downloaded: true,
+                image: require("../../assets/images/courses/1.png"),
                 data: [
                     {
                         title: "Introduction to Angular module organization",
@@ -121,6 +127,7 @@ export const coursesData = [
                 title: "Angular Components Best Practices",
                 duration: "18:59",
                 downloaded: true,
+                image: require("../../assets/images/courses/1.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -148,6 +155,7 @@ export const coursesData = [
                 title: "Performance Best Practices",
                 duration: "23:27",
                 downloaded: true,
+                image: require("../../assets/images/courses/1.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -246,12 +254,14 @@ export const coursesData = [
         id: 2,
         title: "Advanced React.js",
         author: "Samer Buna",
+        authorId: 2,
         level: "Advanced",
         date: "May 5 2020",
         duration: "3h 55m",
         rating: 4.5,
         bookmarked: false,
         downloaded: false,
+        image: require("../../assets/images/courses/2.png"),
         description: "Have you ever wanted to create full-stack JS applications with React.js? This course covers many advanced topics " +
             "and best practices about React.js. First, you'll learn how to configure and customize full-stack JS environments. Next, " +
             "you'll explore how to work with async data and manage an application state both internally and externally. Additionally, " +
@@ -263,6 +273,7 @@ export const coursesData = [
                 title: "Course Overview",
                 duration: "1:25",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "Course Overview",
@@ -274,6 +285,7 @@ export const coursesData = [
                 title: "Introduction",
                 duration: "5:10",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "Is this course for you?",
@@ -285,6 +297,7 @@ export const coursesData = [
                 title: "Full-stack Javascript with React.js",
                 duration: "59:49",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -320,6 +333,7 @@ export const coursesData = [
                 title: "Working with an Asynchronus API",
                 duration: "33:49",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -351,6 +365,7 @@ export const coursesData = [
                 title: "The Context API and higer order components",
                 duration: "27:30",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "React's Context API",
@@ -382,6 +397,7 @@ export const coursesData = [
                 title: "Subscribing to State",
                 duration: "42:32",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "Upgrading dependencies",
@@ -417,6 +433,7 @@ export const coursesData = [
                 title: "Performance Optimization",
                 duration: "40:46",
                 downloaded: true,
+                image: require("../../assets/images/courses/2.png"),
                 data: [
                     {
                         title: "Understanding shouldComponentUpdate function",
@@ -520,13 +537,15 @@ export const coursesData = [
     {
         id: 3,
         title: "Node.js: Getting started",
-        author: "Paul O'Fallon",
+        author: "Scott Allen",
+        authorId: 3,
         level: "Beginner",
         date: "June 10 2020",
         duration: "3h 29m",
         rating: 5,
         bookmarked: false,
         downloaded: false,
+        image: require("../../assets/images/courses/3.png"),
         description: "Web and Mobile applications depend on back-end services to host their various resources and do most of " +
             "the heavy lifting. Creating these back-endservices is often very difficult, but the Node.js runtime makes it easier " +
             "and more fun. In this course, you'll learn the basic skills you need to create scalable back-end services with Node.js. " +
@@ -539,6 +558,7 @@ export const coursesData = [
                 title: "Course Overview",
                 duration: "1:41",
                 downloaded: true,
+                image: require("../../assets/images/courses/3.png"),
                 data: [
                     {
                         title: "Course Overview",
@@ -550,6 +570,7 @@ export const coursesData = [
                 title: "Introduction",
                 duration: "25:22",
                 downloaded: true,
+                image: require("../../assets/images/courses/3.png"),
                 data: [
                     {
                         title: "Course Introduction",
@@ -573,6 +594,7 @@ export const coursesData = [
                 title: "Getting started with Node",
                 duration: "32:47",
                 downloaded: true,
+                image: require("../../assets/images/courses/3.png"),
                 data: [
                     {
                         title: "TAB and Underscore",
@@ -604,6 +626,7 @@ export const coursesData = [
                 title: "Modern Javascript",
                 duration: "25:30",
                 downloaded: true,
+                image: require("../../assets/images/courses/3.png"),
                 data: [
                     {
                         title: "EcmaScript and TC39",
@@ -639,6 +662,7 @@ export const coursesData = [
                 title: "Modules and Concurrency",
                 duration: "40:04",
                 downloaded: true,
+                image: require("../../assets/images/courses/3.png"),
                 data: [
                     {
                         title: "Introduction",
@@ -682,6 +706,7 @@ export const coursesData = [
                 title: "Working with Web Servers",
                 duration: "22:15",
                 downloaded: true,
+                image: require("../../assets/images/courses/3.png"),
                 data: [
                     {
                         title: "Hello World... The Node's version",

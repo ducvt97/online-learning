@@ -31,7 +31,7 @@ const AuthorDetail = (props) => {
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled >
             <View style={styles.container}>
-                <Avatar rounded source={require("../../../assets/avatar.jpg")} size="xlarge" />
+                <Avatar rounded source={author.image} size="xlarge" />
                 <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>{author.name}</Text>
                 <Text style={[theme.textColor, CommonStyles.fontSizeAverage]}>{author.organization}</Text>
                 {followed ? <Button type="outline" title="Unfollow" containerStyle={CommonStyles.shortMarginVertical} buttonStyle={styles.button} onPress={onPressFollow} />

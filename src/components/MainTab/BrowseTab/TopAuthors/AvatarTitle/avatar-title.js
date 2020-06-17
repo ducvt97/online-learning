@@ -8,7 +8,7 @@ const AvatarTitle = (props) => {
     return (
         <View style={[props.style, styles.container]}>
             <TouchableOpacity onPress={() => props.onPressItem(props.screenName, props.itemId)}>
-                <Avatar rounded source={require("../../../../../../assets/avatar.jpg")} size="large" />
+                <Avatar rounded source={props.imageSrc} size="large" />
                 <Text style={[props.titleStyle, CommonStyles.fontSizeAverage, styles.title]}>{props.title}</Text>
             </TouchableOpacity>
         </View>

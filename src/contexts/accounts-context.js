@@ -7,6 +7,7 @@ const createNewAccount = (id, username, email, fullName, password) => {
         password: password,
         email: email,
         fullName: fullName,
+        image: require("../../assets/images/avatar/empty.jpg"),
         activity: {
             activeDays: 1,
             activeTimeOfDay: "10:00 AM",
@@ -21,6 +22,7 @@ const accountsData = [{
     password: "123456",
     email: "admin@mail.com",
     fullName: "Administrator",
+    image: require("../../assets/images/avatar/1.jpg"),
     activity: {
         activeDays: 10,
         activeTimeOfDay: "4:00 PM",

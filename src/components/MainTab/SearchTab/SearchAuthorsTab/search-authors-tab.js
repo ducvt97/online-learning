@@ -23,7 +23,7 @@ const SearchAuthorsTab = (props) => {
             titleStyle={[CommonStyles.fontWeightBold, theme.titleColor]}
             title={item.name} subtitle={item.courses + " courses"}
             onPress={() => onPressListItem(ScreenName.authorDetail, item.id)}
-            leftAvatar={{ source: require("../../../../../assets/avatar.jpg") }}
+            leftAvatar={{ source: item.image }}
             bottomDivider
         />
     )

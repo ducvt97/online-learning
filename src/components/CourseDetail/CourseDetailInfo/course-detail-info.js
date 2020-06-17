@@ -7,12 +7,15 @@ import Description from '../../common/description';
 import { CommonStyles } from '../../../globals/styles';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { CoursesContext } from '../../../contexts/courses-context';
-import { Colors } from '../../../globals/constants';
+import { AuthorsContext } from '../../../contexts/authors-context';
+import { Colors, ScreenName } from '../../../globals/constants';
 
 const CourseDetailInfo = (props) => {
-    const course = props.data;
     const {theme} = useContext(ThemeContext);
     const {toggleBookmarkCourse, toggleDownloadCourse} = useContext(CoursesContext);
+    const {getAuthorById} = useContext(AuthorsContext);
+    const course = props.data;
+    const author = getAuthorById(course.authorId);
     const [bookmarked, setBookmarked] = useState(course.bookmarked);
     const [downloaded, setDownloaded] = useState(course.downloaded);
 
@@ -30,8 +33,8 @@ const CourseDetailInfo = (props) => {
         <View style={[CommonStyles.generalContainer, theme.background]}>
             <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{course.title}</Text>
             <ListItem containerStyle={[styles.authorButton, theme.navigationHeader, CommonStyles.shortMarginVertical]}
-                leftAvatar={{ source: require("../../../../assets/avatar.jpg") }}
-                title={course.author} titleStyle={theme.titleColor}
+                leftAvatar={{ source: author.image }} title={course.author} titleStyle={theme.titleColor}
+                onPress={() => props.navigation.navigate(ScreenName.authorDetail, { itemId: author.id })}
             />
             <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
                 <Text style={theme.textColor}>
