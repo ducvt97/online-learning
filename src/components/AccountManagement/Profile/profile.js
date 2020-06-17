@@ -18,7 +18,6 @@ const Profile = (props) => {
 
     useEffect(() => {
         setCurrentUser(authentication.user);
-        console.log(authentication.user)
     }, [{...authentication}])
 
     const changeFullName = (newFullName) => {
