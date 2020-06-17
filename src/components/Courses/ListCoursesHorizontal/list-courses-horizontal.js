@@ -9,7 +9,8 @@ const ListCoursesHorizontal = (props) => {
             <FlatList style={props.style} horizontal={true} data={props.data}
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => <CourseBox style={styles.item} data={item} onPress={props.onPressItem} />}
+                renderItem={({item}) => <CourseBox style={styles.item} data={item} navigation={props.navigation} 
+                    onPress={() => props.onPressItem(props.screenName, item.id)} />}
             />
         </View>
     )

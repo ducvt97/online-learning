@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 
-import CommonStyles from '../../globals/styles';
+import { CommonStyles } from '../../globals/styles';
 import { Colors } from '../../globals/constants';
 
 const Description = (props) => {
@@ -13,7 +13,7 @@ const Description = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={[CommonStyles.textColor, styles.text]} numberOfLines={extended ? null : 3}>{props.content}</Text>
+            <Text style={[props.style, styles.text]} numberOfLines={extended ? null : 3}>{props.content}</Text>
             <Text style={[styles.textButton]} onPress={() => onPress()}>{extended ? "Less" : "More"}</Text>
             <Divider style={CommonStyles.divider} />
         </View>

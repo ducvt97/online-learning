@@ -1,39 +1,44 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 
-import { Colors, ScreenName } from '../../../../globals/constants';
+import { ScreenName } from '../../../../globals/constants';
+import { ThemeContext } from '../../../../contexts/theme-context';
+import { SearchContext } from '../../../../contexts/search-context';
 
 const SearchHeader = (props) => {
-    const [searchText, setSearchText] = useState(props.route.params ? props.route.params.searchText : "");
+    const {searches, onSearch, onChangeCurrentSearchText} = useContext(SearchContext);
+    const {theme} = useContext(ThemeContext);
 
     const onChangeText = (text) => {
-        setSearchText(searchText => text);
+        onChangeCurrentSearchText(text);
         if (props.route.name === ScreenName.searchResultsTabNavigation) {
-            props.navigation.navigate(ScreenName.searchResults, {searchText: text});
-        } else {
-            props.navigation.setParams({searchText: searchText});
+            props.navigation.navigate(ScreenName.searchResults, {searchText: searches.currentSearchText});
         }
     }
 
     const onClear = () => {
-        setSearchText(searchText => "");
+        onChangeCurrentSearchText("");
         if (props.route.name === ScreenName.searchResultsTabNavigation) {
-            props.navigation.navigate(ScreenName.searchResults, {searchText: ""});
-        } else{
-            props.navigation.setParams({searchText: searchText});
+            props.navigation.navigate(ScreenName.searchResults);
         }
+    }
+
+    const onSubmitEditing = (text) => {
+        onSearch(text);
+        props.navigation.navigate(ScreenName.searchResultsTabNavigation);
     }
 
     return (
         <View >
-            <SearchBar containerStyle={styles.searchContainer} autoFocus
-                cancelButtonProps={{buttonStyle: styles.buttonCancel, color: Colors.white}}
+            <SearchBar containerStyle={[styles.searchContainer, theme.navigationHeader]} 
+                cancelButtonProps={{buttonStyle: styles.buttonCancel, buttonTextStyle: theme.textColor}}
                 platform="ios" placeholder="Search" showCancel={true}
                 onChangeText={(text) => onChangeText(text)}
                 onCancel={onClear}
                 onClear={onClear}
-                value={searchText}
+                onSubmitEditing={() => onSubmitEditing(searches.currentSearchText)}
+                value={searches.currentSearchText}
             />
         </View>
     )
@@ -45,7 +50,6 @@ const styles = StyleSheet.create({
     searchContainer: {
         paddingHorizontal: 10,
         paddingTop: 30,
-        backgroundColor: Colors.boldGrey
     },
     buttonCancel: {
         marginTop: 10,

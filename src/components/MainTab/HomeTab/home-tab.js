@@ -1,36 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Tile, Icon, Avatar } from 'react-native-elements';
 
 import SectionHome from './SectionHome/section-home';
-import CommonStyles from '../../../globals/styles';
-import HomeData from '../../../raw-data/home';
-import { Colors } from '../../../globals/constants';
-import { ScreenName } from '../../../globals/constants';
-
+import { CommonStyles } from '../../../globals/styles';
+import { ScreenName, Colors } from '../../../globals/constants';
+import { ThemeContext } from '../../../contexts/theme-context';
+import { AuthenticationContext } from '../../../contexts/authentication-context';
 
 const HomeTab = (props) => {
+    const {theme} = useContext(ThemeContext);
+    const {authentication} = useContext(AuthenticationContext);
+
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
-            headerLeft: () => <Icon name="settings" color={Colors.white} size={30} containerStyle={styles.headerButton} 
+            headerLeft: () => <Icon name="settings" color={theme.tintColor} size={30} containerStyle={styles.headerButton} 
                 onPress={()=> {props.navigation.navigate(ScreenName.setting)}}
             />,
-            headerRight: () => <Avatar rounded source={require("../../../../assets/avatar.jpg")} size="small" 
+            headerRight: () => <Avatar rounded source={authentication.user.image} size="small"
                 containerStyle={styles.headerButton} onPress={() => props.navigation.navigate(ScreenName.profile)}
             />
         });
-    }, []);
+    }, [{...theme}]);
 
     return (
-        <ScrollView style={CommonStyles.generalContainer}>
+        <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
             <Tile featured titleNumberOfLines={2}
-                imageSrc={require("../../../../assets/bg.jpg")}
+                imageSrc={require("../../../../assets/images/background/bg.jpg")}
                 title={"Build apps of the future"}
-                titleStyle={[CommonStyles.titleColor, CommonStyles.fontWeightBold]}
+                titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontWeightBold]}
                 containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
                 imageContainerStyle={CommonStyles.imageButtonBig}
             />
-            <SectionHome data={HomeData} navigation={props.navigation} />
+            <SectionHome navigation={props.navigation} />
         </ScrollView>
     )
 }

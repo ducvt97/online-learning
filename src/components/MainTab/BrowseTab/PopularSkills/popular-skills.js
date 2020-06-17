@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, View, FlatList, ScrollView } from 'react-native';
 import { Button, Tile } from 'react-native-elements';
 
-import CommonStyles from '../../../../globals/styles';
+import { CommonStyles } from '../../../../globals/styles';
+import { Colors } from '../../../../globals/constants';
 
 const PopularSkills = (props) => {
     const skills = props.data.skills;
@@ -15,20 +16,21 @@ const PopularSkills = (props) => {
                 showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                 renderItem={({item}) => 
                     <Button title={item} buttonStyle={[CommonStyles.buttonListItem, styles.item]}
-                        titleStyle={[CommonStyles.titleColor, CommonStyles.fontSizeSmall]}
+                        titleStyle={[{color: Colors.light}, CommonStyles.fontSizeSmall]}
                     />
                 } 
             />
             <ScrollView horizontal={true}>
-                <FlatList style={styles.listContainer}  data={topics}
+                <FlatList style={styles.listContainer} data={topics}
+                    showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={Math.ceil(topics.length / 2)}
                     renderItem={({item}) => 
                         <Tile featured title={item}
-                            imageSrc={require("../../../../../assets/conference.jpg")}
+                            imageSrc={require("../../../../../assets/images/background/conference.jpg")}
                             containerStyle={[CommonStyles.imageButtonSmall, styles.item]}
                             imageContainerStyle={CommonStyles.imageButtonSmall}
-                            titleStyle={[CommonStyles.titleColor, CommonStyles.fontSizeAverage]}
+                            titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontSizeAverage]}
                         />
                     }
                 />

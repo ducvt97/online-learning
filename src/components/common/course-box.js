@@ -2,21 +2,21 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 import { Rating } from 'react-native-elements';
 
-import CommonStyles from '../../globals/styles';
+import { CommonStyles } from '../../globals/styles';
 import { Colors } from '../../globals/constants';
 
 const CourseBox = (props) => {
-    data = props.data;
+    const data = props.data;
 
     return (
         <View style={props.style}>
             <TouchableOpacity style={styles.container} onPress={props.onPress}>
-                <Image style={styles.image} source={require("../../../assets/react.png")} />
+                <Image style={[styles.image, {backgroundColor: Colors.dark}]} source={data.image} />
                 <View style={styles.descriptionContainer}>
-                    <Text style={[CommonStyles.titleColor, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
-                    {data.author ? <Text style={[CommonStyles.textColor, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.author}</Text> : null}
-                    {data.course ? <Text style={[CommonStyles.textColor, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.course} courses</Text> : null}
-                    <Text style={[CommonStyles.textColor, CommonStyles.fontSizeSmall]} numberOfLines={1}>
+                    <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
+                    {data.author ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.author}</Text> : null}
+                    {data.course ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.course} courses</Text> : null}
+                    <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>
                         {data.level ? `${data.level} . ` : null}
                         {data.date ? `${data.date} . ` : null}
                         {data.duration ? `${data.duration}` : null}
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 100,
-        resizeMode: 'stretch',
+        resizeMode: "stretch"
     },
     descriptionContainer: {
         flex: 1,

@@ -1,48 +1,74 @@
-import React from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
-import { ListItem, Rating, Divider } from 'react-native-elements';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { ListItem, Rating, Divider, Icon } from 'react-native-elements';
 
-import IconButton from '../../common/icon-button';
 import Description from '../../common/description';
-import ListCourses from '../../Courses/ListCourses/list-courses';
-import CommonStyles from '../../../globals/styles';
-import { Colors } from '../../../globals/constants';
 
+import { CommonStyles } from '../../../globals/styles';
+import { ThemeContext } from '../../../contexts/theme-context';
+import { CoursesContext } from '../../../contexts/courses-context';
+import { AuthorsContext } from '../../../contexts/authors-context';
+import { Colors, ScreenName } from '../../../globals/constants';
 
 const CourseDetailInfo = (props) => {
-    const data = props.data;
+    const {theme} = useContext(ThemeContext);
+    const {toggleBookmarkCourse, toggleDownloadCourse} = useContext(CoursesContext);
+    const {getAuthorById} = useContext(AuthorsContext);
+    const course = props.data;
+    const author = getAuthorById(course.authorId);
+    const [bookmarked, setBookmarked] = useState(course.bookmarked);
+    const [downloaded, setDownloaded] = useState(course.downloaded);
+
+    const onPressBookmark = (courseId) => {
+        toggleBookmarkCourse(courseId);
+        setBookmarked(!bookmarked);
+    }
+
+    const onPressDownload = (courseId) => {
+        toggleDownloadCourse(courseId);
+        setDownloaded(!downloaded);
+    }
+
     return (
-        <ScrollView>
-            <View style={CommonStyles.generalContainer}>
-                <Text style={[CommonStyles.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{data.title}</Text>
-                <ListItem containerStyle={[styles.authorButton, CommonStyles.shortMarginVertical]}
-                    leftAvatar={{ source: require("../../../../assets/avatar.jpg") }}
-                    title={data.author}
-                    titleStyle={CommonStyles.titleColor}
-                />
-                <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
-                    <Text style={CommonStyles.textColor}>{`${data.level} . ${data.date} . ${data.duration}`}</Text>
-                    <Rating readonly style={styles.rating} tintColor={Colors.black} imageSize={15} startingValue={data.rating} fractions={0.75} />
-                </View>
-                <View style={[styles.rowContainer, styles.buttonGroup]}>
-                    <IconButton name="bookmark" title="Bookmark" />
-                    <IconButton name="cast" title="Add to channel" />
-                    <IconButton type="font-awesome" name="download" title="Download" />
-                </View>
-                <Divider style={CommonStyles.divider} />
-                <Description content={data.description} />
-                <View>
-                    <Text style={[CommonStyles.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>Contents</Text>
-                    <ListCourses data={data.contents} />
-                </View>
+        <View style={[CommonStyles.generalContainer, theme.background]}>
+            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{course.title}</Text>
+            <ListItem containerStyle={[styles.authorButton, theme.navigationHeader, CommonStyles.shortMarginVertical]}
+                leftAvatar={{ source: author.image }} title={course.author} titleStyle={theme.titleColor}
+                onPress={() => props.navigation.navigate(ScreenName.authorDetail, { itemId: author.id })}
+            />
+            <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
+                <Text style={theme.textColor}>
+                    {`${course.level} . ${course.date} . ${course.duration}`}
+                </Text>
+                <Rating readonly style={styles.rating} tintColor={theme.backgroundColor} imageSize={15}
+                    startingValue={course.rating} fractions={0.75} />
             </View>
-        </ScrollView>
+            <View style={[styles.rowContainer, styles.buttonGroup]}>
+                <TouchableOpacity style={styles.iconButton} onPress={() => onPressBookmark(course.id)}>
+                    <Icon reverse type={props.type} name="bookmark" color={Colors.dimGrey} reverseColor={Colors.white} />
+                    <Text style={theme.titleColor}>{bookmarked ? "Bookmarked" : "Bookmark"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton}>
+                    <Icon reverse name="cast" color={Colors.dimGrey} reverseColor={Colors.white} />
+                    <Text style={theme.titleColor}>Add to channel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.iconButton} onPress={() => onPressDownload(course.id)}>
+                    <Icon reverse type="font-awesome" name="download" color={Colors.dimGrey} reverseColor={Colors.white} />
+                    <Text style={theme.titleColor}>{course.downloaded ? "Downloaded" : "Download"}</Text>
+                </TouchableOpacity>
+            </View>
+            <Divider style={CommonStyles.divider} />
+            <Description style={theme.textColor} content={course.description} />
+        </View>
     )
 }
 
 export default CourseDetailInfo;
 
 const styles = StyleSheet.create({
+    iconButton: {
+        alignItems: "center"
+    },
     rowContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -52,8 +78,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         maxWidth: 180,
         maxHeight: 40,
-        padding: 2,
-        backgroundColor: Colors.dimGrey
+        padding: 2
     },
     rating: {
         marginLeft: 10
