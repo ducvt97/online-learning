@@ -3,7 +3,7 @@ import { StyleSheet, View, SectionList } from 'react-native';
 
 import ListCoursesHorizontal from '../../../Courses/ListCoursesHorizontal/list-courses-horizontal';
 import SectionHeader from '../../../common/section-header';
-import ListEmptyView from '../../../common/list-empty-view';
+import ListEmptyBox from '../../../common/list-empty-box';
 
 import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
@@ -42,16 +42,16 @@ const SectionHome = (props) => {
     const renderItem = (item) => {
         return item.type === 1 ? item.data.length > 0 ?
             <ListCoursesHorizontal data={item.data} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />
-            : <ListEmptyView theme={theme} icon={{name: "school", size: 30}} content="Start learning to improve your skills." />
+            : <ListEmptyBox theme={theme} icon={{name: "school", size: 30}} content="Start learning to improve your skills." />
         : item.type === 2 ? item.data.length > 0 ?
             <ListCoursesHorizontal data={item.data} screenName={ScreenName.pathDetail} onPressItem={onPressListItem} />
-            : <ListEmptyView theme={theme} icon={{name: "extension", size: 30}} content="Use paths to have an overview in a field." />
+            : <ListEmptyBox theme={theme} icon={{name: "extension", size: 30}} content="Use paths to have an overview in a field." />
         : item.type === 3 ? item.data.length > 0 ?
             <ListCoursesHorizontal data={item.data} onPressItem={onPressListItem} />
-            : <ListEmptyView theme={theme} icon={{name: "cast", size: 30}} content="Use channels to save, organize, and share content to accomplish your learning objectives." />
+            : <ListEmptyBox theme={theme} icon={{name: "cast", size: 30}} content="Use channels to save, organize, and share content to accomplish your learning objectives." />
         : item.type === 4 ? item.data.length > 0 ?
             <ListCoursesHorizontal data={item.data} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />
-            : <ListEmptyView theme={theme} icon={{name: "bookmark", size: 30}} content="Use bookmarks to quickly save courses for later." />
+            : <ListEmptyBox theme={theme} icon={{name: "bookmark", size: 30}} content="Use bookmarks to quickly save courses for later." />
         : null;
     }
 

@@ -1,16 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
+
 import { CommonStyles } from '../../globals/styles';
 
 const ListEmptyView = (props) => {
     const theme = props.theme;
-    const icon = props.icon;
-
     return (
-        <View style={[styles.container, theme ? theme.navigationHeader : {}]}>
-            {icon ? <Icon name={icon.name} type={icon.type} size={icon.size} color={theme ? theme.tintColor : null} /> : null}
-            <Text style={[theme ? theme.textColor : {}, CommonStyles.fontSizeAverage, styles.content]}>{props.content}</Text>
+        <View style={styles.container}>
+            {props.showIcon && <Icon name={props.iconName} type={props.iconType} size={80} color={theme ? theme.tintColor : null} />}
+            <Text style={[theme ? theme.titleColor : {}, styles.text, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{props.title ? props.title : "No results"}</Text>
+            <Text style={[theme ? theme.textColor : {}, styles.text, CommonStyles.fontSizeBig]}>{props.subtitle}</Text>
         </View>
     )
 }
@@ -19,16 +19,14 @@ export default ListEmptyView;
 
 const styles = StyleSheet.create({
     container: {
+        flex: 10,
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 10,
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-        maxHeight: 250,
-        minHeight: 150
+        marginHorizontal: 10
     },
-    content: {
+    text: {
         marginTop: 10,
-        textAlign: "center"
+        textAlign: "center",
+        lineHeight: 20
     }
 });

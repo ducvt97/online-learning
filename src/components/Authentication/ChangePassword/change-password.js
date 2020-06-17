@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import { CommonActions } from '@react-navigation/native';
 
 import { CommonStyles } from '../../../globals/styles';
@@ -13,6 +13,8 @@ const ChangePassword = (props) => {
     const [newPassword, setNewPassword] = useState("");
     const [verifyNewPassword, setVerifyNewPassword] = useState("");
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showVerifyPassword, setShowVerifyPassword] = useState(false);
     const [status, setStatus] = useState(null);
 
     const {authentication, setAuthenticated, setUser} = useContext(AuthenticationContext);
@@ -47,15 +49,21 @@ const ChangePassword = (props) => {
                 const account = getAccountByUsernameOrEmail(props.route.params.email);
                 setStatus(changeAccountPassword(account.id, newPassword));
             }
-        } 
+        }
     }
 
     return <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
         <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>New password</Text>
-        <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setNewPassword(text)} />
+        <View style={styles.inputField}>
+            <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showPassword} onChangeText={text => setNewPassword(text)} />
+            <Icon containerStyle={styles.inputIcon} name={showPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowPassword(!showPassword)} />
+        </View>
         {renderValidationText(newPassword, shouldDisplayValidationText, "New password cannot be empty")}
         <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Verify new password</Text>
-        <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setVerifyNewPassword(text)} />
+        <View style={styles.inputField}>
+            <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showVerifyPassword} onChangeText={text => setVerifyNewPassword(text)} />
+            <Icon containerStyle={styles.inputIcon} name={showVerifyPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowVerifyPassword(!showVerifyPassword)} />
+        </View>
         {renderValidationText(verifyNewPassword, shouldDisplayValidationText, newPassword !== verifyNewPassword ? "Verify new password must match new password" : "Verify new password cannot be empty")}
         {renderChangePasswordStatus(status)}
         <Button title="Change password" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressChangePassword(newPassword, verifyNewPassword)} />
@@ -67,5 +75,14 @@ export default ChangePassword;
 const styles = StyleSheet.create({
     container: {
         paddingTop: 30
+    },
+    inputField: {
+        flexDirection: "row-reverse",
+        alignItems: "center"
+    },
+    inputIcon: {
+        zIndex: 100,
+        position: "absolute",
+        marginRight: 10
     }
 });

@@ -1,16 +1,24 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import ListCourses from '../../Courses/ListCourses/list-courses';
+import ListEmptyView from '../../common/list-empty-view';
 import SectionHeader from '../../common/section-header';
+
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
-import { getDownloadedCourses } from '../../../core/services/courses-services';
+import { CoursesContext } from '../../../contexts/courses-context';
 
 const DownloadTab = (props) => {
     const {theme} = useContext(ThemeContext);
-    const downloadedCourses = getDownloadedCourses();
+    const {removeAllDownloadCourses, getDownloadedCourses} = useContext(CoursesContext);
+    let downloadedCourses = getDownloadedCourses();
+
+    const onPressRightHeaderButton = () => {
+        removeAllDownloadCourses();
+        downloadedCourses = getDownloadedCourses();
+    }
 
     const onPressListItem = (screenName, itemId) => {
         props.navigation.navigate(screenName, {itemId: itemId});
@@ -18,10 +26,12 @@ const DownloadTab = (props) => {
 
     return (
         <View style={[CommonStyles.generalContainer, CommonStyles.flex, theme.background]}>
-            <SectionHeader style={[styles.header, theme.background]} title="Download" titleStyle={theme.titleColor}
-                rightButtonTitle={downloadedCourses.length > 0 ? "Remove all" : null} />
-            {downloadedCourses.length > 0 ? <ListCourses data={downloadedCourses} theme={theme} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />
-                :<Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.header]}>No download course found.</Text>}
+            {downloadedCourses.length > 0 ? <>
+                <SectionHeader style={[styles.header, theme.background]} title="Download" titleStyle={theme.titleColor}
+                    rightButtonTitle={downloadedCourses.length > 0 ? "Remove all" : null} onPressRightButton={onPressRightHeaderButton} />
+                    <ListCourses data={downloadedCourses} theme={theme} screenName={ScreenName.courseDetail} onPressItem={onPressListItem} />
+            </> : <ListEmptyView theme={theme} showIcon iconName="download" iconType="font-awesome" title="No downloads" 
+                subtitle="Courses you download will appear here." />}
         </View>
     )
 }

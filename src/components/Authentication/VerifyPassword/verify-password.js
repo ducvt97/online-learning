@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
@@ -11,6 +11,7 @@ import { AuthenticationContext } from '../../../contexts/authentication-context'
 const VerifyPassword = (props) => {
     const [password, setPassword] = useState("");
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [status, setStatus] = useState(null);
 
     const {theme} = useContext(ThemeContext);
@@ -40,7 +41,10 @@ const VerifyPassword = (props) => {
     return (
         <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
             <Text style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>Enter your old password</Text>
-            <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setPassword(text)} />
+            <View style={styles.inputField}>
+                <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showPassword} onChangeText={text => setPassword(text)} />
+                <Icon containerStyle={styles.inputIcon} name={showPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowPassword(!showPassword)} />
+            </View>
             {renderValidationText(password, shouldDisplayValidationText, "Password cannot be empty")}
             {renderVerifyPasswordStatus(status)}
             <Button title="Verify" buttonStyle={CommonStyles.shortMarginVertical}
@@ -55,5 +59,14 @@ export default VerifyPassword;
 const styles = StyleSheet.create({
     container: {
         paddingTop: 30
+    },
+    inputField: {
+        flexDirection: "row-reverse",
+        alignItems: "center"
+    },
+    inputIcon: {
+        zIndex: 100,
+        position: "absolute",
+        marginRight: 10
     }
 });

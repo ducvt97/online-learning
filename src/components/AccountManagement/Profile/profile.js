@@ -12,7 +12,7 @@ import { AccountsContext } from '../../../contexts/accounts-context';
 
 const Profile = (props) => {
     const {theme} = useContext(ThemeContext);
-    const {authentication, setUser} = useContext(AuthenticationContext);
+    const {authentication, setAuthenticated, setUser} = useContext(AuthenticationContext);
     const {getAccountById, changeAccountFullname, changeAccountEmail} = useContext(AccountsContext);
     const [user, setCurrentUser] = useState(authentication.user);
 
@@ -37,6 +37,12 @@ const Profile = (props) => {
             setUser(account);
         }
         return status;
+    }
+
+    const onPressSignOut = () => {
+        setAuthenticated(false);
+        setUser(null);
+        props.navigation.dispatch(CommonActions.navigate({ name: ScreenName.startScreen }));
     }
 
     return <ScrollView style={theme.background}>
@@ -70,7 +76,7 @@ const Profile = (props) => {
             <Button title="Sign out" type="outline"
                 buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
                 titleStyle={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}
-                onPress={() => props.navigation.dispatch(CommonActions.navigate({ name: ScreenName.startScreen }))}
+                onPress={onPressSignOut}
             />
         </View>
     </ScrollView>

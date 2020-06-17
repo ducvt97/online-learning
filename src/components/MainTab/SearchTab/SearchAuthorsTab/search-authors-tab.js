@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 import SectionHeader from '../../../common/section-header';
-import NotFoundView from '../NotFoundView/not-found-view';
+import ListEmptyView from '../../../common/list-empty-view';
 
 import { CommonStyles } from '../../../../globals/styles';
 import { ThemeContext } from '../../../../contexts/theme-context';
@@ -31,7 +31,7 @@ const SearchAuthorsTab = (props) => {
     return (
         <View style={[CommonStyles.generalContainer, theme.background]}>
             {props.data.length > 0 ? <SectionHeader title={props.data.length + " Results"} titleStyle={theme.titleColor} />
-                : <NotFoundView theme={theme} showIcon subtitle={`We couldn't find any matches for "${searches.currentSearchText}"`} />}
+                : <ListEmptyView theme={theme} showIcon iconName="search" subtitle={`We couldn't find any matches for "${searches.currentSearchText}"`} />}
             <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 data={props.data}

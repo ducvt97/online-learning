@@ -5,6 +5,7 @@ const CoursesContext = React.createContext();
 
 const CoursesProvider = (props) => {
     const [courses, setCourses] = useState(coursesData);
+
     const toggleBookmarkCourse = (courseId) => {
         for (let i = 0; i < courses.length; i++) {
             if (courses[i].id === courseId) {
@@ -24,7 +25,26 @@ const CoursesProvider = (props) => {
             }
         }
     }
-    return <CoursesContext.Provider value={{courses, toggleBookmarkCourse, toggleDownloadCourse}}>
+
+    const removeAllDownloadCourses = () => {
+        const temp = [...courses];
+        temp.forEach(item => {
+            if (item.downloaded)
+                item.downloaded = false;
+        });
+        setCourses(temp);
+    }
+
+    const getDownloadedCourses = () => {
+        const result = [];
+        courses.forEach(course => {
+            if (course.downloaded)
+                result.push(course);
+        });
+        return result;
+    }
+
+    return <CoursesContext.Provider value={{courses, toggleBookmarkCourse, toggleDownloadCourse, removeAllDownloadCourses, getDownloadedCourses}}>
         {props.children}
     </CoursesContext.Provider>
 }

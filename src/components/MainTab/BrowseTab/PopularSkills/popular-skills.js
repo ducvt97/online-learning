@@ -27,7 +27,7 @@ const PopularSkills = (props) => {
                     numColumns={Math.ceil(topics.length / 2)}
                     renderItem={({item}) => 
                         <Tile featured title={item}
-                            imageSrc={require("../../../../../assets/conference.jpg")}
+                            imageSrc={require("../../../../../assets/images/background/conference.jpg")}
                             containerStyle={[CommonStyles.imageButtonSmall, styles.item]}
                             imageContainerStyle={CommonStyles.imageButtonSmall}
                             titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontSizeAverage]}

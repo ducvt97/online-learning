@@ -14,6 +14,7 @@ const Login = (props) => {
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState(null);
     const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const {accounts} = useContext(AccountsContext);
     const {setAuthenticated, setUser} = useContext(AuthenticationContext);
@@ -62,7 +63,10 @@ const Login = (props) => {
             <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setUsername(text)} />
             {renderValidationText(username, shouldDisplayValidationText, "Username cannot be empty")}
             <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Password</Text>
-            <TextInput style={[CommonStyles.input, theme.inputBackground]} secureTextEntry onChangeText={text => setPassword(text)} />
+            <View style={styles.inputField}>
+                <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showPassword} onChangeText={text => setPassword(text)} />
+                <Icon containerStyle={styles.inputIcon} name={showPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowPassword(!showPassword)} />
+            </View>
             {renderValidationText(password, shouldDisplayValidationText, "Password cannot be empty")}
             {renderLoginStatus(status)}
             <Button title="Sign in" buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressLogin(username, password, setAuthenticated, setUser)} />
@@ -80,5 +84,14 @@ const styles = StyleSheet.create({
     },
     headerButton: {
         marginHorizontal: 10
+    },
+    inputField: {
+        flexDirection: "row-reverse",
+        alignItems: "center"
+    },
+    inputIcon: {
+        zIndex: 100,
+        position: "absolute",
+        marginRight: 10
     }
 });

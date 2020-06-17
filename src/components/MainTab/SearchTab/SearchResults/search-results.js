@@ -7,7 +7,7 @@ import { Colors, ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { SearchContext } from '../../../../contexts/search-context';
 import SectionHeader from '../../../common/section-header';
-import NotFoundView from '../NotFoundView/not-found-view';
+import ListEmptyView from '../../../common/list-empty-view';
 
 const SearchResults = (props) => {
     
@@ -37,7 +37,7 @@ const SearchResults = (props) => {
         <View style={[CommonStyles.generalContainer, theme.background]}>
             {searches.currentSearchText === "" ? searches.recentSearches.length > 0 ?
                 <SectionHeader style={theme.background} title="Recent searches" titleStyle={theme.titleColor} rightButtonTitle="Clear" onPressRightButton={clearRecentSearches} />
-                : <NotFoundView theme={theme} title="Search by title, author, or subject." subtitle="Over 7000 courses at your fingertips." />
+                : <ListEmptyView theme={theme} title="Search by title, author, or subject." subtitle="Over 7000 courses at your fingertips." />
             : null}
             <FlatList
                 keyExtractor={(item, index) => index.toString()}

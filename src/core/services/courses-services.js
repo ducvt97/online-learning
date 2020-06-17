@@ -19,13 +19,3 @@ export const getBookmarkedCourses = () => {
     });
     return result;
 }
-
-export const getDownloadedCourses = () => {
-    const {courses} = useContext(CoursesContext);
-    const result = [];
-    courses.forEach(course => {
-        if (course.downloaded)
-            result.push(course);
-    });
-    return result;
-}

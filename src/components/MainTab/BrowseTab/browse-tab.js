@@ -13,13 +13,13 @@ const BrowseTab = (props) => {
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled>
             <Tile featured title={"NEW RELEASE"}
-                imageSrc={require("../../../../assets/bg.jpg")}
+                imageSrc={require("../../../../assets/images/background/bg.jpg")}
                 titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
                 containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
                 imageContainerStyle={CommonStyles.imageButtonBig}
             />
             <Tile featured title={"RECOMMENDED FOR YOU"}
-                imageSrc={require("../../../../assets/bg.jpg")}
+                imageSrc={require("../../../../assets/images/background/bg.jpg")}
                 titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
                 containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
                 imageContainerStyle={CommonStyles.imageButtonBig}

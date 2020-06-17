@@ -26,7 +26,7 @@ const HomeTab = (props) => {
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
             <Tile featured titleNumberOfLines={2}
-                imageSrc={require("../../../../assets/bg.jpg")}
+                imageSrc={require("../../../../assets/images/background/bg.jpg")}
                 title={"Build apps of the future"}
                 titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontWeightBold]}
                 containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
