@@ -49,12 +49,10 @@ const Profile = (props) => {
         <View style={[CommonStyles.generalContainer, theme.background]}>
             <View style={styles.container}>
                 <Avatar rounded showAccessory source={user.image} size="xlarge" />
-                <InfoEditable style={CommonStyles.shortMarginVertical} big={true} text={user.fullName} titleStyle={theme.titleColor} 
-                    tintColor={theme.tintColor} onSave={changeFullName} />
+                <InfoEditable style={CommonStyles.shortMarginVertical} big={true} text={user.fullName} theme={theme} onSave={changeFullName} />
                 <View style={[CommonStyles.shortMarginVertical, styles.rowContainer]}>
                     <Icon name="mail" color={theme.tintColor} />
-                    <InfoEditable style={CommonStyles.shortMarginVertical} text={user.email} titleStyle={theme.titleColor} 
-                        tintColor={theme.tintColor} onSave={changeEmail} />
+                    <InfoEditable style={CommonStyles.shortMarginVertical} text={user.email} theme={theme} onSave={changeEmail} />
                 </View>
             </View>
             <View style={[CommonStyles.shortMarginVertical, styles.rowContainer]}>

@@ -36,18 +36,18 @@ const InfoEditable = (props) => {
 
     return isEditing ? 
         <View style={[props.style, styles.container]}>
-            <Input multiline autoFocus value={draftText} containerStyle={styles.input} inputStyle={theme ? theme.titleColor : null} onChangeText={(text) => onChangetext(text)} />
+            <Input multiline autoFocus value={draftText} numberOfLines={1} containerStyle={styles.input} inputStyle={theme ? theme.titleColor : null} onChangeText={(text) => onChangetext(text)} />
             <View style={[styles.row, styles.buttonGroup]}>
-                <Icon name="save" color={props.tintColor} containerStyle={styles.button} onPress={() => onPressSaveButton(props.onSave)} />
-                <Icon name="cancel" color={props.tintColor} containerStyle={styles.button} onPress={() => onPressCancelButton()} />
+                <Icon name="save" color={theme ? theme.tintColor : null} containerStyle={styles.button} onPress={() => onPressSaveButton(props.onSave)} />
+                <Icon name="cancel" color={theme ? theme.tintColor : null} containerStyle={styles.button} onPress={() => onPressCancelButton()} />
             </View>
             
         </View>
         : <View style={[props.style, styles.container, styles.row]}>
-            {props.big ? <Text h3 style={props.titleStyle}>{text}</Text>
-                : <Text style={[props.titleStyle, CommonStyles.fontSizeBig]}>{text}</Text>
+            {props.big ? <Text h3 style={theme ? theme.titleColor : {}}>{text}</Text>
+                : <Text numberOfLines={1} style={[theme ? theme.titleColor : {}, CommonStyles.fontSizeBig]}>{text}</Text>
             }
-            <Icon name="edit" color={props.tintColor} containerStyle={styles.button} onPress={() => onPressEditButton()} />
+            <Icon name="edit" color={theme ? theme.tintColor : null} containerStyle={styles.button} onPress={() => onPressEditButton()} />
         </View>
 }
 
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 250,
+        
     },
     descriptionInput: {
         maxWidth: 250,
