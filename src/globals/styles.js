@@ -73,6 +73,11 @@ export const CommonStyles = StyleSheet.create({
         marginVertical: 10,
         backgroundColor: Colors.dimGrey
     },
+    inputIcon: {
+        zIndex: 100,
+        position: "absolute",
+        marginRight: 10
+    },
     // Style for validation text
     validationText: {
         color: Colors.red,
@@ -108,5 +113,9 @@ export const textStyles = {
     },
     fontSizeBig: {
         fontSize: 20
+    },
+    validationText: {
+        color: Colors.red,
+        marginBottom: 5
     }
 }

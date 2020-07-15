@@ -1,5 +1,22 @@
 import { useContext } from "react";
+import Axios from 'axios';
 import { CoursesContext } from "../../contexts/courses-context";
+
+export class CoursesServices {
+    requestUrl = "course";
+
+    static getCourseInfo = (courseId) => {
+        Axios.get(`${requestUrl}/get-course-info`, {
+            params: {
+               id:  courseId
+            }
+        })
+    }
+
+    handleError = (error) => {
+        console.log(`Course service error: ${error}`);
+    }
+}
 
 export const getCourseById = (courseId) => {
     const {courses} = useContext(CoursesContext);

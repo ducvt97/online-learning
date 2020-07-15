@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeTab from './home-tab';
 import Setting from '../../AccountManagement/Setting/setting';
 import Profile from '../../AccountManagement/Profile/profile';
-import VerifyPassword from '../../Authentication/VerifyPassword/verify-password';
+import ChangeEmail from '../../Authentication/ChangeEmail/change-email';
 import Login from '../../Authentication/Login/login';
 import Theme from '../../AccountManagement/Setting/Theme/theme';
 
@@ -15,10 +15,11 @@ import { ThemeContext } from '../../../contexts/theme-context';
 const HomeTabStack = createStackNavigator();
 
 const HomeTabNavigation = (props) => {
-    const {authentication} = useContext(AuthenticationContext);
+    const authContext = useContext(AuthenticationContext);
     const {theme} = useContext(ThemeContext);
+
     return (
-        <HomeTabStack.Navigator initialRouteName={authentication.authenticated ? ScreenName.homeTab : ScreenName.login}
+        <HomeTabStack.Navigator initialRouteName={authContext.state.authenticated ? ScreenName.homeTab : ScreenName.login}
             screenOptions={{ headerStyle: theme.navigationHeader,
                 headerTintColor: theme.tintColor
             }}
@@ -29,7 +30,7 @@ const HomeTabNavigation = (props) => {
             <HomeTabStack.Screen name={ScreenName.homeTab} component={HomeTab} options={{ headerTitle: ScreenTitle.homeTab }} />
             <HomeTabStack.Screen name={ScreenName.setting} component={Setting} options={{ headerTitle: ScreenTitle.setting }} />
             <HomeTabStack.Screen name={ScreenName.profile} component={Profile} options={{ headerTitle: ScreenTitle.profile }} />
-            <HomeTabStack.Screen name={ScreenName.verifyPassword} component={VerifyPassword} />
+            <HomeTabStack.Screen name={ScreenName.changeEmail} component={ChangeEmail} options={{ headerTitle: ScreenTitle.changeEmail }} />
             <HomeTabStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
         </HomeTabStack.Navigator>
     )

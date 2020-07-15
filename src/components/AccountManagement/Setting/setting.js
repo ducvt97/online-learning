@@ -13,13 +13,13 @@ const Setting = (props) => {
     const toggleSwitchStreaming = () => setIsStreamingEnabled(previousState => !previousState);
     const toggleSwitchDownloading = () => setIsDownloadingEnabled(previousState => !previousState);
 
-    const {authentication} = useContext(AuthenticationContext);
+    const authContext = useContext(AuthenticationContext);
     const {theme} = useContext(ThemeContext);
 
     return (
         <View style={[CommonStyles.generalContainer, theme.background]}>
             <ScrollView>
-                {authentication.authenticated ? 
+                {authContext.state.authenticated ? 
                     <View>
                         <ListItem title="Notifications" titleStyle={[theme.titleColor, CommonStyles.fontSizeAverage]}
                         containerStyle={styles.item} chevron

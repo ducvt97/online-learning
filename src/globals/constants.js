@@ -3,8 +3,9 @@ export const ScreenName = {
     splashScreen: "SplashScreen",
     login: "Login",
     forgetPassword: "ForgetPassword",
+    resetPassword: "ResetPassword",
     changePassword: "ChangePassword",
-    verifyPassword: "VerifyPassword",
+    changeEmail: "ChangeEmail",
     register: "Register",
     profile: "Profile",
     setting: "Setting",
@@ -33,8 +34,9 @@ export const ScreenName = {
 export const ScreenTitle = {
     login: "Sign In",
     forgetPassword: "Forget Password",
+    resetPassword: "Reset Password",
     changePassword: "Change Password",
-    verifyPassword: "Verify Password",
+    changeEmail: "Change Email",
     register: "Register",
     profile: "Profile",
     setting: "Setting",
@@ -69,3 +71,10 @@ export const Colors = {
     red: "red",
     green: "green"
 };
+
+export const ActionTypes = {
+    login: "LOGIN",
+    logout: "LOGOUT",
+    updateProfile: "UPDATE_PROFILE",
+    changeEmail: "CHANGE_EMAIL"
+}

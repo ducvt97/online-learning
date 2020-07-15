@@ -8,24 +8,23 @@ import { Colors } from '../../globals/constants';
 const CourseBox = (props) => {
     const data = props.data;
 
-    return (
-        <View style={props.style}>
+    return data ? <View style={props.style}>
             <TouchableOpacity style={styles.container} onPress={props.onPress}>
-                <Image style={[styles.image, {backgroundColor: Colors.dark}]} source={data.image} />
+                <Image style={[styles.image, {backgroundColor: Colors.dark}]} source={{uri: data.courseImage}} />
                 <View style={styles.descriptionContainer}>
-                    <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
-                    {data.author ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.author}</Text> : null}
-                    {data.course ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.course} courses</Text> : null}
+                    <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.courseTitle}</Text>
+                    {data.instructorName ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.instructorName}</Text> : null}
+                    {data.total ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.total} courses</Text> : null}
+                    {data.coursePrice ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.coursePrice} đ</Text> : null}
                     <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>
-                        {data.level ? `${data.level} . ` : null}
                         {data.date ? `${data.date} . ` : null}
                         {data.duration ? `${data.duration}` : null}
                     </Text>
-                    {data.rating ? <Rating readonly tintColor={Colors.dimGrey} imageSize={15} startingValue={data.rating} fractions={0.75} /> : null}
+                    {data.courseAveragePoint ? <Rating readonly tintColor={Colors.dimGrey} imageSize={15} startingValue={data.courseAveragePoint} fractions={0.75} /> : null}
                 </View>
             </TouchableOpacity>
         </View>
-    )
+    : null;
 }
 
 export default CourseBox;
