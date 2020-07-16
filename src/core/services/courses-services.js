@@ -1,38 +1,76 @@
-import { useContext } from "react";
-import Axios from 'axios';
-import { CoursesContext } from "../../contexts/courses-context";
+import axios from 'axios';
+
+const requestUrl = "/course";
 
 export class CoursesServices {
-    requestUrl = "course";
+    static getTopSell = () => {
+        axios.post(`${requestUrl}/top-sell`, {
+            limit: 10,
+            page: 0
+        });
+    }
+
+    static getTopNew = () => {
+        axios.post(`${requestUrl}/top-new`, {
+            limit: 10,
+            page: 0
+        });
+    }
+
+    static getTopRate = () => {
+        axios.post(`${requestUrl}/top-rate`, {
+            limit: 10,
+            page: 0
+        });
+    }
+
+    static getByUserFavoriteCategory = (userId) => {
+        axios.post(`${requestUrl}/courses-user-favorite-categories`, { userId: userId });
+    }
 
     static getCourseInfo = (courseId) => {
-        Axios.get(`${requestUrl}/get-course-info`, {
-            params: {
-               id:  courseId
-            }
-        })
+        axios.get(`${requestUrl}/get-course-info`, { id: courseId });
     }
 
-    handleError = (error) => {
+    static getCourseDetail = (courseId, userId) => {
+        axios.get(`${requestUrl}/get-course-detail/${courseId}/${userId}`);
+    }
+
+    static getCourseDetailWithLesson = (courseId) => {
+        axios.get(`${requestUrl}/get-course-detail/${courseId}`);
+    }
+
+    static getCourseProcess = (courseId) => {
+        axios.get(`${requestUrl}/process-course/${courseId}`);
+    }
+
+    static ratingCourse = (courseId, formalityPoint, contentPoint, presentationPoint, content) => {
+        axios.post(`${requestUrl}/rating-course`, {
+            courseId: courseId,
+            formalityPoint: formalityPoint,
+            contentPoint: contentPoint,
+            presentationPoint: presentationPoint,
+            content: content
+        });
+    }
+
+    static getRating = (courseId) => {
+        axios.get(`${requestUrl}/get-rating/${courseId}`);
+    }
+
+    static reportCourse = (courseId, content, subject) => {
+        axios.post(`${requestUrl}/report-course`, {
+            courseId: courseId,
+            content: content,
+            subject: subject
+        });
+    }
+
+    static search = (keyword) => {
+        axios.post(`${requestUrl}/search`, { keyword: keyword });
+    }
+
+    static handleError = (error) => {
         console.log(`Course service error: ${error}`);
     }
-}
-
-export const getCourseById = (courseId) => {
-    const {courses} = useContext(CoursesContext);
-    for (let i = 0; i < courses.length; i++) {
-        if (courses[i].id === courseId)
-            return courses[i];
-    }
-    return null;
-}
-
-export const getBookmarkedCourses = () => {
-    const {courses} = useContext(CoursesContext);
-    const result = [];
-    courses.forEach(course => {
-        if (course.bookmarked)
-            result.push(course);
-    });
-    return result;
 }

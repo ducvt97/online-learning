@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 const requestUrl = "/user";
-axios.defaults.validateStatus = (status) => {
-    return status >= 200 && status <= 403;
-}
 
 export default class UserServices {
     static login = (email, password) => {

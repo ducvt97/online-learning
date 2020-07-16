@@ -25,6 +25,9 @@ import { PathsProvider } from './src/contexts/paths-context';
 import { AccountsProvider } from './src/contexts/accounts-context';
 
 axios.defaults.baseURL = "https://api.itedu.me";
+axios.defaults.validateStatus = (status) => {
+    return status >= 200 && status <= 403;
+}
 
 const MainStack = createStackNavigator();
 

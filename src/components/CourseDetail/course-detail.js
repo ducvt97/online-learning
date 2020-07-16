@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Video } from 'expo-av';
@@ -10,7 +10,6 @@ import ContentsTab from './ContentsTab/contents-tab';
 import { CommonStyles } from '../../globals/styles';
 import { Colors, ScreenName, ScreenTitle } from '../../globals/constants';
 import { ThemeContext } from '../../contexts/theme-context';
-import { getCourseById } from '../../core/services/courses-services';
 import TranscriptTab from './TranscriptTab/transcript-tab';
 
 const TopTabBar = createMaterialTopTabNavigator();
@@ -42,7 +41,7 @@ const TopTabBarNavigation = (props) => {
 
 const CourseDetail = (props) => {
     const courseId = props.route.params.itemId;
-    const course = getCourseById(courseId);
+    const [course, setCourse] = useState(null);
     
     const {theme} = useContext(ThemeContext);
 
