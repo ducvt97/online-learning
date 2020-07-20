@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const requestUrl = "/category";
 
-export default class InstructorServices {
+export default class CategoryServices {
     static getAll = () => {
         return axios.get(`${requestUrl}/all`);
     }

@@ -8,6 +8,7 @@ import SectionHeader from '../../common/section-header';
 const ListCoursesHorizontal = (props) => {
     const theme = props.theme;
     const [data, setData] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -17,9 +18,11 @@ const ListCoursesHorizontal = (props) => {
                 if (response.status === 200)
                     setData(response.data.payload);
                 else
-                    props.requestDataError(response.data.message);
+                    setErrorMessage(response.data.message);
             })
             .catch(error => {
+                setIsLoading(false);
+                setErrorMessage(error);
                 props.requestDataError(error);
             })
     }, []);
@@ -34,8 +37,10 @@ const ListCoursesHorizontal = (props) => {
                     showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                     renderItem={({item}) => <CourseBox style={styles.item} data={item} navigation={props.navigation} 
                         onPress={() => props.onPressItem(props.screenName, item.id)} />} />
-                : <ListEmptyBox theme={props.theme} icon={{name: props.emptyListIconName, size: 30}} content={props.emptyListTitle} />
-            : <Text style={theme ? theme.titleColor : null}>Error getting data from server.</Text>}
+                : props.emptyListTitle ?
+                    <ListEmptyBox theme={props.theme} icon={{name: props.emptyListIconName, size: 30}} content={props.emptyListTitle} />
+                    : <Text style={theme ? theme.titleColor : null}>Nothing to show</Text>
+            : <Text style={theme ? theme.titleColor : null}>{errorMessage}</Text>}
     </View>
 }
 

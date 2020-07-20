@@ -10,17 +10,20 @@ const CourseBox = (props) => {
 
     return data ? <View style={props.style}>
             <TouchableOpacity style={styles.container} onPress={props.onPress}>
-                <Image style={[styles.image, {backgroundColor: Colors.dark}]} source={{uri: data.courseImage}} />
+                <Image style={[styles.image, {backgroundColor: Colors.dark}]} source={{uri: data.courseImage || data.imageUrl}} />
                 <View style={styles.descriptionContainer}>
-                    <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.courseTitle}</Text>
+                    <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.courseTitle || data.title}</Text>
                     {data.instructorName ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.instructorName}</Text> : null}
-                    {data.total ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.total} courses</Text> : null}
-                    {data.coursePrice ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.coursePrice} đ</Text> : null}
+                    <Text style={[{color: Colors.red}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.coursePrice || data.price} đ</Text>
                     <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>
-                        {data.date ? `${data.date} . ` : null}
-                        {data.duration ? `${data.duration}` : null}
+                        {data.createdAt ? `${new Date(data.createdAt).toDateString()} . ` : null}
+                        {data.totalHours ? `${data.totalHours} hours` : null}
                     </Text>
-                    {data.courseAveragePoint ? <Rating readonly tintColor={Colors.dimGrey} imageSize={15} startingValue={data.courseAveragePoint} fractions={0.75} /> : null}
+                    {data.courseAveragePoint || data.courseAveragePoint === 0 || data.formalityPoint || data.formalityPoint === 0 ?
+                        <Rating readonly tintColor={Colors.dimGrey} imageSize={15} 
+                            startingValue={data.courseAveragePoint ? data.courseAveragePoint : ((data.formalityPoint + data.contentPoint + data.presentationPoint) / 3)}
+                            fractions={0.75} />
+                        : null}
                 </View>
             </TouchableOpacity>
         </View>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet, View, SectionList, Text } from 'react-native';
 
 import ListCourses from '../../../Courses/ListCourses/list-courses';
-import AuthorsList from '../AuthorsList/authors-list';
+import AuthorsList from '../../../ListAuthors/list-authors';
 import SectionHeader from '../../../common/section-header';
 
 import { CommonStyles } from '../../../../globals/styles';

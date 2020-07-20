@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-import { CommonStyles } from '../../../../globals/styles';
-import { Colors } from '../../../../globals/constants';
-import { ThemeContext } from '../../../../contexts/theme-context';
+import { CommonStyles } from '../../globals/styles';
+import { Colors } from '../../globals/constants';
+import { ThemeContext } from '../../contexts/theme-context';
 
-const AuthorsList = (props) => {
+const ListAuthors = (props) => {
     const {theme} = useContext(ThemeContext);
 
     const renderItem = ({ item }) => {
@@ -20,18 +20,16 @@ const AuthorsList = (props) => {
         />
     }
 
-    return (
-        <View style={[props.style, styles.container]}>
-            <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                data={props.data}
-                renderItem={renderItem}
-            />
-        </View>
-    )
+    return <View style={[props.style, styles.container]}>
+        <FlatList
+            keyExtractor={(item, index) => index.toString()}
+            data={props.data}
+            renderItem={renderItem}
+        />
+    </View>
 }
 
-export default AuthorsList;
+export default ListAuthors;
 
 const styles = StyleSheet.create({
     container: {
