@@ -5,6 +5,7 @@ import AvatarTitle from './AvatarTitle/avatar-title';
 import SectionHeader from '../../../common/section-header';
 
 import InstructorServices from '../../../../core/services/instructor-service';
+import { ScreenName } from '../../../../globals/constants';
 
 const TopAuthors = (props) => {
     const theme = props.theme;
@@ -28,14 +29,14 @@ const TopAuthors = (props) => {
             })
     }, []);
 
-    const onPressHeaderRightButton = () => {
-
+    const onPressHeaderRightButton = (data, theme, style) => {
+        props.navigation.navigate(ScreenName.topInstructor, {data: data, theme: theme, style: style})
     }
 
     return <View style={styles.container}>
         <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null}
             rightButtonTitle={data && data.length > 0 ? "See all >" : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
-            onPressRightButton={onPressHeaderRightButton} />
+            onPressRightButton={() => onPressHeaderRightButton(data, theme, styles.list)} />
         {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
             : data ? <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
                 data={data} renderItem={({item}) =>
@@ -58,5 +59,8 @@ const styles = StyleSheet.create({
     },
     indicator: {
         alignItems: "center"
+    },
+    list: {
+        paddingHorizontal: 10
     }
 });

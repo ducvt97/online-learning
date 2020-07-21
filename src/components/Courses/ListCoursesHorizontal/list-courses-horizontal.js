@@ -29,7 +29,8 @@ const ListCoursesHorizontal = (props) => {
 
     return <View style={styles.container}>
         <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null}
-            rightButtonTitle={data && data.length > 0 ? "See all >" : null} rightButtonTitleStyle={theme ? theme.titleColor : null} />
+            rightButtonTitle={data && data.length > 0 ? "See all >" : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
+            onPressRightButton={() => props.onPressHeaderButton(props.headerScreenName, data, theme, styles.list)} />
             {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
             : data ? data.length > 0 ?
                 <FlatList style={props.style} horizontal={true} data={data}
@@ -56,5 +57,8 @@ const styles = StyleSheet.create({
     },
     indicator: {
         alignItems: "center"
+    },
+    list: {
+        paddingHorizontal: 10
     }
 });

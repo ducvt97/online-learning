@@ -14,8 +14,8 @@ import { CoursesServices } from '../../../core/services/courses-services';
 const BrowseTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
-    const onPressListItem = (screenName, itemId) => {
-        props.navigation.navigate(screenName, {itemId: itemId});
+    const onPressHeaderButton = (screenName, data, theme, style) => {
+        props.navigation.navigate(screenName, { data: data, theme: theme, style: style});
     }
 
     return <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled>
@@ -24,20 +24,25 @@ const BrowseTab = (props) => {
             titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
             containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
             imageContainerStyle={CommonStyles.imageButtonBig}
+            onPress={() => props.navigation.navigate(ScreenName.coursesTopNew)}
         />
         <Tile featured title={"RECOMMENDED FOR YOU"}
             imageSrc={require("../../../../assets/images/background/bg.jpg")}
             titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
             containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
             imageContainerStyle={CommonStyles.imageButtonBig}
+            onPress={() => props.navigation.navigate(ScreenName.coursesRecommend)}
         />
         <View style={styles.container}>
             <PopularSkills theme={theme} headerTitle="Popular Skills Categories" />
-            <ListCoursesHorizontal screenName={ScreenName.courseDetail} onPressItem={onPressListItem} theme={theme}
-                requestData={CoursesServices.getTopSell} requestDataError={CoursesServices.handleError} headerTitle="Top Sell" />
-            <ListCoursesHorizontal screenName={ScreenName.courseDetail} onPressItem={onPressListItem} theme={theme}
-                requestData={CoursesServices.getTopRate} requestDataError={CoursesServices.handleError} headerTitle="Top Rate" />
-            <TopAuthors screenName={ScreenName.authorDetail} onPressItem={onPressListItem} theme={theme} headerTitle="Top Instructors" />
+            <ListCoursesHorizontal screenName={ScreenName.courseDetail} navigation={props.navigation} theme={theme}
+                requestData={CoursesServices.getTopSell} requestDataError={CoursesServices.handleError} headerTitle="Top Sell"
+                onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.coursesTopSell} />
+            <ListCoursesHorizontal screenName={ScreenName.courseDetail} navigation={props.navigation} theme={theme}
+                requestData={CoursesServices.getTopRate} requestDataError={CoursesServices.handleError} headerTitle="Top Rate"
+                onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.coursesTopRate} />
+            <TopAuthors screenName={ScreenName.authorDetail} onPressHeaderButton={onPressHeaderButton} theme={theme} 
+                navigation={props.navigation} headerTitle="Top Instructors" />
         </View>
     </ScrollView>
 }
