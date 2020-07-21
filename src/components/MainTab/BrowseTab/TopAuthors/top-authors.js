@@ -29,6 +29,10 @@ const TopAuthors = (props) => {
             })
     }, []);
 
+    const onPressItem = (screenName, itemId) => {
+        props.navigation.navigate(screenName, {itemId: itemId});
+    }
+
     const onPressHeaderRightButton = (data, theme, style) => {
         props.navigation.navigate(ScreenName.topInstructor, {data: data, theme: theme, style: style})
     }
@@ -41,7 +45,7 @@ const TopAuthors = (props) => {
             : data ? <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
                 data={data} renderItem={({item}) =>
                     <AvatarTitle title={item["user.name"]} style={styles.item} titleStyle={theme ? theme.titleColor : null}
-                        imageUrl={item["user.avatar"]} onPressItem={props.onPressItem} screenName={props.screenName} itemId={item.id} />}/>
+                        imageUrl={item["user.avatar"]} onPressItem={() => onPressItem(ScreenName.authorDetail, item.id)} itemId={item.id} />}/>
             : <Text style={theme ? theme.titleColor : null}>{errorMessage}</Text>
         }
     </View>

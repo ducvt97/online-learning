@@ -9,6 +9,7 @@ import ListAuthors from '../../ListAuthors/list-authors';
 
 import { ScreenName, ScreenTitle } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
+import AuthorDetail from '../../AuthorDetail/author-detail';
 
 const BrowseTabStack = createStackNavigator();
 

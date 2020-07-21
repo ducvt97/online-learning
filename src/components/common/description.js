@@ -7,17 +7,18 @@ import { Colors } from '../../globals/constants';
 
 const Description = (props) => {
     const [extended, setExtended] = useState(false);
+
     const onPress = () => {
         setExtended(extended => !extended);
     }
 
-    return (
+    return props.content ?
         <View style={styles.container}>
             <Text style={[props.style, styles.text]} numberOfLines={extended ? null : 3}>{props.content}</Text>
             <Text style={[styles.textButton]} onPress={() => onPress()}>{extended ? "Less" : "More"}</Text>
             <Divider style={CommonStyles.divider} />
         </View>
-    )
+    : null;
 }
 
 export default Description;

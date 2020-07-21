@@ -4,6 +4,7 @@ import { StyleSheet, FlatList, View, ActivityIndicator, Text } from 'react-nativ
 import CourseBox from '../../common/course-box';
 import ListEmptyBox from '../../common/list-empty-box';
 import SectionHeader from '../../common/section-header';
+import { ScreenName } from '../../../globals/constants';
 
 const ListCoursesHorizontal = (props) => {
     const theme = props.theme;
@@ -27,6 +28,10 @@ const ListCoursesHorizontal = (props) => {
             })
     }, []);
 
+    const onPressItem = (screenName, itemId) => {
+        props.navigation.navigate(screenName, {itemId: itemId});
+    }
+
     return <View style={styles.container}>
         <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null}
             rightButtonTitle={data && data.length > 0 ? "See all >" : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
@@ -37,7 +42,7 @@ const ListCoursesHorizontal = (props) => {
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                     renderItem={({item}) => <CourseBox style={styles.item} data={item} navigation={props.navigation} 
-                        onPress={() => props.onPressItem(props.screenName, item.id)} />} />
+                        onPress={() => onPressItem(ScreenName.courseDetail, item.id)} />} />
                 : props.emptyListTitle ?
                     <ListEmptyBox theme={props.theme} icon={{name: props.emptyListIconName, size: 30}} content={props.emptyListTitle} />
                     : <Text style={theme ? theme.titleColor : null}>Nothing to show</Text>
