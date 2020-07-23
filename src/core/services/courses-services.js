@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const requestUrl = "/course";
 
-export class CoursesServices {
+export default class CoursesServices {
     static getTopSell = () => {
         return axios.post(`${requestUrl}/top-sell`, {
             limit: 10,

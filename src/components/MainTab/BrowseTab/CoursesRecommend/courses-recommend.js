@@ -5,7 +5,7 @@ import ListCourses from '../../../Courses/ListCourses/list-courses';
 import { CommonStyles } from '../../../../globals/styles';
 import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
-import { CoursesServices } from '../../../../core/services/courses-services';
+import CoursesServices from '../../../../core/services/courses-services';
 import { AuthenticationContext } from '../../../../contexts/authentication-context';
 
 const CoursesRecommend = (props) => {
@@ -57,6 +57,6 @@ export default CoursesRecommend;
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 10
+        paddingHorizontal: 15
     }
 });

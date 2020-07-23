@@ -17,6 +17,10 @@ export const CommonStyles = StyleSheet.create({
     shortMarginVertical: {
         marginVertical: 10
     },
+    // Standard padding horizontal for component
+    shortPaddingHorizontal: {
+        paddingHorizontal: 15
+    },
     // Style for text: color, font-weight, font-size
     titleColor: {
         color: Colors.white

@@ -1,51 +1,21 @@
-import React, { useState } from 'react';
-import { coursesData } from '../raw-data/courses';
-import { authorsData } from '../raw-data/authors';
-import { pathsData } from '../raw-data/paths';
+import React, { useReducer } from 'react';
+import searchReducer from '../reducers/search-reducer';
+import { search, changeSearchText, clearRecentSearches, setShouldFocusSearchHeader } from '../actions/search-action';
 
-const searchTextResult = ["react", "react-native", "reactjs", "react-redux"];
-const search = {
+const initialState = {
     currentSearchText: "",
     recentSearches: [],
-    searchTextResult: [],
-    searchResult: {
-        courses: coursesData,
-        paths: pathsData,
-        authors: authorsData
-    }
+    searchResult: {},
+    shouldFocusSearchHeader: false
 }
 
 const SearchContext = React.createContext();
 
 const SearchProvider = (props) => {
-    const [searches, setSearches] = useState(search);
+    const [state, dispatch] = useReducer(searchReducer, initialState);
 
-    const onSearch = (searchText) => {
-        const temp = {...searches};
-        temp.currentSearchText = searchText;
-        if (!searches.recentSearches.includes(searchText))
-            temp.recentSearches.push(searchText);
-        setSearches(temp);
-    }
-
-    const onChangeCurrentSearchText = (searchText) => {
-        const temp = {...searches};
-        temp.currentSearchText = searchText;
-        if (searchText != "")
-            temp.searchTextResult = searchTextResult;
-        else {
-            temp.searchTextResult = temp.recentSearches;
-        }
-        setSearches(temp);
-    }
-
-    const clearRecentSearches = () => {
-        const temp = {...searches};
-        temp.recentSearches.length = 0;
-        setSearches(temp);
-    }
-
-    return <SearchContext.Provider value={{searches, onSearch, onChangeCurrentSearchText, clearRecentSearches}}>
+    return <SearchContext.Provider value={{state, search: search(dispatch), changeSearchText: changeSearchText(dispatch),
+        clearRecentSearches: clearRecentSearches(dispatch)}}>
         {props.children}
     </SearchContext.Provider>
 }

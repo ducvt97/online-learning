@@ -13,8 +13,8 @@ const Description = (props) => {
     }
 
     return props.content ?
-        <View style={styles.container}>
-            <Text style={[props.style, styles.text]} numberOfLines={extended ? null : 3}>{props.content}</Text>
+        <View style={[styles.container, props.style]}>
+            <Text style={[props.theme ? props.theme.textColor : {}, styles.text]} numberOfLines={extended ? null : 3}>{props.content}</Text>
             <Text style={[styles.textButton]} onPress={() => onPress()}>{extended ? "Less" : "More"}</Text>
             <Divider style={CommonStyles.divider} />
         </View>

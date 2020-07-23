@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import ListCourses from '../../../Courses/ListCourses/list-courses';
 import { CommonStyles } from '../../../../globals/styles';
 import { ThemeContext } from '../../../../contexts/theme-context';
-import { CoursesServices } from '../../../../core/services/courses-services';
+import CoursesServices from '../../../../core/services/courses-services';
 import { ScreenName } from '../../../../globals/constants';
 
 const CoursesTopNew = (props) => {
@@ -29,7 +29,7 @@ const CoursesTopNew = (props) => {
             })
     }, []);
 
-    return <View style={[styles.container, theme.background]}>
+    return <View style={[CommonStyles.shortPaddingHorizontal, theme.background]}>
         {isLoading ? <ActivityIndicator color={theme.tintColor} /> 
             : data ? <ListCourses data={data} navigation={props.navigation} theme={theme} screenName={ScreenName.courseDetail} />
             : <Text style={[theme.titleColor, CommonStyles.fontSizeBig]}>{message}</Text>}
@@ -37,9 +37,3 @@ const CoursesTopNew = (props) => {
 }
 
 export default CoursesTopNew;
-
-const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 10
-    }
-});

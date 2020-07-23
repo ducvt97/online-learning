@@ -9,7 +9,7 @@ import TopAuthors from './TopAuthors/top-authors';
 import { CommonStyles } from '../../../globals/styles';
 import { Colors, ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
-import { CoursesServices } from '../../../core/services/courses-services';
+import CoursesServices from '../../../core/services/courses-services';
 
 const BrowseTab = (props) => {
     const {theme} = useContext(ThemeContext);

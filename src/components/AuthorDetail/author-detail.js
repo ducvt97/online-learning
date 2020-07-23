@@ -50,8 +50,8 @@ const AuthorDetail = (props) => {
                     <Text style={[theme.textColor, CommonStyles.fontSizeAverage]}>{instructor.phone}</Text>
                 </View>
             </View>
-            <Description style={theme.textColor} content={instructor.intro} />
-            {instructor.skills ? <View style={CommonStyles.shortMarginVertical}>
+            <Description style={CommonStyles.shortMarginVertical} content={instructor.intro} theme={theme} />
+            {instructor.skills ? <View>
                 <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>Skills</Text>
                 <FlatList data={instructor.skills} keyExtractor={(item, index) => index.toString()}
                     renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.skill]}>&#8226; {item}</Text>} />

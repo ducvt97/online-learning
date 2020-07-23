@@ -86,5 +86,8 @@ export const ActionTypes = {
     login: "LOGIN",
     logout: "LOGOUT",
     updateProfile: "UPDATE_PROFILE",
-    changeEmail: "CHANGE_EMAIL"
+    changeEmail: "CHANGE_EMAIL",
+    search: "SEARCH",
+    changeSearchText: "CHANGE_SEARCH_TEXT",
+    clearRecentSearch: "CLEAR_RECENT_SEARCH"
 }

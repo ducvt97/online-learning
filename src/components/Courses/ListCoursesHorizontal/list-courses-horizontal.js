@@ -38,7 +38,7 @@ const ListCoursesHorizontal = (props) => {
             onPressRightButton={() => props.onPressHeaderButton(props.headerScreenName, data, theme, styles.list)} />
             {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
             : data ? data.length > 0 ?
-                <FlatList style={props.style} horizontal={true} data={data}
+                <FlatList style={props.style} horizontal={true} data={data.length > 5 ? data.slice(0, 5) : data}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
                     renderItem={({item}) => <CourseBox style={styles.item} data={item} navigation={props.navigation} 
