@@ -1,65 +1,65 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text, SectionList, ScrollView, Alert, Share } from 'react-native';
-import { ListItem, Divider, Icon } from 'react-native-elements';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { ListItem, Divider } from 'react-native-elements';
 
 import ListCoursesItem from '../../common/list-courses-item';
 import { CommonStyles } from '../../../globals/styles';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { Colors } from '../../../globals/constants';
+import { setCurrentLesson } from '../../../actions/course-detail-action';
+import LessonServices from '../../../core/services/lesson-services';
+import Utilities from '../../../core/fwk/utilities';
 
 const ContentsTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
-    const onPressActionButton = (title) => {
-        Alert.alert("", title, [
-            { text: "Download", onPress: () => alert("Feature not support!!") },
-            { text: "Share", onPress: ()=> Share.share({ message: `Share "${title}"` })},
-            { text: "Cancel", style: "cancel"}
-        ])
+    const renderSection = (section, theme) => {
+        return <FlatList data={section.lesson} ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
+            keyExtractor={(item, index) => index.toString()} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => renderItem(item, theme, props.state.currentLesson ? props.state.currentLesson.id : null)}
+            ListHeaderComponent={() => renderSectionHeader(section, theme)} stickyHeaderIndices={[0]}
+            ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />} />
     }
 
     const renderSectionHeader = (section, theme) => {
-        return (
-            <View style={[theme.background, styles.container]}>
-                <View style={[styles.sectionHeader, CommonStyles.shortMarginVertical]}>
-                    <ListCoursesItem style={[{flex: 4}, theme.background]} theme={theme} noActiveOpacity data={section}  />
-                    <View style={[styles.shortMarginLeft, {flexDirection: "row", flex: 1}]}>
-                        {section.downloaded ? <Icon name="arrow-circle-down" type="font-awesome" containerStyle={styles.shortMarginLeft} color={theme.tintColor}/> : null}
-                        <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig, styles.shortMarginLeft]} 
-                            onPress={() => onPressActionButton(title)}>...</Text>
-                    </View>
-                </View>
+        return <View style={[theme.background]}>
+            <ListCoursesItem style={theme.background} theme={theme} noActiveOpacity useForHeader
+                data={{title: section.name, imageUrl: props.state.courseInfo.imageUrl, totalHours: Utilities.hourToTime(section.sumHours)}} />
                 <Divider style={CommonStyles.divider} />
-            </View>
-        )
+        </View>
     }
 
-    const renderItem = (item, theme) => {
-        return <ListItem title={item.title} titleStyle={theme.titleColor} containerStyle={[styles.item, theme.background]}
-            leftIcon={item.status === "playing" ? {name: "check-circle", color: Colors.dodgerBlue, size: 14}
-                : item.status ==="done" ? {name: "check-circle", color: Colors.green, size: 14}
-                : {name: "check-circle", color: Colors.green, size: 14}} titleProps={{numberOfLines: 1}}
-            rightElement={() => {return item.status === "playing" ? <Text style={theme.textColor}>0:00 / {item.duration ? item.duration : "0:00"}</Text> : null}}
+    const onPressItem = async (item) => {
+        if (!item.isFinish)
+            LessonServices.updateLessonStatus(item.id)
+                .then(reponse => {})
+                .catch(error => { LessonServices.handleError(error); });
+        setCurrentLesson(props.dispatch, item);
+    }
+
+    const renderItem = (item, theme, currentPlaying) => {
+        return <ListItem title={item.name} titleStyle={theme.titleColor} containerStyle={[styles.item, theme.background]}
+            leftIcon={item.id === currentPlaying ? {name: "play-circle", color: Colors.dodgerBlue, size: 15, type: "font-awesome"}
+                : item.isFinish ? {name: "check-circle", color: Colors.green, size: 15, type: "font-awesome"}
+                : {name: "circle", color: Colors.darkGrey, size: 15, type: "font-awesome"}} titleProps={{numberOfLines: 1}}
+            rightElement={item.id === currentPlaying ? <Text style={theme.textColor}>{Utilities.hourToTime(item.hours)}</Text> : null}
+            onPress={() => onPressItem(item)}
         />
     }
 
-    return (
-        <ScrollView style={theme.background}>
-            <SectionList sections={props.data} stickySectionHeadersEnabled
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => renderItem(item, theme)}
-                renderSectionHeader={({ section }) => renderSectionHeader(section, theme)}
-                ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
-            />
-        </ScrollView>
-    )
+    return <View style={[theme.background, styles.container]}>
+        <FlatList data={props.state.courseSection} ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
+            keyExtractor={(item, index) => index.toString()} renderItem={({item}) => renderSection(item, theme)}
+            showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} />
+        <Divider style={CommonStyles.divider} />
+    </View>
 }
 
 export default ContentsTab;
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10
+        marginBottom: 10
     },
     sectionHeader: {
         flexDirection: "row",
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
     item: {
         paddingVertical: 0,
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
     },
     shortMarginLeft: {
         marginLeft: 10

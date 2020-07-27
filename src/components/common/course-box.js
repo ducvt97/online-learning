@@ -14,7 +14,8 @@ const CourseBox = (props) => {
                 <View style={styles.descriptionContainer}>
                     <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.courseTitle || data.title}</Text>
                     {data.instructorName ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.instructorName}</Text> : null}
-                    <Text style={[{color: Colors.red}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.coursePrice || data.price} đ</Text>
+                    {!data.coursePrice && !data.price && data.coursePrice != 0 && data.price != 0 ? null
+                    : <Text style={[{color: Colors.red}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.coursePrice || data.price} đ</Text>}
                     <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>
                         {data.createdAt ? `${new Date(data.createdAt).toDateString()} . ` : null}
                         {data.totalHours ? `${data.totalHours} hours` : null}
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 10,
         width: 200,
-        height: 190,
+        height: 200,
         backgroundColor: Colors.dimGrey
     },
     image: {

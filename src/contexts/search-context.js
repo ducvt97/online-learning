@@ -1,12 +1,11 @@
 import React, { useReducer } from 'react';
 import searchReducer from '../reducers/search-reducer';
-import { search, changeSearchText, clearRecentSearches, setShouldFocusSearchHeader } from '../actions/search-action';
+import { search, changeSearchText, clearRecentSearches } from '../actions/search-action';
 
 const initialState = {
     currentSearchText: "",
     recentSearches: [],
-    searchResult: {},
-    shouldFocusSearchHeader: false
+    searchResult: {}
 }
 
 const SearchContext = React.createContext();

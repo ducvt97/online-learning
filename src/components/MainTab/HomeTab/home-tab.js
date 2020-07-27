@@ -41,11 +41,11 @@ const HomeTab = (props) => {
                 <ListCoursesHorizontal screenName={ScreenName.courseDetail} onPressItem={onPressListItem} theme={theme}
                     requestData={UserServices.getProcessCourse} requestDataError={UserServices.handleError}
                     emptyListIconName="school" emptyListTitle="Start learning to improve your skills."
-                    headerTitle="Continue learning" />
+                    headerTitle="Continue learning" navigation={props.navigation} />
                 <ListCoursesHorizontal screenName={ScreenName.courseDetail} onPressItem={onPressListItem} theme={theme}
                     requestData={UserServices.getFavoriteCourse} requestDataError={UserServices.handleError}
-                    emptyListIconName="bookmark" emptyListTitle="Use bookmarks to quickly save courses for later."
-                    headerTitle="Bookmarks" />
+                    emptyListIconName="favorite" emptyListTitle="Like courses to quickly save courses for later."
+                    headerTitle="Favorites" navigation={props.navigation} />
             </View>
         </ScrollView>
     )

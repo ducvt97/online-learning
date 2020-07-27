@@ -43,8 +43,9 @@ const TopAuthors = (props) => {
             onPressRightButton={() => onPressHeaderRightButton(data, theme, styles.list)} />
         {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
             : data ? <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}
-                data={data.length > 10 ? data.slice(0, 10) : data} renderItem={({item}) =>
-                    <AvatarTitle title={item["user.name"]} style={styles.item} titleStyle={theme ? theme.titleColor : null}
+                data={data.length > 10 ? data.slice(0, 10) : data}
+                renderItem={({item}) =>
+                    <AvatarTitle title={item["user.name"]} style={styles.item} titleStyle={theme ? theme.titleColor : null} size="large"
                         imageUrl={item["user.avatar"]} onPressItem={() => onPressItem(ScreenName.authorDetail, item.id)} itemId={item.id} />}/>
             : <Text style={theme ? theme.titleColor : null}>{errorMessage}</Text>
         }

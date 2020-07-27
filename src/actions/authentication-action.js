@@ -1,13 +1,13 @@
-import { ActionTypes } from '../globals/constants';
+import { AuthenticationActionTypes } from '../globals/constants';
 
 export const login = (dispatch) => (data) => {
-    dispatch({ type: ActionTypes.login, data: data });
+    dispatch({ type: AuthenticationActionTypes.login, data: data });
 }
 
 export const logout = (dispatch) => () => {
-    dispatch({ type: ActionTypes.logout });
+    dispatch({ type: AuthenticationActionTypes.logout });
 }
 
 export const updateProfile = (dispatch) => (data) => {
-    dispatch({ type: ActionTypes.updateProfile, data: data });
+    dispatch({ type: AuthenticationActionTypes.updateProfile, data: data });
 }

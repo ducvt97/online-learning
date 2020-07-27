@@ -1,13 +1,13 @@
-import { ActionTypes } from '../globals/constants';
+import { SearchActionTypes } from '../globals/constants';
 
 export const search = (dispatch) => (data) => {
-    dispatch({ type: ActionTypes.search, data: data });
+    dispatch({ type: SearchActionTypes.search, data: data });
 }
 
 export const changeSearchText = (dispatch) => (data) => {
-    dispatch({ type: ActionTypes.changeSearchText, data: data });
+    dispatch({ type: SearchActionTypes.changeSearchText, data: data });
 }
 
 export const clearRecentSearches = (dispatch) => () => {
-    dispatch({ type: ActionTypes.clearRecentSearch });
+    dispatch({ type: SearchActionTypes.clearRecentSearch });
 }

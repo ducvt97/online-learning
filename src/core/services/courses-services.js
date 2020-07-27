@@ -44,12 +44,12 @@ export default class CoursesServices {
         return axios.get(`${requestUrl}/process-course/${courseId}`);
     }
 
-    static ratingCourse = (courseId, formalityPoint, contentPoint, presentationPoint, content) => {
+    static ratingCourse = (courseId, ratingNumber, content) => {
         return axios.post(`${requestUrl}/rating-course`, {
             courseId: courseId,
-            formalityPoint: formalityPoint,
-            contentPoint: contentPoint,
-            presentationPoint: presentationPoint,
+            formalityPoint: ratingNumber,
+            contentPoint: ratingNumber,
+            presentationPoint: ratingNumber,
             content: content
         });
     }

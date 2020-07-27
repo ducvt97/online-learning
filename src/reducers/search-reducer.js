@@ -1,4 +1,4 @@
-import { ActionTypes } from '../globals/constants';
+import { SearchActionTypes } from '../globals/constants';
 
 const addToRecentSearches = (recentSearches, searchText) => {
     if (!recentSearches.includes(searchText))
@@ -8,12 +8,12 @@ const addToRecentSearches = (recentSearches, searchText) => {
 
 const searchReducer = (prevState, action) => {
     switch (action.type) {
-        case ActionTypes.search:
+        case SearchActionTypes.search:
             return {...prevState, recentSearches: addToRecentSearches(prevState.recentSearches, action.data.searchText),
                 searchResult: action.data.searchResult, currentSearchText: action.data.searchText};
-        case ActionTypes.changeSearchText:
+        case SearchActionTypes.changeSearchText:
             return {...prevState, currentSearchText: action.data};
-        case ActionTypes.clearRecentSearch:
+        case SearchActionTypes.clearRecentSearch:
             return {...prevState, recentSearches: []};
         default:
             throw new Error(`Action ${action.type} not recognized.`);

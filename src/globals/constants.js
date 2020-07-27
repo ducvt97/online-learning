@@ -12,7 +12,6 @@ export const ScreenName = {
     theme: "Theme",
     courseDetail: "CourseDetail",
     authorDetail: "AuthorDetail",
-    pathDetail: "PathDetail",
     contentsTab: "ContentsTab",
     transcriptTab: "TranscriptTab",
     mainTab: "MainTab",
@@ -32,7 +31,6 @@ export const ScreenName = {
     searchResultsTabNavigation: "SearchResultsTabNavigation",
     searchAllTab: "SearchAllTab",
     searchCoursesTab: "SearchCoursesTab",
-    searchPathsTab: "SearchPathsTab",
     searchAuthorsTab: "SearchAuthorsTab"
 }
 
@@ -48,7 +46,6 @@ export const ScreenTitle = {
     theme: "Theme",
     courseDetail: "Course Detail",
     authorDetail: "Author",
-    pathDetail: "Path",
     contentsTab: "Contents",
     transcriptTab: "Transcript",
     homeTab: "Home",
@@ -62,7 +59,6 @@ export const ScreenTitle = {
     searchTab: "Search",
     searchAllTab: "All",
     searchCoursesTab: "Courses",
-    searchPathsTab: "Paths",
     searchAuthorsTab: "Authors"
 }
 
@@ -82,12 +78,28 @@ export const Colors = {
     green: "green"
 };
 
-export const ActionTypes = {
+export const AuthenticationActionTypes = {
     login: "LOGIN",
     logout: "LOGOUT",
     updateProfile: "UPDATE_PROFILE",
-    changeEmail: "CHANGE_EMAIL",
+    changeEmail: "CHANGE_EMAIL"
+}
+
+export const SearchActionTypes = {
     search: "SEARCH",
     changeSearchText: "CHANGE_SEARCH_TEXT",
     clearRecentSearch: "CLEAR_RECENT_SEARCH"
+}
+
+export const CourseDeatailActionTypes = {
+    setDidUserBuyCourse: "SET_DID_USER_BUY_COURSE",
+    setCourseInfo: "SET_COURSE_INFO",
+    setCourseSection: "SET_COURSE_SECTION",
+    setUserBuyCourse: "SET_USER_BUY_COURSE",
+    setUserLikeCourse: "SET_USER_LIKE_COURSE",
+    setUserRatingCourse: "SET_USER_RATING_COURSE",
+    setCurrentLesson: "SET_CURRENT_LESSON",
+    setCurrentTimePlayingVideo: "SET_CURRENT_TIME_PLAYING_VIDEO",
+    setVideoPlaying: "SET_VIDEO_PLAYING",
+    closeCourseDetail: "CLOSE_COURSE_DETAIL",
 }

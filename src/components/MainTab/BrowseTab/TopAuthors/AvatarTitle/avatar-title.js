@@ -5,9 +5,9 @@ import { Avatar } from 'react-native-elements';
 import { CommonStyles } from '../../../../../globals/styles';
 
 const AvatarTitle = (props) => {
-    return <TouchableOpacity style={[styles.container, props.style]} onPress={props.onPressItem}>
-        <Avatar rounded source={{uri: props.imageUrl}} size="large" />
-        <Text style={[props.titleStyle, CommonStyles.fontSizeAverage, styles.title]} numberOfLines={1}>{props.title}</Text>
+    return <TouchableOpacity style={[styles.container, props.size ? styles[props.size] : {}, props.style]} onPress={props.onPressItem}>
+        <Avatar rounded source={{uri: props.imageUrl}} size={props.size} />
+        <Text style={[CommonStyles.fontSizeAverage, styles.title, props.titleStyle]} numberOfLines={1}>{props.title}</Text>
     </TouchableOpacity>
 }
 
@@ -17,11 +17,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
-        maxWidth: 120
+        alignItems: "center"
     },
     title: {
         marginTop: 5,
         textAlign: "center"
+    },
+    small: {
+        maxWidth: 80
+    },
+    medium: {
+        maxWidth: 100
+    },
+    large: {
+        maxWidth: 120
     }
 });

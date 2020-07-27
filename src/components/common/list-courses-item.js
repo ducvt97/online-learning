@@ -9,13 +9,14 @@ const ListCoursesItem = (props) => {
     const data = props.data;
     const theme = props.theme;
 
-    return (
-        <View style={props.style}>
-            <TouchableOpacity style={styles.container} onPress={props.onPress} activeOpacity={props.noActiveOpacity ? 1 : 0.4}>
-                <Image style={[styles.image, {backgroundColor: theme.tintColor}]} source={{uri: data.imageUrl}} />
-                <View style={styles.descriptionContainer}>
-                    <Text style={[theme ? theme.titleColor: {}, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
-                    {data.instructorName ? <Text style={theme ? theme.textColor : {}}>{data.instructorName}</Text> : null}
+    return <View style={props.style}>
+        <TouchableOpacity style={styles.container} onPress={props.onPress} activeOpacity={props.noActiveOpacity ? 1 : 0.4}>
+            <Image style={[styles.image, {backgroundColor: theme.tintColor}]} source={{uri: data.imageUrl}} />
+            <View style={styles.descriptionContainer}>
+                <Text style={[theme ? theme.titleColor: {}, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
+                {data.instructorName ? <Text style={theme ? theme.textColor : {}}>{data.instructorName}</Text> : null}
+                {props.useForHeader ? <Text style={theme ? theme.textColor : {}} numberOfLines={1}>{data.totalHours}</Text> : null}
+                {!props.useForHeader ? <View>
                     <Text style={{color: Colors.green}}>{data.price} đ</Text>
                     <Text style={theme ? theme.textColor : {}} numberOfLines={1}>
                         {data.createdAt ? `${new Date(data.createdAt).toDateString()} . ` : null}
@@ -23,10 +24,10 @@ const ListCoursesItem = (props) => {
                     </Text>
                     <Rating readonly style={styles.rating} tintColor={theme ? theme.backgroundColor: null} imageSize={20} fractions={1}
                         startingValue={data.courseAveragePoint ? data.courseAveragePoint : ((data.formalityPoint + data.contentPoint + data.presentationPoint) / 3)} />
-                </View>
-            </TouchableOpacity>
-        </View>
-    )
+                </View> : null}
+            </View>
+        </TouchableOpacity>
+    </View>
 }
 
 export default ListCoursesItem;

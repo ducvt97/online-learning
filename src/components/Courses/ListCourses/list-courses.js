@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, FlatList, View, Text } from 'react-native';
 import { Divider } from 'react-native-elements';
 
@@ -7,13 +7,18 @@ import SectionHeader from '../../common/section-header';
 
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
+import { AuthenticationContext } from '../../../contexts/authentication-context';
 
 const ListCourses = (props) => {
     const data = props.data || props.route.params.data;
     const theme = props.theme;
+    const authContext = useContext(AuthenticationContext);
 
     const onPressItem = (screenName, itemId) => {
-        props.navigation.navigate(screenName, {itemId: itemId});
+        if (authContext.state.authenticated)
+            props.navigation.push(screenName, { itemId: itemId });
+        else
+            alert("You have to login to see course detail.");
     }
 
     return (

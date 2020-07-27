@@ -1,12 +1,12 @@
-import { ActionTypes } from '../globals/constants';
+import { AuthenticationActionTypes } from '../globals/constants';
 
 const authenticationReducer = (prevState, action) => {
     switch (action.type) {
-        case ActionTypes.login:
+        case AuthenticationActionTypes.login:
             return {...prevState, authenticated: true, userInfo: action.data.userInfo, token: action.data.token};
-        case ActionTypes.logout:
+        case AuthenticationActionTypes.logout:
             return {...prevState, authenticated: false, userInfo: null, token: null};
-        case ActionTypes.updateProfile:
+        case AuthenticationActionTypes.updateProfile:
             return {...prevState, userInfo: action.data};
         default:
             throw new Error(`Action ${action.type} not recognized.`);
