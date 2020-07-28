@@ -3,11 +3,14 @@ import { StyleSheet, ScrollView, View } from 'react-native';
 import { Tile, Icon, Avatar } from 'react-native-elements';
 
 import ListCoursesHorizontal from '../../Courses/ListCoursesHorizontal/list-courses-horizontal';
+import ImageText from '../../common/image-text';
+
 import { CommonStyles } from '../../../globals/styles';
-import { ScreenName, Colors } from '../../../globals/constants';
+import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import UserServices from '../../../core/services/user-services';
+
 
 const HomeTab = (props) => {
     const {theme} = useContext(ThemeContext);
@@ -24,28 +27,24 @@ const HomeTab = (props) => {
         });
     }, [{...theme}]);
 
-    const onPressListItem = (screenName, itemId) => {
-        props.navigation.navigate(screenName, {itemId: itemId});
+    const onPressHeaderButton = (screenName, data, theme, style) => {
+        props.navigation.navigate(screenName, { data: data, theme: theme, style: style});
     }
 
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
-            <Tile featured titleNumberOfLines={2}
+            <ImageText title="Build apps of the future" disableActiveOpacity
                 imageSrc={require("../../../../assets/images/background/bg.jpg")}
-                title={"Build apps of the future"}
-                titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontWeightBold]}
-                containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
-                imageContainerStyle={CommonStyles.imageButtonBig}
-            />
+                style={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]} />
             <View style={styles.sectionContainer}>
-                <ListCoursesHorizontal screenName={ScreenName.courseDetail} onPressItem={onPressListItem} theme={theme}
+                <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Continue learning"
                     requestData={UserServices.getProcessCourse} requestDataError={UserServices.handleError}
-                    emptyListIconName="school" emptyListTitle="Start learning to improve your skills."
-                    headerTitle="Continue learning" navigation={props.navigation} />
-                <ListCoursesHorizontal screenName={ScreenName.courseDetail} onPressItem={onPressListItem} theme={theme}
+                    onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.continueLearning}
+                    emptyListIconName="school" emptyListTitle="Start learning to improve your skills." />
+                <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Favorites"
                     requestData={UserServices.getFavoriteCourse} requestDataError={UserServices.handleError}
-                    emptyListIconName="favorite" emptyListTitle="Like courses to quickly save courses for later."
-                    headerTitle="Favorites" navigation={props.navigation} />
+                    onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.favorites}
+                    emptyListIconName="favorite" emptyListTitle="Like courses to quickly save courses for later." />
             </View>
         </ScrollView>
     )

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useReducer, useRef } from 'react';
+import React, { useContext, useState, useEffect, useReducer } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator, Text, Image } from 'react-native';
 import { Video } from 'expo-av';
 import { Icon } from 'react-native-elements';
@@ -37,7 +37,6 @@ const CourseDetail = (props) => {
     const [errMsgCourseInfo, setErrMsgCourseInfo] = useState(null);
     const [courseSectionLoading, setcourseSectionLoading] = useState(true);
     const [errMsgCourseSection, setErrMsgCourseSection] = useState(null);
-    const playerRef = useRef(null);
 
     const {theme} = useContext(ThemeContext);
     const authContext = useContext(AuthenticationContext);
@@ -45,6 +44,7 @@ const CourseDetail = (props) => {
     useEffect(() => {
         CoursesServices.getCourseDetail(courseId, authContext.state.userInfo.id)
             .then(response => {
+                console.log(response.data.payload.section)
                 if (response.status === 200)
                     setCourseInfo(dispatch, response.data.payload);
                 else
@@ -90,7 +90,7 @@ const CourseDetail = (props) => {
                 setcourseSectionLoading(false);
                 setCourseSection(dispatch, sections);
             }
-            loadSection();
+            loadSection();ScreenOrientation
         }
     }, [state.userBuyCourse]);
 
@@ -115,10 +115,10 @@ const CourseDetail = (props) => {
         <Icon name="close" size={30} color={Colors.gainsboro} containerStyle={styles.backButton} onPress={props.navigation.goBack} />
         {state.currentLesson ? state.courseInfo.typeUploadVideoLesson === 1 ?
             <Video source={{uri: state.currentLesson.videoUrl}} posterSource={{uri: state.courseInfo.imageUrl}}
-                rate={1.0} volume={1.0} shouldCorrectPitch={true} isMuted={false} resizeMode="cover"
+                rate={1.0} volume={1.0} shouldCorrectPitch={true} isMuted={false} resizeMode="contain"
                 shouldPlay useNativeControls style={styles.video}
                 positionMillis={Utilities.hourToMilsecond(state.currentLesson.currentTime * 60 * 60 * 1000)} />
-            : <YoutubePlayer ref={playerRef} height={200} videoId={state.currentLesson.videoUrl} play={state.videoPlaying}
+            : <YoutubePlayer height={200} videoId={Utilities.getYoutubeVideoIdFromUrl(state.currentLesson.videoUrl)} play={state.videoPlaying}
                 onChangeState={event => onChangeStateYtPlayer(event)} onError={e => console.log(e)} volume={80} playbackRate={1}
                 initialPlayerParams={{ start: Utilities.hourToMilsecond(state.currentLesson.currentTime * 60 * 60), rel: 0 }} />
         : <Image style={styles.image} source={{uri: state.courseInfo.imageUrl}} />}
@@ -127,9 +127,9 @@ const CourseDetail = (props) => {
             <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Lessons</Text>
             {state.userBuyCourse ?
                 courseSectionLoading ? <ActivityIndicator color={theme.tintColor} />
-                : state.courseSection ? <ContentsTab {...props} state={state} dispatch={dispatch} ytPlayerRef={playerRef} />
+                : state.courseSection ? <ContentsTab {...props} state={state} dispatch={dispatch} />
                     : <Text style={[theme.titleColor, CommonStyles.fontSizeAverage]}>{errMsgCourseSection}</Text>
-            : null}
+            : <Text style={[theme.titleColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>You must buy course to see lessons.</Text>}
             <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Related Courses</Text>
             <ListCoursesHorizontal data={state.courseInfo.coursesLikeCategory} theme={theme} {...props} />
             <RatingsAndReviews state={state} dispatch={dispatch} theme={theme} style={CommonStyles.shortMarginVertical} />

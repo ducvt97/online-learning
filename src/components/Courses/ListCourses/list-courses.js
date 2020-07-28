@@ -11,7 +11,7 @@ import { AuthenticationContext } from '../../../contexts/authentication-context'
 
 const ListCourses = (props) => {
     const data = props.data || props.route.params.data;
-    const theme = props.theme;
+    const theme = props.theme || props.route.params.theme;
     const authContext = useContext(AuthenticationContext);
 
     const onPressItem = (screenName, itemId) => {
@@ -31,9 +31,8 @@ const ListCourses = (props) => {
                 <FlatList data={data}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-                    renderItem={({item}) => <ListCoursesItem data={item} style={styles.item}
-                        onPress={() => onPressItem(ScreenName.courseDetail, item.id)}
-                        theme={props.theme || props.route.params.theme} />}
+                    renderItem={({item}) => <ListCoursesItem data={item} style={styles.item} theme={theme}
+                        onPress={() => onPressItem(ScreenName.courseDetail, item.id)} />}
                     ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />} />
             : <Text style={[theme ? theme.titleColor : {}, CommonStyles.fontSizeAverage, styles.text]}>{props.emptyListText}</Text>}
         </View>

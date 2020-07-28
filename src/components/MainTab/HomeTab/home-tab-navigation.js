@@ -7,6 +7,7 @@ import Profile from '../../AccountManagement/Profile/profile';
 import ChangeEmail from '../../Authentication/ChangeEmail/change-email';
 import Login from '../../Authentication/Login/login';
 import Theme from '../../AccountManagement/Setting/Theme/theme';
+import ListCourses from '../../Courses/ListCourses/list-courses';
 
 import { ScreenName, ScreenTitle } from '../../../globals/constants';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
@@ -32,6 +33,8 @@ const HomeTabNavigation = (props) => {
             <HomeTabStack.Screen name={ScreenName.profile} component={Profile} options={{ headerTitle: ScreenTitle.profile }} />
             <HomeTabStack.Screen name={ScreenName.changeEmail} component={ChangeEmail} options={{ headerTitle: ScreenTitle.changeEmail }} />
             <HomeTabStack.Screen name={ScreenName.theme} component={Theme} options={{ title: ScreenTitle.theme }} />
+            <HomeTabStack.Screen name={ScreenName.continueLearning} component={ListCourses} options={{ headerTitle: ScreenTitle.continueLearning }} />
+            <HomeTabStack.Screen name={ScreenName.favorites} component={ListCourses} options={{ headerTitle: ScreenTitle.favorites }} />
         </HomeTabStack.Navigator>
     )
 }

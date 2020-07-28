@@ -43,7 +43,7 @@ const MainNavigation = () => {
             <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: ScreenTitle.changePassword }} />
             <MainStack.Screen name={ScreenName.mainTab} component={MainTabNavigation} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
-            <MainStack.Screen name={ScreenName.instructorDetail} component={InstructorDetail} options={{ title: ScreenTitle.InstructorDetail }} />
+            <MainStack.Screen name={ScreenName.instructorDetail} component={InstructorDetail} options={{ title: ScreenTitle.instructorDetail }} />
         </MainStack.Navigator>
     )
 }

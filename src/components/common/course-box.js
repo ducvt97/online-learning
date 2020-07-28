@@ -14,15 +14,16 @@ const CourseBox = (props) => {
                 <View style={styles.descriptionContainer}>
                     <Text style={[{color: Colors.white}, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.courseTitle || data.title}</Text>
                     {data.instructorName ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.instructorName}</Text> : null}
-                    {!data.coursePrice && !data.price && data.coursePrice != 0 && data.price != 0 ? null
-                    : <Text style={[{color: Colors.red}, CommonStyles.fontSizeSmall]} numberOfLines={1}>{data.coursePrice || data.price} đ</Text>}
-                    <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>
+                    {typeof(data.coursePrice) === "number" || typeof(data.price) === "number"
+                    ? <Text style={{color: Colors.red}}>{typeof(data.coursePrice) === "number" ? data.coursePrice : data.price} đ</Text> : null}
+                    {data.createdAt || data.totalHours ? <Text style={[{color: Colors.gainsboro}, CommonStyles.fontSizeSmall]} numberOfLines={1}>
                         {data.createdAt ? `${new Date(data.createdAt).toDateString()} . ` : null}
                         {data.totalHours ? `${data.totalHours} hours` : null}
-                    </Text>
-                    {data.courseAveragePoint || data.courseAveragePoint === 0 || data.formalityPoint || data.formalityPoint === 0 ?
+                    </Text> : null}
+                    {typeof(data.courseAveragePoint) === "number" || (typeof(data.courseAveragePoint) === "number" && typeof(data.formalityPoint) === "number" && typeof(data.formalityPoint) === "number") ?
                         <Rating readonly tintColor={Colors.dimGrey} imageSize={15} 
-                            startingValue={data.courseAveragePoint ? data.courseAveragePoint : ((data.formalityPoint + data.contentPoint + data.presentationPoint) / 3)}
+                            startingValue={typeof(data.courseAveragePoint) === "number" ? data.courseAveragePoint
+                                : ((data.formalityPoint + data.contentPoint + data.presentationPoint) / 3)}
                             fractions={0.75} />
                         : null}
                 </View>

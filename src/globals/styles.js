@@ -55,7 +55,7 @@ export const CommonStyles = StyleSheet.create({
     },
     // Styles for some button types
     imageButtonBig: {
-        height: 120
+        height: 130
     },
     imageButtonSmall: {
         height: 70,

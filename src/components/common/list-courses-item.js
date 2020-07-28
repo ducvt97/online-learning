@@ -11,19 +11,22 @@ const ListCoursesItem = (props) => {
 
     return <View style={props.style}>
         <TouchableOpacity style={styles.container} onPress={props.onPress} activeOpacity={props.noActiveOpacity ? 1 : 0.4}>
-            <Image style={[styles.image, {backgroundColor: theme.tintColor}]} source={{uri: data.imageUrl}} />
+            <Image style={[styles.image, {backgroundColor: theme.tintColor}]} source={{uri: data.courseImage || data.imageUrl}} />
             <View style={styles.descriptionContainer}>
-                <Text style={[theme ? theme.titleColor: {}, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.title}</Text>
+                <Text style={[theme ? theme.titleColor: {}, CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} numberOfLines={2}>{data.courseTitle || data.title}</Text>
                 {data.instructorName ? <Text style={theme ? theme.textColor : {}}>{data.instructorName}</Text> : null}
                 {props.useForHeader ? <Text style={theme ? theme.textColor : {}} numberOfLines={1}>{data.totalHours}</Text> : null}
                 {!props.useForHeader ? <View>
-                    <Text style={{color: Colors.green}}>{data.price} đ</Text>
-                    <Text style={theme ? theme.textColor : {}} numberOfLines={1}>
+                    {typeof(data.coursePrice) === "number" || typeof(data.price) === "number"
+                    ? <Text style={{color: Colors.green}}>{typeof(data.coursePrice) === "number" ? data.coursePrice : data.price} đ</Text> : null}
+                    {data.createdAt || data.totalHours ? <Text style={theme ? theme.textColor : {}} numberOfLines={1}>
                         {data.createdAt ? `${new Date(data.createdAt).toDateString()} . ` : null}
                         {data.totalHours ? `${data.totalHours} hours` : null}
-                    </Text>
-                    <Rating readonly style={styles.rating} tintColor={theme ? theme.backgroundColor: null} imageSize={20} fractions={1}
-                        startingValue={data.courseAveragePoint ? data.courseAveragePoint : ((data.formalityPoint + data.contentPoint + data.presentationPoint) / 3)} />
+                    </Text> : null}
+                    {typeof(data.courseAveragePoint) === "number" || (typeof(data.courseAveragePoint) === "number" && typeof(data.formalityPoint) === "number" && typeof(data.formalityPoint) === "number") ?
+                        <Rating readonly style={styles.rating} tintColor={theme ? theme.backgroundColor: null} imageSize={20} fractions={1}
+                            startingValue={typeof(data.courseAveragePoint) === "number" ? data.courseAveragePoint : ((data.formalityPoint + data.contentPoint + data.presentationPoint) / 3)} />
+                    : null}
                 </View> : null}
             </View>
         </TouchableOpacity>
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
         alignItems: "flex-start"
     },
     rating: {
-        marginTop: 5
+        marginTop: 5,
+        alignSelf: "flex-start"
     }
 });
