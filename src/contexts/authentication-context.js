@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
+import axios from 'axios';
 
-const authentications = {
+import authenticationReducer from '../reducers/authentication-reducer';
+import { login, logout, updateProfile } from '../actions/authentication-action';
+
+const initialState = {
     authenticated: false,
-    user: null
+    userInfo: null,
+    token: null
 }
 
 const AuthenticationContext = React.createContext();
 
 const AuthenticationProvider = (props) => {
-    const [authentication, setAuthentication] = useState(authentications);
+    const [state, dispatch] = useReducer(authenticationReducer, initialState);
 
-    const setAuthenticated = (authenticated) => {
-        const newAuthentication = authentication;
-        newAuthentication.authenticated = authenticated;
-        setAuthentication(newAuthentication);
-    }
+    useEffect(() => {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
+    }, [state.token])
 
-    const setUser = (user) => {
-        const newAuthentication = authentication;
-        newAuthentication.user = user;
-        setAuthentication(newAuthentication);
-    }
-
-    return <AuthenticationContext.Provider value={{authentication, setAuthenticated, setUser}}>
+    return <AuthenticationContext.Provider value={{state, login: login(dispatch), logout: logout(dispatch),
+        updateProfile: updateProfile(dispatch)}}>
         {props.children}
     </AuthenticationContext.Provider>
 }

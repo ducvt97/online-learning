@@ -8,17 +8,12 @@ import SectionHeader from '../../common/section-header';
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
-import { CoursesContext } from '../../../contexts/courses-context';
 
 const DownloadTab = (props) => {
     const {theme} = useContext(ThemeContext);
-    const {removeAllDownloadCourses, getDownloadedCourses} = useContext(CoursesContext);
-    let downloadedCourses = getDownloadedCourses();
+    let downloadedCourses = [];
 
-    const onPressRightHeaderButton = () => {
-        removeAllDownloadCourses();
-        downloadedCourses = getDownloadedCourses();
-    }
+    const onPressRightHeaderButton = () => {}
 
     const onPressListItem = (screenName, itemId) => {
         props.navigation.navigate(screenName, {itemId: itemId});

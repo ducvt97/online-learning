@@ -3,55 +3,67 @@ export const ScreenName = {
     splashScreen: "SplashScreen",
     login: "Login",
     forgetPassword: "ForgetPassword",
+    resetPassword: "ResetPassword",
     changePassword: "ChangePassword",
-    verifyPassword: "VerifyPassword",
+    changeEmail: "ChangeEmail",
     register: "Register",
     profile: "Profile",
     setting: "Setting",
     theme: "Theme",
     courseDetail: "CourseDetail",
-    authorDetail: "AuthorDetail",
-    pathDetail: "PathDetail",
+    instructorDetail: "InstructorDetail",
     contentsTab: "ContentsTab",
     transcriptTab: "TranscriptTab",
     mainTab: "MainTab",
     homeTabNavigation: "HomeTabNavigation",
     homeTab: "HomeTab",
+    continueLearning: "ContinueLearning",
+    favorites: "Favorites",
     downloadTabNavigation: "DownloadTabNavigation",
     downloadTab: "DownloadTab",
     browseTabNavigation: "BrowseTabNavigation",
     browseTab: "BrowseTab",
+    coursesTopNew: "CoursesTopNew",
+    coursesTopSell: "CoursesTopSell",
+    coursesTopRate: "CoursesTopRate",
+    coursesRecommend: "CoursesRecommend",
+    topInstructor: "TopInstructor",
     searchTab: "SearchTab",
     searchResults: "SearchResults",
     searchResultsTabNavigation: "SearchResultsTabNavigation",
     searchAllTab: "SearchAllTab",
     searchCoursesTab: "SearchCoursesTab",
-    searchPathsTab: "SearchPathsTab",
-    searchAuthorsTab: "SearchAuthorsTab"
+    searchInstructorsTab: "SearchInstructorsTab"
 }
 
 export const ScreenTitle = {
     login: "Sign In",
     forgetPassword: "Forget Password",
+    resetPassword: "Reset Password",
     changePassword: "Change Password",
-    verifyPassword: "Verify Password",
+    changeEmail: "Change Email",
     register: "Register",
     profile: "Profile",
     setting: "Setting",
     theme: "Theme",
     courseDetail: "Course Detail",
-    authorDetail: "Author",
-    pathDetail: "Path",
+    instructorDetail: "Instructor",
     contentsTab: "Contents",
     transcriptTab: "Transcript",
     homeTab: "Home",
+    continueLearning: "Continue Learning",
+    favorites: "Favorites",
     downloadTab: "Download",
     browseTab: "Browse",
+    coursesTopNew: "Top New",
+    coursesTopSell: "Top Sell",
+    coursesTopRate: "Top Rate",
+    coursesRecommend: "Recommend",
+    topInstructor: "Top Instructor",
     searchTab: "Search",
     searchAllTab: "All",
     searchCoursesTab: "Courses",
-    searchPathsTab: "Paths",
-    searchAuthorsTab: "Authors"
+    searchInstructorsTab: "Instructors"
 }
 
 export const Colors = {
@@ -69,3 +81,29 @@ export const Colors = {
     red: "red",
     green: "green"
 };
+
+export const AuthenticationActionTypes = {
+    login: "LOGIN",
+    logout: "LOGOUT",
+    updateProfile: "UPDATE_PROFILE",
+    changeEmail: "CHANGE_EMAIL"
+}
+
+export const SearchActionTypes = {
+    search: "SEARCH",
+    changeSearchText: "CHANGE_SEARCH_TEXT",
+    clearRecentSearch: "CLEAR_RECENT_SEARCH"
+}
+
+export const CourseDeatailActionTypes = {
+    setDidUserBuyCourse: "SET_DID_USER_BUY_COURSE",
+    setCourseInfo: "SET_COURSE_INFO",
+    setCourseSection: "SET_COURSE_SECTION",
+    setUserBuyCourse: "SET_USER_BUY_COURSE",
+    setUserLikeCourse: "SET_USER_LIKE_COURSE",
+    setUserRatingCourse: "SET_USER_RATING_COURSE",
+    setCurrentLesson: "SET_CURRENT_LESSON",
+    setCurrentTimePlayingVideo: "SET_CURRENT_TIME_PLAYING_VIDEO",
+    setVideoPlaying: "SET_VIDEO_PLAYING",
+    closeCourseDetail: "CLOSE_COURSE_DETAIL",
+}

@@ -17,6 +17,10 @@ export const CommonStyles = StyleSheet.create({
     shortMarginVertical: {
         marginVertical: 10
     },
+    // Standard padding horizontal for component
+    shortPaddingHorizontal: {
+        paddingHorizontal: 15
+    },
     // Style for text: color, font-weight, font-size
     titleColor: {
         color: Colors.white
@@ -51,7 +55,7 @@ export const CommonStyles = StyleSheet.create({
     },
     // Styles for some button types
     imageButtonBig: {
-        height: 120
+        height: 130
     },
     imageButtonSmall: {
         height: 70,
@@ -72,6 +76,11 @@ export const CommonStyles = StyleSheet.create({
     divider: {
         marginVertical: 10,
         backgroundColor: Colors.dimGrey
+    },
+    inputIcon: {
+        zIndex: 100,
+        position: "absolute",
+        marginRight: 10
     },
     // Style for validation text
     validationText: {
@@ -108,5 +117,9 @@ export const textStyles = {
     },
     fontSizeBig: {
         fontSize: 20
+    },
+    validationText: {
+        color: Colors.red,
+        marginBottom: 5
     }
 }

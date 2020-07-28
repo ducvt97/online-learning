@@ -1,32 +1,48 @@
 import React, { useContext } from 'react';
-import { ScrollView } from 'react-native';
-import { Tile } from 'react-native-elements';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
-import SectionBrowse from './SectionBrowse/section-browse';
+import PopularSkills from './PopularSkills/popular-skills';
+import ListCoursesHorizontal from '../../Courses/ListCoursesHorizontal/list-courses-horizontal';
+import TopInstructors from './TopInstructors/top-instructors';
+
 import { CommonStyles } from '../../../globals/styles';
-import { Colors } from '../../../globals/constants';
+import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
+import CoursesServices from '../../../core/services/courses-services';
+import ImageText from '../../common/image-text';
 
 const BrowseTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
-    return (
-        <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled>
-            <Tile featured title={"NEW RELEASE"}
-                imageSrc={require("../../../../assets/images/background/bg.jpg")}
-                titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
-                containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
-                imageContainerStyle={CommonStyles.imageButtonBig}
-            />
-            <Tile featured title={"RECOMMENDED FOR YOU"}
-                imageSrc={require("../../../../assets/images/background/bg.jpg")}
-                titleStyle={[Colors.white, CommonStyles.fontWeightBold]}
-                containerStyle={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
-                imageContainerStyle={CommonStyles.imageButtonBig}
-            />
-            <SectionBrowse {...props} />
-        </ScrollView>
-    )
+    const onPressHeaderButton = (screenName, data, theme, style) => {
+        props.navigation.navigate(screenName, { data: data, theme: theme, style: style});
+    }
+
+    return <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
+        <ImageText imageSrc={require("../../../../assets/images/background/bg.jpg")} title="NEW RELEASE"
+            style={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
+            onPress={() => props.navigation.navigate(ScreenName.coursesTopNew)} />
+        <ImageText imageSrc={require("../../../../assets/images/background/bg.jpg")} title={`RECOMMENDED\nFOR YOU`}
+            style={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
+            onPress={() => props.navigation.navigate(ScreenName.coursesRecommend)} />
+        <View style={styles.container}>
+            <PopularSkills theme={theme} headerTitle="Popular Skills Categories" />
+            <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Top Sell"
+                requestData={CoursesServices.getTopSell} requestDataError={CoursesServices.handleError}
+                onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.coursesTopSell} />
+            <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Top Rate"
+                requestData={CoursesServices.getTopRate} requestDataError={CoursesServices.handleError}
+                onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.coursesTopRate} />
+            <TopInstructors screenName={ScreenName.instructorDetail} onPressHeaderButton={onPressHeaderButton} theme={theme} 
+                navigation={props.navigation} headerTitle="Top Instructors" />
+        </View>
+    </ScrollView>
 }
 
 export default BrowseTab;
+
+const styles = StyleSheet.create({
+    container: {
+        marginTop: 20
+    }
+});

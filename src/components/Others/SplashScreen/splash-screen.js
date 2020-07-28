@@ -9,20 +9,20 @@ import { ThemeContext } from '../../../contexts/theme-context';
 const SplashScreen = (props) => {
     const [loading, setLoading] = useState(0);
 
-    const {authentication} = useContext(AuthenticationContext);
+    const authContext = useContext(AuthenticationContext);
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
-        this.timer = setInterval(() => setLoading(loading => loading + 1), 10);
+        const timer = setInterval(() => setLoading(loading => loading + 1), 10);
         if (loading >= 100) {
-            clearInterval(this.timer);
-            if (authentication.authenticated)
+            clearInterval(timer);
+            if (authContext.state.authenticated)
                 props.navigation.navigate(ScreenName.mainTab);
             else
                 props.navigation.navigate(ScreenName.startScreen);
         }
         return () => {
-            clearInterval(this.timer);
+            clearInterval(timer);
         }
     }, [loading]);
 
