@@ -30,18 +30,21 @@ const RatingsAndReviews = (props) => {
 
     const onPressSubmitReview = () => {
         setReviewLoading(true);
-        if (!rating || rating === 0)
+        if (!rating || rating === 0){
+            setReviewLoading(false);
             alert("You must rate this course also.");
-        else
+        } else
             CoursesServices.ratingCourse(props.state.courseInfo.id, rating, review)
                 .then(response => {
                     setReviewLoading(false);
+                    setIsEditReview(false);
                     if (response.status === 200)
                         setUserRatingCourse(props.dispatch, response.data.payload);
                     else
                         alert(response.data.message);
                 }).catch(error => {
                     setReviewLoading(false);
+                    setIsEditReview(false);
                     alert(error.message);
                     CoursesServices.handleError(error);
                 })
@@ -66,7 +69,7 @@ const RatingsAndReviews = (props) => {
                 : <View>
                     <Rating tintColor={theme.backgroundColor} imageSize={40} fractions={2} onFinishRating={rating => setRating(rating)}
                         startingValue={(props.state.userRatingCourse.formalityPoint + props.state.userRatingCourse.contentPoint + props.state.userRatingCourse.presentationPoint) / 3} />
-                    <TextInput style={[CommonStyles.input, styles.input]} multiline onChangeText={text => setReview(text)} value={review} />
+                    <TextInput style={[CommonStyles.input, theme.inputBackground, styles.input]} multiline onChangeText={text => setReview(text)} value={review} />
                     <View style={[styles.row, {justifyContent: "flex-end"}]}>
                         <Button title="Cancel" containerStyle={styles.submitButton} type="outline" onPress={() => setIsEditReview(false)} />
                         <Button title="Review" containerStyle={styles.submitButton} disabled={!review ? true : false} loading={reviewLoading} onPress={onPressSubmitReview} />
@@ -75,7 +78,7 @@ const RatingsAndReviews = (props) => {
                 </View>
             : <View>
                 <Rating tintColor={theme.backgroundColor} imageSize={40} fractions={2} startingValue={0} onFinishRating={rating => setRating(rating)} />
-                <TextInput style={[CommonStyles.input, styles.input]} multiline onChangeText={text => setReview(text)} />
+                <TextInput style={[CommonStyles.input, theme.inputBackground, styles.input]} multiline onChangeText={text => setReview(text)} />
                 <Button title="Review" containerStyle={styles.submitButton} disabled={!review ? true : false} loading={reviewLoading} onPress={onPressSubmitReview} />
             </View>}
         </View> : null}

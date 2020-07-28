@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
-import { Tile, Icon, Avatar } from 'react-native-elements';
+import { Icon, Avatar } from 'react-native-elements';
 
 import ListCoursesHorizontal from '../../Courses/ListCoursesHorizontal/list-courses-horizontal';
 import ImageText from '../../common/image-text';

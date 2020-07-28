@@ -18,11 +18,13 @@ const SearchAllTab = (props) => {
     }
 
     return <ScrollView style={[CommonStyles.shortPaddingHorizontal, theme.background]}>
-        <ListCourses data={searchContext.state.searchResult.courses} theme={theme} headerTitle="Courses"
+        <ListCourses data={searchContext.state.searchResult.courses.length > 5 ? searchContext.state.searchResult.courses.slice(0, 5) :
+                searchContext.state.searchResult.courses} theme={theme} headerTitle="Courses"
             rightButtonTitle={searchContext.state.searchResult.courses.length + " results"}
             emptyListText={`No results match "${searchContext.state.currentSearchText}"`}
             onPressHeaderButton={() => onPressHeaderButton(ScreenName.searchCoursesTab)} navigation={props.navigation} />
-        <ListInstructors data={searchContext.state.searchResult.instructors} theme={theme} headerTitle="Instructors" style={styles.list}
+        <ListInstructors data={searchContext.state.searchResult.instructors.length > 5 ? searchContext.state.searchResult.instructors.slice(0, 5) :
+                searchContext.state.searchResult.instructors} theme={theme} headerTitle="Instructors" style={styles.list}
             rightButtonTitle={searchContext.state.searchResult.instructors.length + " results"}
             emptyListText={`No results match "${searchContext.state.currentSearchText}"`}
             onPressHeaderButton={() => onPressHeaderButton(ScreenName.searchInstructorsTab)} navigation={props.navigation} />

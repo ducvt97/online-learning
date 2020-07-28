@@ -14,7 +14,7 @@ const SearchInstructorsTab = (props) => {
     const searchContext = useContext(SearchContext);
 
     return searchContext.state.searchResult.instructors.length > 0 ? 
-        <View style={[CommonStyles.shortPaddingHorizontal, theme.background]}>
+        <View style={[CommonStyles.shortPaddingHorizontal, theme.background, CommonStyles.flex]}>
             <SectionHeader title={searchContext.state.searchResult.instructors.length + " Results"} titleStyle={theme.titleColor} />
             <ListInstructors data={searchContext.state.searchResult.instructors} theme={theme} title="Instructors" navigation={props.navigation} style={styles.list} />
         </View>

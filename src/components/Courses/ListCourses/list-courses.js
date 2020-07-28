@@ -8,11 +8,12 @@ import SectionHeader from '../../common/section-header';
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
+import { ThemeContext } from '../../../contexts/theme-context';
 
 const ListCourses = (props) => {
     const data = props.data || props.route.params.data;
-    const theme = props.theme || props.route.params.theme;
     const authContext = useContext(AuthenticationContext);
+    const {theme} = useContext(ThemeContext);
 
     const onPressItem = (screenName, itemId) => {
         if (authContext.state.authenticated)
@@ -22,7 +23,7 @@ const ListCourses = (props) => {
     }
 
     return (
-        <View style={props.style ? props.style : props.route ? props.route.params.style : {}}>
+        <View style={[theme ? theme.background : {}, props.style ? props.style : props.route ? props.route.params.style : {}, props.route ? CommonStyles.flex : {}]}>
             {props.headerTitle &&
                 <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null}
                     rightButtonTitle={data.length > 0 ? props.rightButtonTitle : null} rightButtonTitleStyle={theme ? theme.titleColor : null}

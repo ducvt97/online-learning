@@ -58,7 +58,7 @@ const InstructorDetail = (props) => {
             </View>: null}
             <Divider style={CommonStyles.divider} />
             <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>Courses</Text>
-            <ListCourses data={instructor.courses} theme={theme} screenName={ScreenName.courseDetail} />
+            <ListCourses data={instructor.courses} theme={theme} {...props} />
         </View>
         : <Text>{message}</Text>}
     </ScrollView>

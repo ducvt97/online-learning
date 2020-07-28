@@ -82,7 +82,7 @@ const CourseDetailInfo = (props) => {
             });
     }
 
-    return <View style={[theme.background]}>
+    return <View style={[theme.background, {marginTop: 15}]}>
         <Spinner visible={buyCourseLoading} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
         <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{props.state.courseInfo.title}</Text>
         <ListItem containerStyle={[styles.instructorButton, theme.navigationHeader, CommonStyles.shortMarginVertical]}

@@ -44,7 +44,6 @@ const CourseDetail = (props) => {
     useEffect(() => {
         CoursesServices.getCourseDetail(courseId, authContext.state.userInfo.id)
             .then(response => {
-                console.log(response.data.payload.section)
                 if (response.status === 200)
                     setCourseInfo(dispatch, response.data.payload);
                 else
@@ -90,7 +89,7 @@ const CourseDetail = (props) => {
                 setcourseSectionLoading(false);
                 setCourseSection(dispatch, sections);
             }
-            loadSection();ScreenOrientation
+            loadSection();
         }
     }, [state.userBuyCourse]);
 

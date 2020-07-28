@@ -44,15 +44,15 @@ const Register = (props) => {
                 .then(response => {
                     if (status === 200) {
                         UserServices.sendActivateEmail(email)
-                            .then(response => {
-                                setStatus({status: response.status, message: response.data.message});
+                            .then(response1 => {
+                                setStatus({status: response1.status, message: response1.data.message});
                             })
                             .catch(error => {
                                 setStatus({status: 503, message: error.message});
                                 UserServices.handleError(error);
                             });
                     } else
-                        setStatus(response);
+                        setStatus({status: response.status, message: response.data.message});
                 })
                 .catch(error => {
                     setStatus({status: 503, message: error.message});

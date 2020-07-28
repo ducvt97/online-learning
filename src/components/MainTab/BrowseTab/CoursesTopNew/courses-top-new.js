@@ -29,7 +29,7 @@ const CoursesTopNew = (props) => {
             })
     }, []);
 
-    return <View style={[CommonStyles.shortPaddingHorizontal, theme.background]}>
+    return <View style={[CommonStyles.shortPaddingHorizontal, theme.background, CommonStyles.flex]}>
         {isLoading ? <ActivityIndicator color={theme.tintColor} /> 
             : data ? <ListCourses data={data} navigation={props.navigation} theme={theme} screenName={ScreenName.courseDetail} />
             : <Text style={[theme.titleColor, CommonStyles.fontSizeBig]}>{message}</Text>}
