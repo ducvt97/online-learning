@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 
 import ListCourses from '../../../Courses/ListCourses/list-courses';
-import ListAuthors from '../../../ListAuthors/list-authors';
+import ListInstructors from '../../../ListInstructors/list-instructors';
 
 import { CommonStyles } from '../../../../globals/styles';
 import { ThemeContext } from '../../../../contexts/theme-context';
@@ -22,10 +22,10 @@ const SearchAllTab = (props) => {
             rightButtonTitle={searchContext.state.searchResult.courses.length + " results"}
             emptyListText={`No results match "${searchContext.state.currentSearchText}"`}
             onPressHeaderButton={() => onPressHeaderButton(ScreenName.searchCoursesTab)} navigation={props.navigation} />
-        <ListAuthors data={searchContext.state.searchResult.instructors} theme={theme} headerTitle="Instructors" style={styles.list}
+        <ListInstructors data={searchContext.state.searchResult.instructors} theme={theme} headerTitle="Instructors" style={styles.list}
             rightButtonTitle={searchContext.state.searchResult.instructors.length + " results"}
             emptyListText={`No results match "${searchContext.state.currentSearchText}"`}
-            onPressHeaderButton={() => onPressHeaderButton(ScreenName.searchAuthorsTab)} navigation={props.navigation} />
+            onPressHeaderButton={() => onPressHeaderButton(ScreenName.searchInstructorsTab)} navigation={props.navigation} />
     </ScrollView>
 }
 

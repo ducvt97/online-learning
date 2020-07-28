@@ -11,7 +11,7 @@ export const ScreenName = {
     setting: "Setting",
     theme: "Theme",
     courseDetail: "CourseDetail",
-    authorDetail: "AuthorDetail",
+    instructorDetail: "InstructorDetail",
     contentsTab: "ContentsTab",
     transcriptTab: "TranscriptTab",
     mainTab: "MainTab",
@@ -31,7 +31,7 @@ export const ScreenName = {
     searchResultsTabNavigation: "SearchResultsTabNavigation",
     searchAllTab: "SearchAllTab",
     searchCoursesTab: "SearchCoursesTab",
-    searchAuthorsTab: "SearchAuthorsTab"
+    searchInstructorsTab: "SearchInstructorsTab"
 }
 
 export const ScreenTitle = {
@@ -45,7 +45,7 @@ export const ScreenTitle = {
     setting: "Setting",
     theme: "Theme",
     courseDetail: "Course Detail",
-    authorDetail: "Author",
+    instructorDetail: "Instructor",
     contentsTab: "Contents",
     transcriptTab: "Transcript",
     homeTab: "Home",
@@ -59,7 +59,7 @@ export const ScreenTitle = {
     searchTab: "Search",
     searchAllTab: "All",
     searchCoursesTab: "Courses",
-    searchAuthorsTab: "Authors"
+    searchInstructorsTab: "Instructors"
 }
 
 export const Colors = {

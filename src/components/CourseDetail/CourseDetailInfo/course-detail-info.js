@@ -85,10 +85,10 @@ const CourseDetailInfo = (props) => {
     return <View style={[theme.background]}>
         <Spinner visible={buyCourseLoading} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
         <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{props.state.courseInfo.title}</Text>
-        <ListItem containerStyle={[styles.authorButton, theme.navigationHeader, CommonStyles.shortMarginVertical]}
+        <ListItem containerStyle={[styles.instructorButton, theme.navigationHeader, CommonStyles.shortMarginVertical]}
             leftAvatar={{source: {uri: props.state.courseInfo.instructor.avatar}}}
             title={props.state.courseInfo.instructor.name} titleStyle={theme.titleColor}
-            onPress={() => props.navigation.navigate(ScreenName.authorDetail, { itemId: props.state.courseInfo.instructor.id })} />
+            onPress={() => props.navigation.navigate(ScreenName.instructorDetail, { itemId: props.state.courseInfo.instructor.id })} />
         <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
             <Text style={theme.textColor}>{`${new Date(props.state.courseInfo.createdAt).toDateString()} . ${props.state.courseInfo.totalHours} hours`}</Text>
             <Rating style={[styles.rating, CommonStyles.shortPaddingHorizontal]} tintColor={theme.backgroundColor} imageSize={15} fractions={0.75}
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
     },
-    authorButton: {
+    instructorButton: {
         marginTop: 10,
         borderRadius: 30,
         maxWidth: 200,

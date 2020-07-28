@@ -4,7 +4,7 @@ import { Tile } from 'react-native-elements';
 
 import PopularSkills from './PopularSkills/popular-skills';
 import ListCoursesHorizontal from '../../Courses/ListCoursesHorizontal/list-courses-horizontal';
-import TopAuthors from './TopAuthors/top-authors';
+import TopInstructors from './TopInstructors/top-instructors';
 
 import { CommonStyles } from '../../../globals/styles';
 import { Colors, ScreenName } from '../../../globals/constants';
@@ -41,7 +41,7 @@ const BrowseTab = (props) => {
             <ListCoursesHorizontal screenName={ScreenName.courseDetail} navigation={props.navigation} theme={theme}
                 requestData={CoursesServices.getTopRate} requestDataError={CoursesServices.handleError} headerTitle="Top Rate"
                 onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.coursesTopRate} />
-            <TopAuthors screenName={ScreenName.authorDetail} onPressHeaderButton={onPressHeaderButton} theme={theme} 
+            <TopInstructors screenName={ScreenName.instructorDetail} onPressHeaderButton={onPressHeaderButton} theme={theme} 
                 navigation={props.navigation} headerTitle="Top Instructors" />
         </View>
     </ScrollView>

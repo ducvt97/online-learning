@@ -88,7 +88,7 @@ return <View style={[CommonStyles.generalContainer, theme.background]}>
         {searchContext.state.currentSearchText === "" ? searchContext.state.recentSearches.length > 0 ?
             <SectionHeader style={theme.background} title="Recent searches" titleStyle={theme.titleColor} rightButtonTitle="Clear"
                 onPressRightButton={searchContext.clearRecentSearches} />
-            : <ListEmptyView theme={theme} title="Search by title, author, or subject." subtitle="Over 7000 courses at your fingertips." />
+            : <ListEmptyView theme={theme} title="Search by title, instructor, or subject." subtitle="Over 7000 courses at your fingertips." />
         : null}
         <FlatList keyExtractor={(item, index) => index.toString()} data={searchContext.state.recentSearches} renderItem={renderItem} />
     </View>

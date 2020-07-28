@@ -7,7 +7,7 @@ import SectionHeader from '../../../common/section-header';
 import InstructorServices from '../../../../core/services/instructor-service';
 import { ScreenName } from '../../../../globals/constants';
 
-const TopAuthors = (props) => {
+const TopInstructors = (props) => {
     const theme = props.theme;
     const [data, setData] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -46,13 +46,13 @@ const TopAuthors = (props) => {
                 data={data.length > 10 ? data.slice(0, 10) : data}
                 renderItem={({item}) =>
                     <AvatarTitle title={item["user.name"]} style={styles.item} titleStyle={theme ? theme.titleColor : null} size="large"
-                        imageUrl={item["user.avatar"]} onPressItem={() => onPressItem(ScreenName.authorDetail, item.id)} itemId={item.id} />}/>
+                        imageUrl={item["user.avatar"]} onPressItem={() => onPressItem(ScreenName.instructorDetail, item.id)} itemId={item.id} />}/>
             : <Text style={theme ? theme.titleColor : null}>{errorMessage}</Text>
         }
     </View>
 }
 
-export default TopAuthors;
+export default TopInstructors;
 
 const styles = StyleSheet.create({
     container: {

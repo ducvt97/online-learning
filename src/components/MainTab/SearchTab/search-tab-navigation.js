@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import SearchAllTab from './SearchAllTab/search-all-tab';
 import SearchCoursesTab from './SearchCoursesTab/search-courses-tab';
-import SearchAuthorsTab from './SearchAuthorsTab/search-authors-tab';
+import SearchInstructorsTab from './SearchInstructorsTab/search-instructors-tab';
 import SearchResults from './SearchResults/search-results';
 import SearchHeader from './SearchHeader/search-header';
 
@@ -35,9 +35,9 @@ const SearchResultsTabNavigation = (props) => {
                 options={{ headerShown: false,
                     tabBarLabel: ScreenTitle.searchCoursesTab
             }} />
-            <SearchResultsTab.Screen name={ScreenName.searchAuthorsTab} component={SearchAuthorsTab}
+            <SearchResultsTab.Screen name={ScreenName.searchInstructorsTab} component={SearchInstructorsTab}
                 options={{ headerShown: false,
-                    tabBarLabel: ScreenTitle.searchAuthorsTab
+                    tabBarLabel: ScreenTitle.searchInstructorsTab
             }} />
         </SearchResultsTab.Navigator>
     )

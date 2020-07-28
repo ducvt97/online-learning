@@ -11,13 +11,12 @@ import StartScreen from './src/components/Others/StartScreen/start-screen';
 import SplashScreen from './src/components/Others/SplashScreen/splash-screen';
 import MainTabNavigation from './src/components/MainTab/main-tab-navigation';
 import CourseDetail from './src/components/CourseDetail/course-detail';
-import AuthorDetail from './src/components/AuthorDetail/author-detail';
+import InstructorDetail from './src/components/InstructorDetail/instructor-detail';
 import ResetPassword from './src/components/Authentication/ResetPassword/reset-password';
 
 import { ScreenName, ScreenTitle } from './src/globals/constants';
 import { AuthenticationProvider } from './src/contexts/authentication-context';
 import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
-import { CoursesProvider } from './src/contexts/courses-context';
 import { SearchProvider } from './src/contexts/search-context';
 
 axios.defaults.baseURL = "https://api.itedu.me";
@@ -44,7 +43,7 @@ const MainNavigation = () => {
             <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: ScreenTitle.changePassword }} />
             <MainStack.Screen name={ScreenName.mainTab} component={MainTabNavigation} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
-            <MainStack.Screen name={ScreenName.authorDetail} component={AuthorDetail} options={{ title: ScreenTitle.authorDetail }} />
+            <MainStack.Screen name={ScreenName.instructorDetail} component={InstructorDetail} options={{ title: ScreenTitle.InstructorDetail }} />
         </MainStack.Navigator>
     )
 }
@@ -53,13 +52,11 @@ export default function App() {
     return (
         <AuthenticationProvider>
             <ThemeProvider>
-                <CoursesProvider>
-                    <SearchProvider>
-                        <NavigationContainer>
-                            <MainNavigation />
-                        </NavigationContainer>
-                    </SearchProvider>
-                </CoursesProvider>
+                <SearchProvider>
+                    <NavigationContainer>
+                        <MainNavigation />
+                    </NavigationContainer>
+                </SearchProvider>
             </ThemeProvider>
         </AuthenticationProvider>
     );

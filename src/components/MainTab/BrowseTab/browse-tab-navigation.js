@@ -5,11 +5,10 @@ import BrowseTab from './browse-tab';
 import CoursesTopNew from './CoursesTopNew/courses-top-new';
 import CoursesRecommend from './CoursesRecommend/courses-recommend';
 import ListCourses from '../../Courses/ListCourses/list-courses';
-import ListAuthors from '../../ListAuthors/list-authors';
+import ListInstructors from '../../ListInstructors/list-instructors';
 
 import { ScreenName, ScreenTitle } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
-import AuthorDetail from '../../AuthorDetail/author-detail';
 
 const BrowseTabStack = createStackNavigator();
 
@@ -26,7 +25,7 @@ const BrowseTabNavigation = (props) => {
             <BrowseTabStack.Screen name={ScreenName.coursesTopSell} component={ListCourses} options={{ headerTitle: ScreenTitle.coursesTopSell }} />
             <BrowseTabStack.Screen name={ScreenName.coursesTopRate} component={ListCourses} options={{ headerTitle: ScreenTitle.coursesTopRate }} />
             <BrowseTabStack.Screen name={ScreenName.coursesRecommend} component={CoursesRecommend} options={{ headerTitle: ScreenTitle.coursesRecommend }} />
-            <BrowseTabStack.Screen name={ScreenName.topInstructor} component={ListAuthors} options={{ headerTitle: ScreenTitle.topInstructor }} />
+            <BrowseTabStack.Screen name={ScreenName.topInstructor} component={ListInstructors} options={{ headerTitle: ScreenTitle.topInstructor }} />
         </BrowseTabStack.Navigator>
     )
 }

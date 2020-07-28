@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, FlatList, View, Text, TextInput } from 'react-native';
 import { Rating, Divider, Button } from 'react-native-elements';
 
-import AvatarTitle from '../../MainTab/BrowseTab/TopAuthors/AvatarTitle/avatar-title';
+import AvatarTitle from '../../MainTab/BrowseTab/TopInstructors/AvatarTitle/avatar-title';
 import { CommonStyles } from '../../../globals/styles';
 import CoursesServices from '../../../core/services/courses-services';
 import { setUserRatingCourse } from '../../../actions/course-detail-action';

@@ -7,7 +7,7 @@ import { CommonStyles } from '../../globals/styles';
 import { Colors, ScreenName } from '../../globals/constants';
 import { ThemeContext } from '../../contexts/theme-context';
 
-const ListAuthors = (props) => {
+const ListInstructors = (props) => {
     const data = props.data || props.route.params.data;
     const {theme} = useContext(ThemeContext);
 
@@ -22,7 +22,7 @@ const ListAuthors = (props) => {
             subtitle={item.major}
             leftAvatar={{ source: { uri: item["user.avatar"] } }}
             bottomDivider
-            onPress={() => onPressItem(ScreenName.authorDetail, item.id)}
+            onPress={() => onPressItem(ScreenName.instructorDetail, item.id)}
         />
     }
 
@@ -38,7 +38,7 @@ const ListAuthors = (props) => {
     </View>;
 }
 
-export default ListAuthors;
+export default ListInstructors;
 
 const styles = StyleSheet.create({
     item: {

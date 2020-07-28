@@ -11,7 +11,7 @@ import { ScreenName, Colors } from '../../globals/constants';
 import InstructorServices from '../../core/services/instructor-service';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-const AuthorDetail = (props) => {
+const InstructorDetail = (props) => {
     const instructorId = props.route.params.itemId;
     const [instructor, setInstructor] = useState(null);
     const [message, setMessage] = useState(null);
@@ -64,7 +64,7 @@ const AuthorDetail = (props) => {
     </ScrollView>
 }
 
-export default AuthorDetail;
+export default InstructorDetail;
 
 const styles = StyleSheet.create({
     container: {
