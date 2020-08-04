@@ -70,6 +70,15 @@ export default class CoursesServices {
         return axios.post(`${requestUrl}/search`, { keyword: keyword });
     }
 
+    static searchByCategory = (categoryId) => {
+        return axios.post(`${requestUrl}/search`, { 
+            keyword: "",
+            opt: {
+                category: [ categoryId ],
+            }
+        });
+    }
+
     static handleError = (error) => {
         console.log(`Course service error: ${error}`);
     }

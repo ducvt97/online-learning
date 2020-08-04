@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 
 import ListCourses from '../../../Courses/ListCourses/list-courses';
 import { CommonStyles } from '../../../../globals/styles';
@@ -7,18 +7,18 @@ import { ThemeContext } from '../../../../contexts/theme-context';
 import CoursesServices from '../../../../core/services/courses-services';
 import { ScreenName } from '../../../../globals/constants';
 
-const CoursesTopNew = (props) => {
+const CoursesOfCategory = (props) => {
     const [data, setData] = useState(null);
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
-        CoursesServices.getTopNew()
+        CoursesServices.searchByCategory(props.route.params.category.id)
             .then(response => {
                 setIsLoading(false);
                 if(response.status === 200)
-                    setData(response.data.payload);
+                    setData(response.data.payload.rows);
                 else
                     setMessage(response.data.message);
             })
@@ -30,10 +30,20 @@ const CoursesTopNew = (props) => {
     }, []);
 
     return <View style={[CommonStyles.shortPaddingHorizontal, theme.background, CommonStyles.flex]}>
+        <Text style={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, theme.titleColor, styles.header]}>Category "{props.route.params.category.name}"</Text>
         {isLoading ? <ActivityIndicator color={theme.tintColor} /> 
-            : data ? <ListCourses data={data} navigation={props.navigation} theme={theme} screenName={ScreenName.courseDetail} />
+            : data ? <ListCourses data={data} style={styles.list} navigation={props.navigation} theme={theme} screenName={ScreenName.courseDetail} />
             : <Text style={[theme.titleColor, CommonStyles.fontSizeBig]}>{message}</Text>}
     </View>
 }
 
-export default CoursesTopNew;
+export default CoursesOfCategory;
+
+const styles = StyleSheet.create({
+    header: {
+        marginVertical: 10
+    },
+    list: {
+        marginBottom: 50
+    }
+});

@@ -55,11 +55,11 @@ export const CommonStyles = StyleSheet.create({
     },
     // Styles for some button types
     imageButtonBig: {
-        height: 130
+        height: 120
     },
     imageButtonSmall: {
         height: 70,
-        width: 200
+        width: 190
     },
     buttonListItem: {
         borderRadius: 15,

@@ -4,12 +4,12 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import PopularSkills from './PopularSkills/popular-skills';
 import ListCoursesHorizontal from '../../Courses/ListCoursesHorizontal/list-courses-horizontal';
 import TopInstructors from './TopInstructors/top-instructors';
+import ImageText from '../../common/image-text';
 
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import CoursesServices from '../../../core/services/courses-services';
-import ImageText from '../../common/image-text';
 
 const BrowseTab = (props) => {
     const {theme} = useContext(ThemeContext);
@@ -26,7 +26,7 @@ const BrowseTab = (props) => {
             style={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]}
             onPress={() => props.navigation.navigate(ScreenName.coursesRecommend)} />
         <View style={styles.container}>
-            <PopularSkills theme={theme} headerTitle="Popular Skills Categories" />
+            <PopularSkills theme={theme} {...props} />
             <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Top Sell"
                 requestData={CoursesServices.getTopSell} requestDataError={CoursesServices.handleError}
                 onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.coursesTopSell} />
