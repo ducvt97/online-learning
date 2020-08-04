@@ -12,8 +12,6 @@ export const ScreenName = {
     theme: "Theme",
     courseDetail: "CourseDetail",
     instructorDetail: "InstructorDetail",
-    contentsTab: "ContentsTab",
-    transcriptTab: "TranscriptTab",
     mainTab: "MainTab",
     homeTabNavigation: "HomeTabNavigation",
     homeTab: "HomeTab",
@@ -48,8 +46,6 @@ export const ScreenTitle = {
     theme: "Theme",
     courseDetail: "Course Detail",
     instructorDetail: "Instructor",
-    contentsTab: "Contents",
-    transcriptTab: "Transcript",
     homeTab: "Home",
     continueLearning: "Continue Learning",
     favorites: "Favorites",
@@ -95,7 +91,7 @@ export const SearchActionTypes = {
     clearRecentSearch: "CLEAR_RECENT_SEARCH"
 }
 
-export const CourseDeatailActionTypes = {
+export const CourseDetailActionTypes = {
     setDidUserBuyCourse: "SET_DID_USER_BUY_COURSE",
     setCourseInfo: "SET_COURSE_INFO",
     setCourseSection: "SET_COURSE_SECTION",
@@ -105,5 +101,6 @@ export const CourseDeatailActionTypes = {
     setCurrentLesson: "SET_CURRENT_LESSON",
     setCurrentTimePlayingVideo: "SET_CURRENT_TIME_PLAYING_VIDEO",
     setVideoPlaying: "SET_VIDEO_PLAYING",
+    setProcess: "SET_PROCESS",
     closeCourseDetail: "CLOSE_COURSE_DETAIL",
 }

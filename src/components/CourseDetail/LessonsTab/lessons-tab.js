@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { StyleSheet, View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { ListItem, Divider } from 'react-native-elements';
 
 import ListCoursesItem from '../../common/list-courses-item';
@@ -10,7 +10,7 @@ import { setCurrentLesson } from '../../../actions/course-detail-action';
 import LessonServices from '../../../core/services/lesson-services';
 import Utilities from '../../../core/fwk/utilities';
 
-const ContentsTab = (props) => {
+const LessonsTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
     const renderSection = (section, theme) => {
@@ -47,15 +47,18 @@ const ContentsTab = (props) => {
         />
     }
 
-    return <View style={[theme.background, styles.container]}>
-        <FlatList data={props.state.courseSection} ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
-            keyExtractor={(item, index) => index.toString()} renderItem={({item}) => renderSection(item, theme)}
-            showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} />
-        <Divider style={CommonStyles.divider} />
+    return <View style={[theme.background, styles.container, CommonStyles.flex]}>
+    {
+        props.dataLoading ? <ActivityIndicator color={theme.tintColor} />
+        : props.errMsgLoading ? <Text>{props.errMsgLoading}</Text>
+            : <FlatList data={props.state.courseSection} ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
+                keyExtractor={(item, index) => index.toString()} renderItem={({item}) => renderSection(item, theme)}
+                showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} />
+    }
     </View>
 }
 
-export default ContentsTab;
+export default LessonsTab;
 
 const styles = StyleSheet.create({
     container: {

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native';
-import { ListItem, Rating, Divider, Button } from 'react-native-elements';
+import { StyleSheet, View, Text, ActivityIndicator, FlatList, TouchableOpacity, Share } from 'react-native';
+import { ListItem, Rating, Button, Icon } from 'react-native-elements';
 import { Linking } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -10,14 +10,15 @@ import { ThemeContext } from '../../../contexts/theme-context';
 import { Colors, ScreenName } from '../../../globals/constants';
 import PaymentServices from '../../../core/services/payment-services';
 import UserServices from '../../../core/services/user-services';
-import { setUserBuyCourse, setUserLikeCourse } from '../../../actions/course-detail-action';
+import { setUserBuyCourse, setUserLikeCourse, setProcess } from '../../../actions/course-detail-action';
+import CoursesServices from '../../../core/services/courses-services';
+import Utilities from '../../../core/fwk/utilities';
 
 const CourseDetailInfo = (props) => {
     const {theme} = useContext(ThemeContext);
     const [paymentLoadingStatus, setPaymentLoadingStatus] = useState(true);
     const [errMsgPaymentStatus, setErrMsgPaymentStatus] = useState("");
     const [likeCourseLoading, setLikeCourseLoading] = useState(true);
-    const [errMsgLikeCourseLoading, setErrMsgLikeCourseLoading] = useState("");
     const [buyCourseLoading, setBuyCourseLoading] = useState(false);
 
     useEffect(() => {
@@ -38,25 +39,34 @@ const CourseDetailInfo = (props) => {
             .then(response => {
                 setLikeCourseLoading(false);
                 if (response.status === 200)
-                    setUserLikeCourse(props.dispatch,response.data.likeStatus);
+                    setUserLikeCourse(props.dispatch, response.data.likeStatus);
                 else
-                    setErrMsgLikeCourseLoading(response.data.message);
+                    alert(response.data.message);
             }).catch(error => {
                 setLikeCourseLoading(false);
-                setErrMsgLikeCourseLoading(error.message);
+                alert(error.message);
                 UserServices.handleError(error);
             });
     }, []);
+
+    useEffect(() => {
+        CoursesServices.getCourseProcess(props.state.courseInfo.id)
+            .then(response => {
+                if (response.status === 200)
+                    setProcess(props.dispatch, Utilities.roundFloat(response.data.payload / 100 * props.state.courseInfo.totalHours) );
+            }).catch(error => {
+                UserServices.handleError(error);
+            });
+    }, [props.state.currentLesson]);
 
     const onPressLikeCourse = (courseId) => {
         setLikeCourseLoading(true);
         UserServices.likeCourse(courseId)
             .then(response => {
                 setLikeCourseLoading(false);
-                if (response.status === 200) {
+                if (response.status === 200)
                     setUserLikeCourse(props.dispatch, response.data.likeStatus);
-                    setErrMsgLikeCourseLoading("");
-                } else
+                else
                     alert(response.data.message);
             }).catch(error => {
                 setLikeCourseLoading(false);
@@ -91,22 +101,28 @@ const CourseDetailInfo = (props) => {
             onPress={() => props.navigation.navigate(ScreenName.instructorDetail, { itemId: props.state.courseInfo.instructor.id })} />
         <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
             <Text style={theme.textColor}>{`${new Date(props.state.courseInfo.createdAt).toDateString()} . ${props.state.courseInfo.totalHours} hours`}</Text>
-            <Rating style={[styles.rating, CommonStyles.shortPaddingHorizontal]} tintColor={theme.backgroundColor} imageSize={15} fractions={0.75}
+            <Rating style={{marginLeft: 15}} tintColor={theme.backgroundColor} imageSize={15} fractions={0.75}
                 startingValue={Number(props.state.courseInfo.averagePoint)} readonly />
-            <Text style={theme.textColor}>({props.state.courseInfo.ratedNumber})</Text>
+            <Text style={[theme.textColor, {marginLeft: 5}]}>({props.state.courseInfo.ratedNumber})</Text>
         </View>
-        {props.state.userLikeCourse != null ?
-            <Button icon={{type: "font-awesome", name: props.state.userLikeCourse ? "heart" : "heart-o", color: Colors.dodgerBlue}} type="outline"
-                loading={likeCourseLoading} title={props.state.userLikeCourse ? "Unlike Course" : "Like Course"}
-                containerStyle={CommonStyles.shortMarginVertical} onPress={() => onPressLikeCourse(props.state.courseInfo.id)} />
-            : <Text style={[theme.textColor]}>{errMsgLikeCourseLoading}</Text>}
+        <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Process:  {props.state.process} / {props.state.courseInfo.totalHours} hours</Text>
+        <View style={[styles.rowContainer, styles.buttonGroup]}>
+            <TouchableOpacity style={styles.iconButton} onPress={() => onPressLikeCourse(props.state.courseInfo.id)}>
+                <Icon reverse type="font-awesome" name={likeCourseLoading ? "spinner" : props.state.userLikeCourse ? "heart" : "heart-o"}
+                    color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
+                <Text style={{color: Colors.dodgerBlue}}>{props.state.userLikeCourse ? "Liked" : "Like"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.iconButton} onPress={() => Share.share({message: `Share course "${props.state.courseInfo.title}"`})}>
+                <Icon reverse type="font-awesome" name="share" color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
+                <Text style={{color: Colors.dodgerBlue}}>Share</Text>
+            </TouchableOpacity>
+        </View>
         {paymentLoadingStatus ? <ActivityIndicator color={theme.tintColor} />
         : !props.state.userBuyCourse ? props.state.userBuyCourse != null
             ? <Button icon={{type: "font-awesome", name: "shopping-cart", color: Colors.ghostWhite}} title="Buy Course" containerStyle={CommonStyles.shortMarginVertical}
                 onPress={() => onPressBuyCourse(props.state.courseInfo.id)} />
             : <Text style={theme.textColor}>{errMsgPaymentStatus}</Text>
         : null}
-        <Divider style={CommonStyles.divider} />
         <View>
             <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Descriptions</Text>
             <Description style={theme.textColor} content={props.state.courseInfo.description} theme={theme} />
@@ -138,14 +154,18 @@ const styles = StyleSheet.create({
         maxHeight: 40,
         padding: 2
     },
-    rating: {
-        marginLeft: 10
-    },
     listItem: {
         marginVertical: 3,
         marginLeft: 5
     },
     field: {
         marginBottom: 10
+    },
+    iconButton: {
+        alignItems: "center"
+    },
+    buttonGroup: {
+        justifyContent: "space-around",
+        marginVertical: 10
     }
 });

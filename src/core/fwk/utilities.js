@@ -16,4 +16,8 @@ export default class Utilities {
         const splits = url.split("https://youtube.com/embed/");
         return splits[1];
     }
+
+    static roundFloat(number) {
+        return Number.parseFloat(number).toFixed(2);
+    }
 }
