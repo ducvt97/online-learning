@@ -15,7 +15,6 @@ const CoursesRecommend = (props) => {
     useEffect(() => {
         CoursesServices.getTopRate()
             .then(response => {
-                
                 setIsLoading(false);
                 if(response.status === 200)
                     setData(response.data.payload);

@@ -10,6 +10,15 @@ export default class UserServices {
         });
     }
 
+    static loginWithGoogle = (email, googleId) => {
+        return axios.post(`/user/login-google-mobile`, {
+            user: {
+                email: email,
+                id: googleId
+            }
+        });
+    }
+
     static register = (name, email, phone, password) => {
         return axios.post(`${requestUrl}/register`, {
             name: name,
@@ -28,7 +37,6 @@ export default class UserServices {
     }
 
     static getInfo = (token) => {
-        // return axios.get(`${requestUrl}/me`);
         const instance = axios.create({
             headers: {"Authorization": `Bearer ${token}`}
         });

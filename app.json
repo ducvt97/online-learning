@@ -22,7 +22,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hcmus.onlineLearning",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "33913581111-firjd69m8h8lm4rs554rp7s79csq6aet.apps.googleusercontent.com"
+        }
+      }
+    },
+    "android": {
+      "package": "com.hcmus.onlineLearning"
     }
   }
 }
