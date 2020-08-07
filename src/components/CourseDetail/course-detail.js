@@ -18,6 +18,7 @@ import { AuthenticationContext } from '../../contexts/authentication-context';
 import courseDetailReducer from '../../reducers/course-detail-reducer';
 import { setCourseInfo, setVideoPlaying, setUserRatingCourse } from '../../actions/course-detail-action';
 import Utilities from '../../core/fwk/utilities';
+import { LanguageContext } from '../../contexts/language-context';
 
 const initialState = {
     process: null,
@@ -38,6 +39,7 @@ const CourseDetail = (props) => {
 
     const {theme} = useContext(ThemeContext);
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
         CoursesServices.getCourseDetail(courseId, authContext.state.userInfo.id)
@@ -91,10 +93,10 @@ const CourseDetail = (props) => {
         : <Image style={styles.image} source={{uri: state.courseInfo.imageUrl}} />}
         <ScrollView nestedScrollEnabled style={CommonStyles.shortPaddingHorizontal}>
             <CourseDetailInfo {...props} state={state} dispatch={dispatch} />
-            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Contents</Text>
+            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["content"]}</Text>
             {state.userBuyCourse ? <Contents {...props} state={state} dispatch={dispatch} />
-            : <Text style={[theme.titleColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>You must buy course to see lessons.</Text>}
-            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Related Courses</Text>
+            : <Text style={[theme.titleColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["paymentRequire"]}</Text>}
+            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["courses"]} {langContext.state.translation["relate"]}</Text>
             <ListCoursesHorizontal data={state.courseInfo.coursesLikeCategory} theme={theme} {...props} />
             <RatingsAndReviews state={state} dispatch={dispatch} theme={theme} style={CommonStyles.shortMarginVertical} />
         </ScrollView>

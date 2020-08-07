@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 import { Rating } from 'react-native-elements';
 
 import { CommonStyles } from '../../globals/styles';
 import { Colors } from '../../globals/constants';
+import { LanguageContext } from '../../contexts/language-context';
 
 const ListCoursesItem = (props) => {
     const data = props.data;
     const theme = props.theme;
+    const langContext = useContext(LanguageContext);
 
     return <View style={props.style}>
         <TouchableOpacity style={styles.container} onPress={props.onPress} activeOpacity={props.noActiveOpacity ? 1 : 0.4}>
@@ -21,7 +23,7 @@ const ListCoursesItem = (props) => {
                     ? <Text style={{color: Colors.green}}>{typeof(data.coursePrice) === "number" ? data.coursePrice : data.price} đ</Text> : null}
                     {data.createdAt || data.totalHours ? <Text style={theme ? theme.textColor : {}} numberOfLines={1}>
                         {data.createdAt ? `${new Date(data.createdAt).toDateString()} . ` : null}
-                        {data.totalHours ? `${data.totalHours} hours` : null}
+                        {data.totalHours ? `${data.totalHours} ${langContext.state.translation["hour"]}` : null}
                     </Text> : null}
                     {typeof(data.courseAveragePoint) === "number" || (typeof(data.courseAveragePoint) === "number" && typeof(data.formalityPoint) === "number" && typeof(data.formalityPoint) === "number") ?
                         <Rating readonly style={styles.rating} tintColor={theme ? theme.backgroundColor: null} imageSize={20} fractions={1}

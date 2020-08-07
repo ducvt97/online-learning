@@ -6,13 +6,16 @@ import ListEmptyBox from '../../common/list-empty-box';
 import SectionHeader from '../../common/section-header';
 import { ScreenName } from '../../../globals/constants';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const ListCoursesHorizontal = (props) => {
     const theme = props.theme;
     const [data, setData] = useState(props.data);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
         if (!data)
@@ -41,7 +44,7 @@ const ListCoursesHorizontal = (props) => {
 
     return <View style={[styles.container, props.style]}>
         {props.headerTitle ? <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null}
-            rightButtonTitle={data && data.length > 0 ? "See all >" : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
+            rightButtonTitle={data && data.length > 0 ? `${langContext.state.translation["seeMore"]} >` : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
             onPressRightButton={() => props.onPressHeaderButton(props.headerScreenName, data, theme, styles.list)} />
         : null}
         {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
@@ -53,7 +56,7 @@ const ListCoursesHorizontal = (props) => {
                     onPress={() => onPressItem(ScreenName.courseDetail, item.id)} />} />
             : props.emptyListTitle ?
                 <ListEmptyBox theme={props.theme} icon={{name: props.emptyListIconName, size: 30}} content={props.emptyListTitle} />
-                : <Text style={theme ? theme.titleColor : null}>Nothing to show</Text>
+                : <Text style={theme ? theme.titleColor : null}>{langContext.state.translation["nothingShow"]}</Text>
         : <Text style={theme ? theme.titleColor : null}>{errorMessage}</Text>}
     </View>
 }

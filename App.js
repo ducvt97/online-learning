@@ -14,10 +14,11 @@ import CourseDetail from './src/components/CourseDetail/course-detail';
 import InstructorDetail from './src/components/InstructorDetail/instructor-detail';
 import ResetPassword from './src/components/Authentication/ResetPassword/reset-password';
 
-import { ScreenName, ScreenTitle } from './src/globals/constants';
+import { ScreenName } from './src/globals/constants';
 import { AuthenticationProvider } from './src/contexts/authentication-context';
 import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
 import { SearchProvider } from './src/contexts/search-context';
+import { LanguageProvider, LanguageContext } from './src/contexts/language-context';
 
 axios.defaults.baseURL = "https://api.itedu.me";
 axios.defaults.validateStatus = (status) => {
@@ -28,6 +29,7 @@ const MainStack = createStackNavigator();
 
 const MainNavigation = () => {
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     return (
         <MainStack.Navigator initialRouteName={ScreenName.splashScreen}
@@ -36,28 +38,30 @@ const MainNavigation = () => {
         }}>
             <MainStack.Screen name={ScreenName.splashScreen} component={SplashScreen} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.startScreen} component={StartScreen} options={{ headerShown: false }} />
-            <MainStack.Screen name={ScreenName.login} component={Login} options={{ title: ScreenTitle.login }} />
-            <MainStack.Screen name={ScreenName.register} component={Register} options={{ title: ScreenTitle.register }} />
-            <MainStack.Screen name={ScreenName.forgetPassword} component={ForgetPassword} options={{ title: ScreenTitle.forgetPassword }} />
-            <MainStack.Screen name={ScreenName.resetPassword} component={ResetPassword} options={{ title: ScreenTitle.resetPassword }} />
-            <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: ScreenTitle.changePassword }} />
+            <MainStack.Screen name={ScreenName.login} component={Login} options={{ title: langContext.state.translation.screenTitle.login }} />
+            <MainStack.Screen name={ScreenName.register} component={Register} options={{ title: langContext.state.translation.screenTitle.register }} />
+            <MainStack.Screen name={ScreenName.forgetPassword} component={ForgetPassword} options={{ title: langContext.state.translation.screenTitle.forgetPassword }} />
+            <MainStack.Screen name={ScreenName.resetPassword} component={ResetPassword} options={{ title: langContext.state.translation.screenTitle.resetPassword }} />
+            <MainStack.Screen name={ScreenName.changePassword} component={ChangePassword} options={{ title: langContext.state.translation.screenTitle.changePassword }} />
             <MainStack.Screen name={ScreenName.mainTab} component={MainTabNavigation} options={{ headerShown: false }} />
             <MainStack.Screen name={ScreenName.courseDetail} component={CourseDetail} options={{ headerShown: false }} />
-            <MainStack.Screen name={ScreenName.instructorDetail} component={InstructorDetail} options={{ title: ScreenTitle.instructorDetail }} />
+            <MainStack.Screen name={ScreenName.instructorDetail} component={InstructorDetail} options={{ title: langContext.state.translation.screenTitle.instructorDetail }} />
         </MainStack.Navigator>
     )
 }
 
 export default function App() {
     return (
-        <AuthenticationProvider>
-            <ThemeProvider>
-                <SearchProvider>
-                    <NavigationContainer>
-                        <MainNavigation />
-                    </NavigationContainer>
-                </SearchProvider>
-            </ThemeProvider>
-        </AuthenticationProvider>
+        <LanguageProvider>
+            <AuthenticationProvider>
+                <ThemeProvider>
+                    <SearchProvider>
+                        <NavigationContainer>
+                            <MainNavigation />
+                        </NavigationContainer>
+                    </SearchProvider>
+                </ThemeProvider>
+            </AuthenticationProvider>
+        </LanguageProvider>
     );
 }

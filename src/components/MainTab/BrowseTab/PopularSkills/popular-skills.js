@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, FlatList, ScrollView, Text, ActivityIndicator } from 'react-native';
 
 import SectionHeader from '../../../common/section-header';
+import ImageText from '../../../common/image-text';
+
 import { CommonStyles } from '../../../../globals/styles';
 import { Colors, ScreenName } from '../../../../globals/constants';
 import CategoryServices from '../../../../core/services/category-services';
-import ImageText from '../../../common/image-text';
+import { LanguageContext } from '../../../../contexts/language-context';
 
 const PopularSkills = (props) => {
     const theme = props.theme;
+    const langContext = useContext(LanguageContext);
     const [categories, setCategories] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +37,7 @@ const PopularSkills = (props) => {
     }
 
     return <View>
-        <SectionHeader title="Popular Skills &amp; Categories" style={[theme ? theme.background : null, styles.header]} titleStyle={theme ? theme.titleColor : null} />
+        <SectionHeader title={langContext.state.translation["popularCategory"]} style={[theme ? theme.background : null, styles.header]} titleStyle={theme ? theme.titleColor : null} />
         {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
         : categories && categories.length > 0 ?
             <ScrollView horizontal={true}>

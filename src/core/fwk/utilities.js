@@ -1,3 +1,5 @@
+import { AsyncStorage } from "react-native";
+
 export default class Utilities {
     static milsecondToHour = (millisec) => (millisec / (1000 * 60 * 60)).toFixed(2);
 
@@ -17,7 +19,5 @@ export default class Utilities {
         return splits[1];
     }
 
-    static roundFloat(number) {
-        return Number.parseFloat(number).toFixed(2);
-    }
+    static roundFloat = (number) => Number.parseFloat(number).toFixed(2);
 }

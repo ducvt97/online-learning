@@ -2,23 +2,26 @@ import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ButtonGroup, Divider } from 'react-native-elements';
 
+import LessonsTab from '../LessonsTab/lessons-tab';
+import ExercisesTab from '../ExercisesTab/exercises-tab';
+
 import { CommonStyles } from '../../../globals/styles';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { Colors } from '../../../globals/constants';
 import { setCourseSection } from '../../../actions/course-detail-action';
 import LessonServices from '../../../core/services/lesson-services';
 import ExerciseServices from '../../../core/services/exercise-services';
-import LessonsTab from '../LessonsTab/lessons-tab';
-import ExercisesTab from '../ExercisesTab/exercises-tab';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const Contents = (props) => {
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
     const [sectionsLoading, setSectionsLoading] = useState(true);
     const [errMsgSections, setErrMsgSections] = useState(null);
     const [exercisesLoading, setExercisesLoading] = useState(true);
     const [errMsgExercises, setErrMsgExercises] = useState(null);
 
-    const buttons = ["Lessons", "Exercises"];
+    const buttons = [langContext.state.translation["lesson"], langContext.state.translation["exercise"]];
     const [currentTab, setCurrentTab] = useState(0);
 
     useEffect(() => {

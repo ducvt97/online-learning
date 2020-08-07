@@ -13,9 +13,11 @@ import UserServices from '../../../core/services/user-services';
 import { setUserBuyCourse, setUserLikeCourse, setProcess } from '../../../actions/course-detail-action';
 import CoursesServices from '../../../core/services/courses-services';
 import Utilities from '../../../core/fwk/utilities';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const CourseDetailInfo = (props) => {
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
     const [paymentLoadingStatus, setPaymentLoadingStatus] = useState(true);
     const [errMsgPaymentStatus, setErrMsgPaymentStatus] = useState("");
     const [likeCourseLoading, setLikeCourseLoading] = useState(true);
@@ -82,7 +84,7 @@ const CourseDetailInfo = (props) => {
                 setBuyCourseLoading(false);
                 if (response.status === 200) {
                     setUserBuyCourse(props.dispatch, true);
-                    alert("Congratulation!! You are so lucky to get this course for free.");
+                    alert(langContext.state.translation["buyCourseSuccessMsg"]);
                 } else
                     Linking.openURL(`https://itedu.me/payment/${props.state.courseInfo.id}`);
             }).catch(error => {
@@ -100,40 +102,40 @@ const CourseDetailInfo = (props) => {
             title={props.state.courseInfo.instructor.name} titleStyle={theme.titleColor}
             onPress={() => props.navigation.navigate(ScreenName.instructorDetail, { itemId: props.state.courseInfo.instructor.id })} />
         <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
-            <Text style={theme.textColor}>{`${new Date(props.state.courseInfo.createdAt).toDateString()} . ${props.state.courseInfo.totalHours} hours`}</Text>
+            <Text style={theme.textColor}>{`${new Date(props.state.courseInfo.createdAt).toDateString()} . ${props.state.courseInfo.totalHours} ${langContext.state.translation["hour"]}`}</Text>
             <Rating style={{marginLeft: 15}} tintColor={theme.backgroundColor} imageSize={15} fractions={0.75}
                 startingValue={Number(props.state.courseInfo.averagePoint)} readonly />
             <Text style={[theme.textColor, {marginLeft: 5}]}>({props.state.courseInfo.ratedNumber})</Text>
         </View>
-        <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Process:  {props.state.process} / {props.state.courseInfo.totalHours} hours</Text>
+        <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["process"]}:  {props.state.process} / {props.state.courseInfo.totalHours} {langContext.state.translation["hour"]}</Text>
         <View style={[styles.rowContainer, styles.buttonGroup]}>
             <TouchableOpacity style={styles.iconButton} onPress={() => onPressLikeCourse(props.state.courseInfo.id)}>
                 <Icon reverse type="font-awesome" name={likeCourseLoading ? "spinner" : props.state.userLikeCourse ? "heart" : "heart-o"}
                     color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
-                <Text style={{color: Colors.dodgerBlue}}>{props.state.userLikeCourse ? "Liked" : "Like"}</Text>
+                <Text style={{color: Colors.dodgerBlue}}>{props.state.userLikeCourse ? langContext.state.translation["liked"] : langContext.state.translation["like"]}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.iconButton} onPress={() => Share.share({message: `Share course "${props.state.courseInfo.title}"`})}>
+            <TouchableOpacity style={styles.iconButton} onPress={() => Share.share({message: `${langContext.state.translation["share"]} ${langContext.state.translation["course"]} "${props.state.courseInfo.title}"`})}>
                 <Icon reverse type="font-awesome" name="share" color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
-                <Text style={{color: Colors.dodgerBlue}}>Share</Text>
+                <Text style={{color: Colors.dodgerBlue}}>{langContext.state.translation["share"]}</Text>
             </TouchableOpacity>
         </View>
         {paymentLoadingStatus ? <ActivityIndicator color={theme.tintColor} />
         : !props.state.userBuyCourse ? props.state.userBuyCourse != null
-            ? <Button icon={{type: "font-awesome", name: "shopping-cart", color: Colors.ghostWhite}} title="Buy Course" containerStyle={CommonStyles.shortMarginVertical}
+            ? <Button icon={{type: "font-awesome", name: "shopping-cart", color: Colors.ghostWhite}} title={`${langContext.state.translation["buy"]} ${langContext.state.translation["course"]}`} containerStyle={CommonStyles.shortMarginVertical}
                 onPress={() => onPressBuyCourse(props.state.courseInfo.id)} />
             : <Text style={theme.textColor}>{errMsgPaymentStatus}</Text>
         : null}
         <View>
-            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Descriptions</Text>
+            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["description"]}</Text>
             <Description style={theme.textColor} content={props.state.courseInfo.description} theme={theme} />
         </View>
         <View style={styles.field}>
-            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>What you will learn</Text>
+            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["learnWhat"]}</Text>
             <FlatList data={props.state.courseInfo.learnWhat} keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.listItem]}>&#8226; {item}</Text>} />
         </View>
         <View style={styles.field}>
-            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>Requirements</Text>
+            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["requirement"]}</Text>
             <FlatList data={props.state.courseInfo.requirement} keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.listItem]}>&#8226; {item}</Text>} />
         </View>

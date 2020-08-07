@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, FlatList, ActivityIndicator, Text } from 'react-native';
 
 import AvatarTitle from './AvatarTitle/avatar-title';
@@ -6,9 +6,11 @@ import SectionHeader from '../../../common/section-header';
 
 import InstructorServices from '../../../../core/services/instructor-service';
 import { ScreenName } from '../../../../globals/constants';
+import { LanguageContext } from '../../../../contexts/language-context';
 
 const TopInstructors = (props) => {
     const theme = props.theme;
+    const langContext = useContext(LanguageContext);
     const [data, setData] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +41,7 @@ const TopInstructors = (props) => {
 
     return <View style={styles.container}>
         <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null}
-            rightButtonTitle={data && data.length > 0 ? "See all >" : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
+            rightButtonTitle={data && data.length > 0 ? `${langContext.state.translation["seeMore"]} >` : null} rightButtonTitleStyle={theme ? theme.titleColor : null}
             onPressRightButton={() => onPressHeaderRightButton(data, theme, styles.list)} />
         {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
             : data ? <FlatList horizontal={true} keyExtractor={(item, index) => index.toString()}

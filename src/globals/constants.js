@@ -10,6 +10,7 @@ export const ScreenName = {
     profile: "Profile",
     setting: "Setting",
     theme: "Theme",
+    language: "Language",
     courseDetail: "CourseDetail",
     instructorDetail: "InstructorDetail",
     mainTab: "MainTab",
@@ -33,35 +34,6 @@ export const ScreenName = {
     searchAllTab: "SearchAllTab",
     searchCoursesTab: "SearchCoursesTab",
     searchInstructorsTab: "SearchInstructorsTab"
-}
-
-export const ScreenTitle = {
-    login: "Sign In",
-    forgetPassword: "Forget Password",
-    resetPassword: "Reset Password",
-    changePassword: "Change Password",
-    changeEmail: "Change Email",
-    register: "Register",
-    profile: "Profile",
-    setting: "Setting",
-    theme: "Theme",
-    courseDetail: "Course Detail",
-    instructorDetail: "Instructor",
-    homeTab: "Home",
-    continueLearning: "Continue Learning",
-    favorites: "Favorites",
-    downloadTab: "Download",
-    browseTab: "Browse",
-    coursesOfCategory: "Courses Of Category",
-    coursesTopNew: "Top New",
-    coursesTopSell: "Top Sell",
-    coursesTopRate: "Top Rate",
-    coursesRecommend: "Recommend",
-    topInstructor: "Top Instructor",
-    searchTab: "Search",
-    searchAllTab: "All",
-    searchCoursesTab: "Courses",
-    searchInstructorsTab: "Instructors"
 }
 
 export const Colors = {

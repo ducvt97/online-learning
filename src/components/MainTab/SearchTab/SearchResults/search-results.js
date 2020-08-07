@@ -12,15 +12,16 @@ import { ThemeContext } from '../../../../contexts/theme-context';
 import { SearchContext } from '../../../../contexts/search-context';
 import CoursesServices from '../../../../core/services/courses-services';
 import InstructorServices from '../../../../core/services/instructor-service';
+import { LanguageContext } from '../../../../contexts/language-context';
 
 const SearchResults = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const {theme} = useContext(ThemeContext);
     const searchContext = useContext(SearchContext);
+    const langContext = useContext(LanguageContext);
 
     const searchInstructors = async (instructors, searchText) => {
-        if (!searchText)
-            return instructors;
+        if (!searchText) return instructors;
         else {
             let result = [];
             searchText = searchText.toLowerCase();
@@ -57,8 +58,7 @@ const SearchResults = (props) => {
                             } else
                                 alert(reponse.data.message);
                             setIsLoading(false);
-                        })
-                        .catch(error1 => {
+                        }).catch(error1 => {
                             setIsLoading(false);
                             alert(error1);
                             InstructorServices.handleError(error1);
@@ -66,8 +66,7 @@ const SearchResults = (props) => {
                 else
                     alert(reponse.data.message);
                 setIsLoading(false);
-            })
-            .catch(error => {
+            }).catch(error => {
                 setIsLoading(false);
                 alert(error);
                 CoursesServices.handleError(error);
@@ -85,13 +84,13 @@ const SearchResults = (props) => {
 
 return <View style={[CommonStyles.generalContainer, theme.background]}>
     <Spinner visible={isLoading} color={theme.tintColor} />
-        {searchContext.state.currentSearchText === "" ? searchContext.state.recentSearches.length > 0 ?
-            <SectionHeader style={theme.background} title="Recent searches" titleStyle={theme.titleColor} rightButtonTitle="Clear"
-                onPressRightButton={searchContext.clearRecentSearches} />
-            : <ListEmptyView theme={theme} title="Search by title, instructor, or subject." subtitle="Over 7000 courses at your fingertips." />
-        : null}
-        <FlatList keyExtractor={(item, index) => index.toString()} data={searchContext.state.recentSearches} renderItem={renderItem} />
-    </View>
+    {searchContext.state.currentSearchText === "" ? searchContext.state.recentSearches.length > 0 ?
+        <SectionHeader style={theme.background} title={langContext.state.translation["recentSearch"]} titleStyle={theme.titleColor} 
+            rightButtonTitle={langContext.state.translation["clear"]} onPressRightButton={searchContext.clearRecentSearches} />
+        : <ListEmptyView theme={theme} title={langContext.state.translation["searchResultEmptyTitle"]} subtitle={langContext.state.translation["searchResultEmptySubtitle"]} />
+    : null}
+    <FlatList keyExtractor={(item, index) => index.toString()} data={searchContext.state.recentSearches} renderItem={renderItem} />
+</View>
 }
 
 export default SearchResults;

@@ -8,11 +8,13 @@ import { ThemeContext } from '../../../../contexts/theme-context';
 import { SearchContext } from '../../../../contexts/search-context';
 import CoursesServices from '../../../../core/services/courses-services';
 import InstructorServices from '../../../../core/services/instructor-service';
+import { LanguageContext } from '../../../../contexts/language-context';
 
 const SearchHeader = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const searchContext = useContext(SearchContext);
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     const onChangeText = (text) => {
         searchContext.changeSearchText(text);
@@ -22,14 +24,12 @@ const SearchHeader = (props) => {
 
     const onClear = () => {
         searchContext.changeSearchText("");
-        if (props.route.name === ScreenName.searchResultsTabNavigation) {
+        if (props.route.name === ScreenName.searchResultsTabNavigation)
             props.navigation.navigate(ScreenName.searchResults);
-        }
     }
 
     const searchInstructors = async (instructors, searchText) => {
-        if (!searchText)
-            return instructors;
+        if (!searchText) return instructors;
         else {
             let result = [];
             searchText = searchText.toLowerCase();
@@ -67,8 +67,7 @@ const SearchHeader = (props) => {
                                 alert(reponse.data.message);
                                 setIsLoading(false);
                             }
-                        })
-                        .catch(error1 => {
+                        }).catch(error1 => {
                             setIsLoading(false);
                             alert(error1);
                             InstructorServices.handleError(error1);
@@ -77,8 +76,7 @@ const SearchHeader = (props) => {
                     alert(reponse.data.message);
                     setIsLoading(false);
                 }
-            })
-            .catch(error => {
+            }).catch(error => {
                 setIsLoading(false);
                 alert(error);
                 CoursesServices.handleError(error);
@@ -89,9 +87,9 @@ const SearchHeader = (props) => {
         <Spinner visible={isLoading} color={theme.tintColor} />
         <SearchBar containerStyle={[styles.searchContainer, theme.navigationHeader]} 
             cancelButtonProps={{buttonStyle: styles.buttonCancel, buttonTextStyle: theme.textColor}}
+            cancelButtonTitle={langContext.state.translation["cancel"]}
             platform="ios" placeholder="Search" showCancel={true}
-            onChangeText={(text) => onChangeText(text)}
-            onCancel={onClear} onClear={onClear}
+            onChangeText={(text) => onChangeText(text)} onCancel={onClear} onClear={onClear}
             onSubmitEditing={() => onSubmitEditing(searchContext.state.currentSearchText)}
             value={searchContext.state.currentSearchText} />
     </View>

@@ -6,12 +6,14 @@ import { CommonStyles } from '../../../../globals/styles';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import CoursesServices from '../../../../core/services/courses-services';
 import { ScreenName } from '../../../../globals/constants';
+import { LanguageContext } from '../../../../contexts/language-context';
 
 const CoursesOfCategory = (props) => {
     const [data, setData] = useState(null);
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
         CoursesServices.searchByCategory(props.route.params.category.id)
@@ -30,7 +32,7 @@ const CoursesOfCategory = (props) => {
     }, []);
 
     return <View style={[CommonStyles.shortPaddingHorizontal, theme.background, CommonStyles.flex]}>
-        <Text style={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, theme.titleColor, styles.header]}>Category "{props.route.params.category.name}"</Text>
+        <Text style={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, theme.titleColor, styles.header]}>{langContext.state.translation["category"]} "{props.route.params.category.name}"</Text>
         {isLoading ? <ActivityIndicator color={theme.tintColor} /> 
             : data ? <ListCourses data={data} style={styles.list} navigation={props.navigation} theme={theme} screenName={ScreenName.courseDetail} />
             : <Text style={[theme.titleColor, CommonStyles.fontSizeBig]}>{message}</Text>}

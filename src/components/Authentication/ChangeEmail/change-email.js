@@ -8,6 +8,7 @@ import { ThemeContext } from '../../../contexts/theme-context';
 import UserServices from '../../../core/services/user-services';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import { ScreenName } from '../../../globals/constants';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const ChangeEmail = (props) => {
     const [email, setEmail] = useState("");
@@ -17,11 +18,12 @@ const ChangeEmail = (props) => {
 
     const {theme} = useContext(ThemeContext);
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
         if (status && status.status === 200) {
             authContext.logout();
-            alert("Change email successfully. Please check your new email and click on the link that we have just sent you to activate your account.");
+            alert(langContext.state.translation["changeEmailSuccessMsg"]);
             props.navigation.dispatch(CommonActions.navigate({ name: ScreenName.startScreen }));
         }
     }, [status])
@@ -54,11 +56,11 @@ const ChangeEmail = (props) => {
 
     return (
         <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
-            <Text style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>Enter your new email:</Text>
+            <Text style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>{langContext.state.translation["newEmail"]}</Text>
             <TextInput style={[CommonStyles.input, theme.inputBackground]} onChangeText={text => setEmail(text)} />
-            {renderValidationText(email, shouldDisplayValidationText, "Email cannot be empty")}
+            {renderValidationText(email, shouldDisplayValidationText, `Email ${langContext.state.translation["validationText"]}`)}
             {renderChangeEmailStatus(status)}
-            <Button title="Change Email" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressChangeEmail(email)} />
+            <Button title={langContext.state.translation["changeEmail"]} loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressChangeEmail(email)} />
         </View>
     )
 }

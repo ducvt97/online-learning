@@ -10,11 +10,13 @@ import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import UserServices from '../../../core/services/user-services';
+import { LanguageContext } from '../../../contexts/language-context';
 
 
 const HomeTab = (props) => {
     const {theme} = useContext(ThemeContext);
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
 
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
@@ -33,18 +35,18 @@ const HomeTab = (props) => {
 
     return (
         <ScrollView style={[CommonStyles.generalContainer, theme.background]}>
-            <ImageText title="Build apps of the future" disableActiveOpacity
+            <ImageText title={langContext.state.translation["buildFutureApp"]} disableActiveOpacity
                 imageSrc={require("../../../../assets/images/background/bg.jpg")}
                 style={[CommonStyles.imageButtonBig, CommonStyles.shortMarginVertical]} />
             <View style={styles.sectionContainer}>
-                <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Continue learning"
+                <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle={langContext.state.translation["continueLearning"]}
                     requestData={UserServices.getProcessCourse} requestDataError={UserServices.handleError}
                     onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.continueLearning}
-                    emptyListIconName="school" emptyListTitle="Start learning to improve your skills." />
-                <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle="Favorites"
+                    emptyListIconName="school" emptyListTitle={langContext.state.translation["continueLearningEmptyTitle"]} />
+                <ListCoursesHorizontal navigation={props.navigation} theme={theme} headerTitle={langContext.state.translation["favorites"]}
                     requestData={UserServices.getFavoriteCourse} requestDataError={UserServices.handleError}
                     onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.favorites}
-                    emptyListIconName="favorite" emptyListTitle="Like courses to quickly save courses for later." />
+                    emptyListIconName="favorite" emptyListTitle={langContext.state.translation["favoritesEmptyTitle"]} />
             </View>
         </ScrollView>
     )
