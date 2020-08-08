@@ -25,8 +25,6 @@ const courseDetailReducer = (prevState, action) => {
             return {...prevState, currentLesson: action.data};
         case CourseDetailActionTypes.setCurrentTimePlayingVideo:
             return {...prevState, currentTimePlayingVideo: action.data};
-        case CourseDetailActionTypes.setVideoPlaying:
-            return {...prevState, videoPlaying: action.data};
         case CourseDetailActionTypes.setProcess:
             return {...prevState, process: action.data};
         default:

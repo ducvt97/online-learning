@@ -28,10 +28,6 @@ export const setCurrentTimePlayingVideo = (dispatch, data) => {
     dispatch({ type: CourseDetailActionTypes.setCurrentTimePlayingVideo, data: data });
 }
 
-export const setVideoPlaying = (dispatch, data) => {
-    dispatch({ type: CourseDetailActionTypes.setVideoPlaying, data: data });
-}
-
 export const setProcess = (dispatch, data) => {
     dispatch({ type: CourseDetailActionTypes.setProcess, data: data });
 }

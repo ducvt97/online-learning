@@ -52,6 +52,8 @@
 
     "content": "Nội dung",
     "paymentRequire": "Bạn phải mua khóa học mới có thể xem nội dung chi tiết.",
+    "loginRequire": "Bạn phải đăng nhập mới có thể xem nội dung khóa học.",
+    "loginRequireAction": "Bạn phải đăng nhập mới có thể dùng chức năng này.",
     "course": "Khóa học",
     "courses": "Khóa học",
     "relate": "liên quan",

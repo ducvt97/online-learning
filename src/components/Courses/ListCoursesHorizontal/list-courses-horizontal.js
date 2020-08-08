@@ -5,7 +5,6 @@ import CourseBox from '../../common/course-box';
 import ListEmptyBox from '../../common/list-empty-box';
 import SectionHeader from '../../common/section-header';
 import { ScreenName } from '../../../globals/constants';
-import { AuthenticationContext } from '../../../contexts/authentication-context';
 import { LanguageContext } from '../../../contexts/language-context';
 
 const ListCoursesHorizontal = (props) => {
@@ -14,7 +13,6 @@ const ListCoursesHorizontal = (props) => {
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const authContext = useContext(AuthenticationContext);
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
@@ -36,10 +34,7 @@ const ListCoursesHorizontal = (props) => {
     }, []);
 
     const onPressItem = (screenName, itemId) => {
-        if (authContext.state.authenticated)
-            props.navigation.navigate(screenName, { itemId: itemId });
-        else
-            alert("You have to login to see course detail.");
+        props.navigation.navigate(screenName, { itemId: itemId });
     }
 
     return <View style={[styles.container, props.style]}>

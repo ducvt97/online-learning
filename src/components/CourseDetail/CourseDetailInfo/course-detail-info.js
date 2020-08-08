@@ -14,41 +14,47 @@ import { setUserBuyCourse, setUserLikeCourse, setProcess } from '../../../action
 import CoursesServices from '../../../core/services/courses-services';
 import Utilities from '../../../core/fwk/utilities';
 import { LanguageContext } from '../../../contexts/language-context';
+import { AuthenticationContext } from '../../../contexts/authentication-context';
 
 const CourseDetailInfo = (props) => {
     const {theme} = useContext(ThemeContext);
     const langContext = useContext(LanguageContext);
-    const [paymentLoadingStatus, setPaymentLoadingStatus] = useState(true);
+    const authContext = useContext(AuthenticationContext);
+    const [paymentLoadingStatus, setPaymentLoadingStatus] = useState(false);
     const [errMsgPaymentStatus, setErrMsgPaymentStatus] = useState("");
-    const [likeCourseLoading, setLikeCourseLoading] = useState(true);
+    const [likeCourseLoading, setLikeCourseLoading] = useState(false);
     const [buyCourseLoading, setBuyCourseLoading] = useState(false);
 
     useEffect(() => {
-        PaymentServices.getPaymentStatus(props.state.courseInfo.id)
-            .then(response => {
-                setPaymentLoadingStatus(false);
-                if (response.status === 200)
-                    setUserBuyCourse(props.dispatch, response.data.didUserBuyCourse);
-                else
-                    setErrMsgPaymentStatus(response.data.message);
-            }).catch(error => {
-                setPaymentLoadingStatus(false);
-                setErrMsgPaymentStatus(error.message);
-                PaymentServices.handleError(error);
-            });
+        if (authContext.state.authenticated) {
+            setPaymentLoadingStatus(true);
+            setLikeCourseLoading(true);
+            PaymentServices.getPaymentStatus(props.state.courseInfo.id)
+                .then(response => {
+                    setPaymentLoadingStatus(false);
+                    if (response.status === 200)
+                        setUserBuyCourse(props.dispatch, response.data.didUserBuyCourse);
+                    else
+                        setErrMsgPaymentStatus(response.data.message);
+                }).catch(error => {
+                    setPaymentLoadingStatus(false);
+                    setErrMsgPaymentStatus(error.message);
+                    PaymentServices.handleError(error);
+                });
 
-        UserServices.getCourseLikeStatus(props.state.courseInfo.id)
-            .then(response => {
-                setLikeCourseLoading(false);
-                if (response.status === 200)
-                    setUserLikeCourse(props.dispatch, response.data.likeStatus);
-                else
-                    alert(response.data.message);
-            }).catch(error => {
-                setLikeCourseLoading(false);
-                alert(error.message);
-                UserServices.handleError(error);
-            });
+            UserServices.getCourseLikeStatus(props.state.courseInfo.id)
+                .then(response => {
+                    setLikeCourseLoading(false);
+                    if (response.status === 200)
+                        setUserLikeCourse(props.dispatch, response.data.likeStatus);
+                    else
+                        alert(response.data.message);
+                }).catch(error => {
+                    setLikeCourseLoading(false);
+                    alert(error.message);
+                    UserServices.handleError(error);
+                });
+        }
     }, []);
 
     useEffect(() => {
@@ -62,36 +68,40 @@ const CourseDetailInfo = (props) => {
     }, [props.state.currentLesson]);
 
     const onPressLikeCourse = (courseId) => {
-        setLikeCourseLoading(true);
-        UserServices.likeCourse(courseId)
-            .then(response => {
-                setLikeCourseLoading(false);
-                if (response.status === 200)
-                    setUserLikeCourse(props.dispatch, response.data.likeStatus);
-                else
-                    alert(response.data.message);
-            }).catch(error => {
-                setLikeCourseLoading(false);
-                alert(error);
-                UserServices.handleError(error);
-            });
+        if (authContext.state.authenticated) {
+            setLikeCourseLoading(true);
+            UserServices.likeCourse(courseId)
+                .then(response => {
+                    setLikeCourseLoading(false);
+                    if (response.status === 200)
+                        setUserLikeCourse(props.dispatch, response.data.likeStatus);
+                    else
+                        alert(response.data.message);
+                }).catch(error => {
+                    setLikeCourseLoading(false);
+                    alert(error.message);
+                    UserServices.handleError(error);
+                });
+        } else alert(langContext.state.translation["loginRequireAction"]);
     }
 
     const onPressBuyCourse = (courseId) => {
-        setBuyCourseLoading(true);
-        PaymentServices.buyCourseFree(courseId)
-            .then(response => {
-                setBuyCourseLoading(false);
-                if (response.status === 200) {
-                    setUserBuyCourse(props.dispatch, true);
-                    alert(langContext.state.translation["buyCourseSuccessMsg"]);
-                } else
-                    Linking.openURL(`https://itedu.me/payment/${props.state.courseInfo.id}`);
-            }).catch(error => {
-                setBuyCourseLoading(false);
-                alert(error);
-                PaymentServices.handleError(error);
-            });
+        if (authContext.state.authenticated) {
+            setBuyCourseLoading(true);
+            PaymentServices.buyCourseFree(courseId)
+                .then(response => {
+                    setBuyCourseLoading(false);
+                    if (response.status === 200) {
+                        setUserBuyCourse(props.dispatch, true);
+                        alert(langContext.state.translation["buyCourseSuccessMsg"]);
+                    } else
+                        Linking.openURL(`https://itedu.me/payment/${props.state.courseInfo.id}`);
+                }).catch(error => {
+                    setBuyCourseLoading(false);
+                    alert(error.message);
+                    PaymentServices.handleError(error);
+                });
+        } else alert(langContext.state.translation["loginRequireAction"]);
     }
 
     return <View style={[theme.background, {marginTop: 15}]}>
@@ -104,7 +114,7 @@ const CourseDetailInfo = (props) => {
         <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
             <Text style={theme.textColor}>{`${new Date(props.state.courseInfo.createdAt).toDateString()} . ${props.state.courseInfo.totalHours} ${langContext.state.translation["hour"]}`}</Text>
             <Rating style={{marginLeft: 15}} tintColor={theme.backgroundColor} imageSize={15} fractions={0.75}
-                startingValue={Number(props.state.courseInfo.averagePoint)} readonly />
+                startingValue={props.state.courseInfo.averagePoint !== "NaN" ? Number(props.state.courseInfo.averagePoint) : 1} readonly />
             <Text style={[theme.textColor, {marginLeft: 5}]}>({props.state.courseInfo.ratedNumber})</Text>
         </View>
         <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["process"]}:  {props.state.process} / {props.state.courseInfo.totalHours} {langContext.state.translation["hour"]}</Text>

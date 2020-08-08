@@ -44,6 +44,10 @@ export default class CoursesServices {
         return axios.get(`${requestUrl}/process-course/${courseId}`);
     }
 
+    static getLastWatchLesson = (courseId) => {
+        return axios.get(`${requestUrl}/last-watched-lesson/${courseId}`);
+    }
+
     static ratingCourse = (courseId, ratingNumber, content) => {
         return axios.post(`${requestUrl}/rating-course`, {
             courseId: courseId,

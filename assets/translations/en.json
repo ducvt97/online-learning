@@ -52,6 +52,8 @@
 
     "content": "Contents",
     "paymentRequire": "You must buy course to see contents.",
+    "loginRequire": "You must sign in to see contents.",
+    "loginRequireAction": "You must sign in to do this.",
     "course": "Course",
     "courses": "Courses",
     "relate": "Related",

@@ -7,19 +7,14 @@ import SectionHeader from '../../common/section-header';
 
 import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
-import { AuthenticationContext } from '../../../contexts/authentication-context';
 import { ThemeContext } from '../../../contexts/theme-context';
 
 const ListCourses = (props) => {
     const data = props.data || props.route.params.data;
-    const authContext = useContext(AuthenticationContext);
     const {theme} = useContext(ThemeContext);
 
     const onPressItem = (screenName, itemId) => {
-        if (authContext.state.authenticated)
-            props.navigation.push(screenName, { itemId: itemId });
-        else
-            alert("You have to login to see course detail.");
+        props.navigation.push(screenName, { itemId: itemId });
     }
 
     return (

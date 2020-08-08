@@ -29,20 +29,34 @@ const LessonsTab = (props) => {
         </View>
     }
 
-    const onPressItem = async (item) => {
-        if (!item.isFinish)
-            LessonServices.updateLessonStatus(item.id)
-                .then(reponse => {})
-                .catch(error => { LessonServices.handleError(error); });
-        setCurrentLesson(props.dispatch, item);
+    const updateVideoCurrentTime = (lessonId, time) => {
+        LessonServices.updateVideoCurrentTime(lessonId, time)
+            .then(reponse => {})
+            .catch(error => { LessonServices.handleError(error); });
     }
 
-    const renderItem = (item, theme, currentPlaying) => {
+    const onPressItem = async (item) => {
+        if (item.id !== props.state.currentLesson.id && item.id !== props.state.currentLesson.lessonId) {
+            if (!props.state.currentLesson.isFinish)
+            LessonServices.updateLessonStatus(props.state.currentLesson.id || props.state.currentLesson.lessonId)
+                .then(reponse => {})
+                .catch(error => { LessonServices.handleError(error); });
+            if (props.state.courseInfo.typeUploadVideoLesson === 1)
+                props.videoPlayer.current.setOnPlaybackStatusUpdate(status => updateVideoCurrentTime(props.state.currentLesson.id || props.state.currentLesson.lessonId, status.positionMillis));
+            else
+                props.ytPlayer.current.getCurrentTime().then(async currentTime => updateVideoCurrentTime(props.state.currentLesson.id || props.state.currentLesson.lessonId, await Utilities.secondToMilsecond(currentTime)));
+            setCurrentLesson(props.dispatch, item);
+        }
+    }
+
+    const renderItem = (item, theme) => {
         return <ListItem title={item.name} titleStyle={theme.titleColor} containerStyle={[styles.item, theme.background]}
-            leftIcon={item.id === currentPlaying ? {name: "play-circle", color: Colors.dodgerBlue, size: 15, type: "font-awesome"}
+            leftIcon={item.id === props.state.currentLesson.id || item.id === props.state.currentLesson.lessonId
+                ? {name: "play-circle", color: Colors.dodgerBlue, size: 15, type: "font-awesome"}
                 : item.isFinish ? {name: "check-circle", color: Colors.green, size: 15, type: "font-awesome"}
                 : {name: "circle", color: Colors.darkGrey, size: 15, type: "font-awesome"}} titleProps={{numberOfLines: 1}}
-            rightElement={item.id === currentPlaying ? <Text style={theme.textColor}>{Utilities.hourToTime(item.hours)}</Text> : null}
+            rightElement={item.id === props.state.currentLesson.id || item.id === props.state.currentLesson.lessonId ?
+                <Text style={theme.textColor}>{Utilities.hourToTime(item.hours)}</Text> : null}
             onPress={() => onPressItem(item)}
         />
     }

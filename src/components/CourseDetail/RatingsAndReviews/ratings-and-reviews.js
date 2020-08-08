@@ -76,7 +76,6 @@ const RatingsAndReviews = (props) => {
                         <Button title={langContext.state.translation["cancel"]} containerStyle={styles.submitButton} type="outline" onPress={() => setIsEditReview(false)} />
                         <Button title={langContext.state.translation["review"]} containerStyle={styles.submitButton} disabled={!review ? true : false} loading={reviewLoading} onPress={onPressSubmitReview} />
                     </View>
-                    
                 </View>
             : <View>
                 <Rating tintColor={theme.backgroundColor} imageSize={40} fractions={2} startingValue={0} onFinishRating={rating => setRating(rating)} />

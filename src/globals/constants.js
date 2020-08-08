@@ -74,7 +74,6 @@ export const CourseDetailActionTypes = {
     setUserRatingCourse: "SET_USER_RATING_COURSE",
     setCurrentLesson: "SET_CURRENT_LESSON",
     setCurrentTimePlayingVideo: "SET_CURRENT_TIME_PLAYING_VIDEO",
-    setVideoPlaying: "SET_VIDEO_PLAYING",
     setProcess: "SET_PROCESS",
     closeCourseDetail: "CLOSE_COURSE_DETAIL",
 }

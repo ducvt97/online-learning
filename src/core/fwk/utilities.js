@@ -12,7 +12,9 @@ export default class Utilities {
         return `${hour > 0 ? `${hour}:` : ""}${hour > 0 && minute < 10 ? `0${minute}` : minute}:${second < 10 ? `0${second}` : second}`;
     }
 
-    static hourToMilsecond = (hours) => hours ? hours * 60 * 60 * 1000 : 0;
+    static secondToMilsecond = (second) => second ? second * 1000 : 0;
+
+    static milsecondToSecond = (millisec) => millisec ? millisec / 1000 : 0;
 
     static getYoutubeVideoIdFromUrl = (url) => {
         const splits = url.split("https://youtube.com/embed/");
