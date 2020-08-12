@@ -11,3 +11,11 @@ export const changeSearchText = (dispatch) => (data) => {
 export const clearRecentSearches = (dispatch) => () => {
     dispatch({ type: SearchActionTypes.clearRecentSearch });
 }
+
+export const setRecentSearches = (dispatch, data) => {
+    dispatch({ type: SearchActionTypes.setRecentSearch, data: data });
+}
+
+export const setRecentSearches2 = (dispatch) => (data) => {
+    dispatch({ type: SearchActionTypes.setRecentSearch, data: data });
+}

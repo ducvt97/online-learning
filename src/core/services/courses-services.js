@@ -70,8 +70,11 @@ export default class CoursesServices {
         });
     }
 
-    static search = (keyword) => {
-        return axios.post(`${requestUrl}/search`, { keyword: keyword });
+    static search = (keyword, token) => {
+        return axios.post(`${requestUrl}/searchV2`, {
+            keyword: keyword,
+            token: token
+        });
     }
 
     static searchByCategory = (categoryId) => {
@@ -81,6 +84,21 @@ export default class CoursesServices {
                 category: [ categoryId ],
             }
         });
+    }
+
+    static getSearchHistory = () => {
+        return axios.get(`${requestUrl}/search-history`);
+    }
+
+    static getSearchHistoryWithToken = (token) => {
+        const instance = axios.create({
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        return instance.get(`${requestUrl}/search-history`);
+    }
+
+    static deleteSearchHistory = (searchId) => {
+        return axios.delete(`${requestUrl}/delete-search-history/${searchId}`);
     }
 
     static handleError = (error) => {

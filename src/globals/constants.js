@@ -62,7 +62,8 @@ export const AuthenticationActionTypes = {
 export const SearchActionTypes = {
     search: "SEARCH",
     changeSearchText: "CHANGE_SEARCH_TEXT",
-    clearRecentSearch: "CLEAR_RECENT_SEARCH"
+    clearRecentSearch: "CLEAR_RECENT_SEARCH",
+    setRecentSearch: "SET_RECENT_SEARCH"
 }
 
 export const CourseDetailActionTypes = {

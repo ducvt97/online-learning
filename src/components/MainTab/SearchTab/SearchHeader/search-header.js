@@ -7,14 +7,15 @@ import { ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { SearchContext } from '../../../../contexts/search-context';
 import CoursesServices from '../../../../core/services/courses-services';
-import InstructorServices from '../../../../core/services/instructor-service';
 import { LanguageContext } from '../../../../contexts/language-context';
+import { AuthenticationContext } from '../../../../contexts/authentication-context';
 
 const SearchHeader = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const searchContext = useContext(SearchContext);
     const {theme} = useContext(ThemeContext);
     const langContext = useContext(LanguageContext);
+    const authContext = useContext(AuthenticationContext);
 
     const onChangeText = (text) => {
         searchContext.changeSearchText(text);
@@ -28,54 +29,33 @@ const SearchHeader = (props) => {
             props.navigation.navigate(ScreenName.searchResults);
     }
 
-    const searchInstructors = async (instructors, searchText) => {
-        if (!searchText) return instructors;
-        else {
-            let result = [];
-            searchText = searchText.toLowerCase();
-            await instructors.every(async instructor => {
-                await instructor.skills.every(skill => {
-                    if (skill.toLowerCase().includes(searchText)) {
-                        result.push(instructor);
-                        return;
-                    }
-                });
-            });
-            return result;
-        }
-    }
-
     const onSubmitEditing = (text) => {
         setIsLoading(true);
-        CoursesServices.search(text)
-            .then(reponse => {
-                if (reponse.status === 200)
-                    InstructorServices.getAll()
-                        .then(async reponse1 => {
-                            if (reponse1.status === 200) {
-                                const instructors = await searchInstructors(reponse1.data.payload, text);
-                                await searchContext.search({
-                                    searchText: text,
-                                    searchResult: {
-                                        courses: reponse.data.payload.rows,
-                                        instructors: instructors
-                                    }
-                                });
-                                setIsLoading(false);
-                                props.navigation.navigate(ScreenName.searchResultsTabNavigation);
-                            } else {
-                                alert(reponse.data.message);
-                                setIsLoading(false);
-                            }
-                        }).catch(error1 => {
-                            setIsLoading(false);
-                            alert(error1);
-                            InstructorServices.handleError(error1);
-                        });
-                else {
-                    alert(reponse.data.message);
+        CoursesServices.search(text, authContext.state.token)
+            .then(async response => {
+                if (response.status === 200) {
+                    let searchHistory = 0;
+                    await CoursesServices.getSearchHistory()
+                        .then(response1 => {
+                            if (response1.status === 200) {
+                                searchHistory = response1.data.payload.data;
+                            } else
+                                console.log(response1.data.message);
+                        })
+                        .catch(error1 => CoursesServices.handleError(error1));
+                    await searchContext.search({
+                        searchText: text,
+                        searchResult: {
+                            courses: response.data.payload.courses.data,
+                            instructors: response.data.payload.instructors.data
+                        },
+                        recentSearches: searchHistory
+                    });
                     setIsLoading(false);
-                }
+                    props.navigation.navigate(ScreenName.searchResultsTabNavigation);
+                } else
+                    alert(response.data.message);
+                setIsLoading(false);
             }).catch(error => {
                 setIsLoading(false);
                 alert(error);
