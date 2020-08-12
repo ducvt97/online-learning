@@ -32,6 +32,14 @@ export const setProcess = (dispatch, data) => {
     dispatch({ type: CourseDetailActionTypes.setProcess, data: data });
 }
 
+export const setIsDownloaded = (dispatch, data) => {
+    dispatch({ type: CourseDetailActionTypes.setIsDownloaded, data: data });
+}
+
+export const setTotalLessons = (dispatch, data) => {
+    dispatch({ type: CourseDetailActionTypes.setTotalLessons, data: data });
+}
+
 export const closeCourseDetail = (dispatch) => {
     dispatch({ type: CourseDetailActionTypes.closeCourseDetail });
 }

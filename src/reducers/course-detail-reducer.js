@@ -27,6 +27,10 @@ const courseDetailReducer = (prevState, action) => {
             return {...prevState, currentTimePlayingVideo: action.data};
         case CourseDetailActionTypes.setProcess:
             return {...prevState, process: action.data};
+        case CourseDetailActionTypes.setIsDownloaded:
+            return {...prevState, isDownloaded: action.data};
+        case CourseDetailActionTypes.setTotalLessons:
+            return {...prevState, totalLessons: action.data};
         default:
             throw new Error(`Action ${action.type} not recognized.`);
     }

@@ -8,7 +8,7 @@ import ExercisesTab from '../ExercisesTab/exercises-tab';
 import { CommonStyles } from '../../../globals/styles';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { Colors } from '../../../globals/constants';
-import { setCourseSection } from '../../../actions/course-detail-action';
+import { setCourseSection, setTotalLessons } from '../../../actions/course-detail-action';
 import LessonServices from '../../../core/services/lesson-services';
 import ExerciseServices from '../../../core/services/exercise-services';
 import { LanguageContext } from '../../../contexts/language-context';
@@ -28,10 +28,12 @@ const Contents = (props) => {
         if (props.state.userBuyCourse) {
             const loadSections = async () => {
                 let sections = [];
+                let totalLessons = 0;
                 for (const section of props.state.courseInfo.section) {
                     let lessons = [];
                     for (const lesson of section.lesson) {
                         let temp = {};
+                        totalLessons += 1;
                         await LessonServices.getVideoStatus(props.state.courseInfo.id, lesson.id)
                             .then(response => {
                                 if (response.status === 200)
@@ -62,6 +64,7 @@ const Contents = (props) => {
                 setSectionsLoading(false);
                 setExercisesLoading(false);
                 setCourseSection(props.dispatch, sections);
+                setTotalLessons(props.dispatch, totalLessons);
             }
             loadSections();
         }

@@ -19,6 +19,7 @@ import { AuthenticationProvider } from './src/contexts/authentication-context';
 import { ThemeProvider, ThemeContext } from './src/contexts/theme-context';
 import { SearchProvider } from './src/contexts/search-context';
 import { LanguageProvider, LanguageContext } from './src/contexts/language-context';
+import { DownloadProvider } from './src/contexts/download-context';
 
 axios.defaults.baseURL = "https://api.itedu.me";
 axios.defaults.validateStatus = (status) => {
@@ -55,11 +56,13 @@ export default function App() {
         <LanguageProvider>
             <AuthenticationProvider>
                 <ThemeProvider>
-                    <SearchProvider>
-                        <NavigationContainer>
-                            <MainNavigation />
-                        </NavigationContainer>
-                    </SearchProvider>
+                    <DownloadProvider>
+                        <SearchProvider>
+                            <NavigationContainer>
+                                <MainNavigation />
+                            </NavigationContainer>
+                        </SearchProvider>
+                    </DownloadProvider>
                 </ThemeProvider>
             </AuthenticationProvider>
         </LanguageProvider>

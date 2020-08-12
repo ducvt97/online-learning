@@ -75,5 +75,14 @@ export const CourseDetailActionTypes = {
     setCurrentLesson: "SET_CURRENT_LESSON",
     setCurrentTimePlayingVideo: "SET_CURRENT_TIME_PLAYING_VIDEO",
     setProcess: "SET_PROCESS",
-    closeCourseDetail: "CLOSE_COURSE_DETAIL",
+    setIsDownloaded: "SET_IS_DOWNLOADED",
+    setTotalLessons: "SET_TOTAL_LESSONS",
+    closeCourseDetail: "CLOSE_COURSE_DETAIL"
+}
+
+export const DownloadActionTypes = {
+    setDownloadedCourses: "SET_DOWNLOADED_COURSES",
+    startDownload: "START_DOWNLOAD",
+    removeDownloadedCourse: "REMOVE_DOWNLOADED_COURSE",
+    removeAllDownloadedCourses: "REMOVE_ALL_DOWNLOADED_COURSES"
 }

@@ -4,6 +4,7 @@ import { Video } from 'expo-av';
 import { Icon } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import * as FileSystem from 'expo-file-system';
 
 import CourseDetailInfo from './CourseDetailInfo/course-detail-info';
 import Contents from './Contents/contents';
@@ -29,7 +30,9 @@ const initialState = {
     userRatingCourse: null,
     userLikeCourse: null,
     courseSection: null,
-    currentLesson: null
+    currentLesson: null,
+    totalLessons: null,
+    isDownloaded: null
 }
 
 const CourseDetail = (props) => {
@@ -63,16 +66,12 @@ const CourseDetail = (props) => {
                 .then(response => {
                     if (response.status === 200)
                         setUserRatingCourse(dispatch, response.data.payload);
-                }).catch(error => {
-                    CoursesServices.handleError(error);
-                });
+                }).catch(error => { CoursesServices.handleError(error); });
             CoursesServices.getLastWatchLesson(courseId)
                 .then(response => {
                     if (response.status === 200)
                         setCurrentLesson(dispatch, response.data.payload);
-                }).catch(error => {
-                    CoursesServices.handleError(error);
-                });
+                }).catch(error => { CoursesServices.handleError(error); });
         }
     }, [state.userBuyCourse]);
 
@@ -83,9 +82,8 @@ const CourseDetail = (props) => {
     }
 
     const onChangeStateYtPlayer = async (event) => {
-        if (event === "ended") {
+        if (event === "ended")
             updateVideoCurrentTime(state.currentLesson.id || state.currentLesson.lessonId, 0);
-        }
     }
 
     const ytPlayerOnReady = () => {
@@ -104,7 +102,7 @@ const CourseDetail = (props) => {
                     if (state.courseInfo.typeUploadVideoLesson === 1 && videoPlayer.current)
                         videoPlayer.current.setOnPlaybackStatusUpdate(status => {
                             if (status.isLoaded)
-                                updateVideoCurrentTime(state.currentLesson.id || state.currentLesson.lessonId, status.positionMillis);
+                                updateVideoCurrentTime(state.currentLesson.id || state.currentLesson.lessonId, status.positionMillis >= status.playableDurationMillis ? 0 : status.positionMillis);
                         });
                     else if (state.courseInfo.typeUploadVideoLesson !== 1 && ytPlayer.current)
                         ytPlayer.current.getCurrentTime().then(async currentTime =>
@@ -118,10 +116,13 @@ const CourseDetail = (props) => {
     : state.courseInfo ? <View style={[styles.container, theme.background, CommonStyles.flex]}>
         <Icon name="close" size={30} color={Colors.gainsboro} containerStyle={styles.backButton} onPress={onPressCloseBtn} />
         {state.currentLesson ? state.courseInfo.typeUploadVideoLesson === 1 ?
-            <Video source={{uri: state.currentLesson.videoUrl}} posterSource={{uri: state.courseInfo.imageUrl}}
-                rate={1.0} volume={1.0} shouldCorrectPitch={true} isMuted={false} resizeMode="contain"
-                shouldPlay useNativeControls style={styles.video} ref={videoPlayer} progressUpdateIntervalMillis={1000000}
-                positionMillis={state.currentLesson.currentTime} onPlaybackStatusUpdate={status => videoPlayerStatusUpdate(status)} />
+            state.isDownloaded !== null ?
+                <Video source={{uri: !state.isDownloaded ? state.currentLesson.videoUrl : state.currentLesson.id ?
+                        `${FileSystem.documentDirectory}${courseId}/${state.currentLesson.id}.mp4` : `${FileSystem.documentDirectory}${courseId}/${state.currentLesson.lessonId}.mp4`}} 
+                    posterSource={{uri: state.courseInfo.imageUrl}} rate={1.0} volume={1.0} shouldCorrectPitch={true} resizeMode="contain"
+                    shouldPlay useNativeControls isMuted={false} style={styles.video} ref={videoPlayer} progressUpdateIntervalMillis={1000000}
+                    positionMillis={state.currentLesson.currentTime} onPlaybackStatusUpdate={status => videoPlayerStatusUpdate(status)} />
+                :<Image style={styles.image} source={{uri: state.courseInfo.imageUrl}} />
             : <YoutubePlayer height={200} videoId={Utilities.getYoutubeVideoIdFromUrl(state.currentLesson.videoUrl)} play
                 onChangeState={event => onChangeStateYtPlayer(event)} onError={e => console.log(e)} volume={80} playbackRate={1} ref={ytPlayer}
                 initialPlayerParams={{ rel: 0, autoplay: 1 }} onReady={ytPlayerOnReady} />

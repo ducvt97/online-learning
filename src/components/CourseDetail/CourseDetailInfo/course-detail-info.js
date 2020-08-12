@@ -5,6 +5,7 @@ import { Linking } from 'expo';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import Description from '../../common/description';
+import DownloadInfo from './DownloadInfo/download-info';
 import { CommonStyles } from '../../../globals/styles';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { Colors, ScreenName } from '../../../globals/constants';
@@ -41,7 +42,6 @@ const CourseDetailInfo = (props) => {
                     setErrMsgPaymentStatus(error.message);
                     PaymentServices.handleError(error);
                 });
-
             UserServices.getCourseLikeStatus(props.state.courseInfo.id)
                 .then(response => {
                     setLikeCourseLoading(false);
@@ -62,9 +62,7 @@ const CourseDetailInfo = (props) => {
             .then(response => {
                 if (response.status === 200)
                     setProcess(props.dispatch, Utilities.roundFloat(response.data.payload / 100 * props.state.courseInfo.totalHours) );
-            }).catch(error => {
-                UserServices.handleError(error);
-            });
+            }).catch(error => { UserServices.handleError(error); });
     }, [props.state.currentLesson]);
 
     const onPressLikeCourse = (courseId) => {
@@ -108,8 +106,7 @@ const CourseDetailInfo = (props) => {
         <Spinner visible={buyCourseLoading} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
         <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{props.state.courseInfo.title}</Text>
         <ListItem containerStyle={[styles.instructorButton, theme.navigationHeader, CommonStyles.shortMarginVertical]}
-            leftAvatar={{source: {uri: props.state.courseInfo.instructor.avatar}}}
-            title={props.state.courseInfo.instructor.name} titleStyle={theme.titleColor}
+            leftAvatar={{source: {uri: props.state.courseInfo.instructor.avatar}}} title={props.state.courseInfo.instructor.name} titleStyle={theme.titleColor}
             onPress={() => props.navigation.navigate(ScreenName.instructorDetail, { itemId: props.state.courseInfo.instructor.id })} />
         <View style={[styles.rowContainer, CommonStyles.shortMarginVertical]}>
             <Text style={theme.textColor}>{`${new Date(props.state.courseInfo.createdAt).toDateString()} . ${props.state.courseInfo.totalHours} ${langContext.state.translation["hour"]}`}</Text>
@@ -119,11 +116,13 @@ const CourseDetailInfo = (props) => {
         </View>
         <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["process"]}:  {props.state.process} / {props.state.courseInfo.totalHours} {langContext.state.translation["hour"]}</Text>
         <View style={[styles.rowContainer, styles.buttonGroup]}>
-            <TouchableOpacity style={styles.iconButton} onPress={() => onPressLikeCourse(props.state.courseInfo.id)}>
-                <Icon reverse type="font-awesome" name={likeCourseLoading ? "spinner" : props.state.userLikeCourse ? "heart" : "heart-o"}
-                    color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
+            <TouchableOpacity style={styles.iconButton} onPress={() => onPressLikeCourse(props.state.courseInfo.id)} disabled={likeCourseLoading}>
+                {likeCourseLoading ? <ActivityIndicator color={theme.tintColor} />
+                : <Icon reverse type="font-awesome" name={props.state.userLikeCourse ? "heart" : "heart-o"}
+                    color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />}
                 <Text style={{color: Colors.dodgerBlue}}>{props.state.userLikeCourse ? langContext.state.translation["liked"] : langContext.state.translation["like"]}</Text>
             </TouchableOpacity>
+            <DownloadInfo {...props} />
             <TouchableOpacity style={styles.iconButton} onPress={() => Share.share({message: `${langContext.state.translation["share"]} ${langContext.state.translation["course"]} "${props.state.courseInfo.title}"`})}>
                 <Icon reverse type="font-awesome" name="share" color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
                 <Text style={{color: Colors.dodgerBlue}}>{langContext.state.translation["share"]}</Text>
@@ -135,10 +134,8 @@ const CourseDetailInfo = (props) => {
                 onPress={() => onPressBuyCourse(props.state.courseInfo.id)} />
             : <Text style={theme.textColor}>{errMsgPaymentStatus}</Text>
         : null}
-        <View>
-            <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["description"]}</Text>
-            <Description style={theme.textColor} content={props.state.courseInfo.description} theme={theme} />
-        </View>
+        <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["description"]}</Text>
+        <Description style={theme.textColor} content={props.state.courseInfo.description} theme={theme} />
         <View style={styles.field}>
             <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["learnWhat"]}</Text>
             <FlatList data={props.state.courseInfo.learnWhat} keyExtractor={(item, index) => index.toString()}
@@ -156,8 +153,7 @@ export default CourseDetailInfo;
 
 const styles = StyleSheet.create({
     rowContainer: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: "row"
     },
     instructorButton: {
         marginTop: 10,

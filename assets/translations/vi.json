@@ -54,6 +54,7 @@
     "paymentRequire": "Bạn phải mua khóa học mới có thể xem nội dung chi tiết.",
     "loginRequire": "Bạn phải đăng nhập mới có thể xem nội dung khóa học.",
     "loginRequireAction": "Bạn phải đăng nhập mới có thể dùng chức năng này.",
+    "paymentRequireAction": "Bạn phải mua khóa học mới có thể dùng chức năng này.",
     "course": "Khóa học",
     "courses": "Khóa học",
     "relate": "liên quan",
@@ -88,8 +89,14 @@
     "popularCategory": "Danh mục phổ biến",
 
     "download": "Tải về",
+    "downloading": "Đang tải",
+    "downloaded": "Đã tải",
+    "downloadedAlert": "Bạn đã tải khóa học này.",
+    "courseDownloadingAlert": "Khóa học đang được tải về.",
     "downloadEmptyTitle": "Không có mục được tải về",
     "downloadEmptySubtitle": "Khóa học bạn tải về sẽ xuất hiện ở đây.",
+    "remove": "Xóa",
+    "removeFromDownload": "Xóa khỏi danh sách tải về",
     "removeAll": "Xóa tất cả",
 
     "continueLearning": "Tiếp tục học",

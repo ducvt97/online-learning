@@ -5,7 +5,7 @@ export const CommonStyles = StyleSheet.create({
     // Some style for container
     generalContainer: {
         flex: 1,
-        padding: 15
+        padding: 10
     },
     searchTabContainer: {
         paddingTop: 100
