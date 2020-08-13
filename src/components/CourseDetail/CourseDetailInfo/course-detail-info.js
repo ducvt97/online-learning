@@ -16,11 +16,13 @@ import CoursesServices from '../../../core/services/courses-services';
 import Utilities from '../../../core/fwk/utilities';
 import { LanguageContext } from '../../../contexts/language-context';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
+import { HomeContext } from '../../../contexts/home-context';
 
 const CourseDetailInfo = (props) => {
     const {theme} = useContext(ThemeContext);
     const langContext = useContext(LanguageContext);
     const authContext = useContext(AuthenticationContext);
+    const homeContext = useContext(HomeContext);
     const [paymentLoadingStatus, setPaymentLoadingStatus] = useState(false);
     const [errMsgPaymentStatus, setErrMsgPaymentStatus] = useState("");
     const [likeCourseLoading, setLikeCourseLoading] = useState(false);
@@ -71,8 +73,10 @@ const CourseDetailInfo = (props) => {
             UserServices.likeCourse(courseId)
                 .then(response => {
                     setLikeCourseLoading(false);
-                    if (response.status === 200)
+                    if (response.status === 200){
+                        homeContext.setShouldFavoritesReload(true);
                         setUserLikeCourse(props.dispatch, response.data.likeStatus);
+                    }
                     else
                         alert(response.data.message);
                 }).catch(error => {
@@ -90,6 +94,7 @@ const CourseDetailInfo = (props) => {
                 .then(response => {
                     setBuyCourseLoading(false);
                     if (response.status === 200) {
+                        homeContext.setShouldContinueLearningReload(true)
                         setUserBuyCourse(props.dispatch, true);
                         alert(langContext.state.translation["buyCourseSuccessMsg"]);
                     } else

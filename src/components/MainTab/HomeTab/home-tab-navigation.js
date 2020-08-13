@@ -39,6 +39,7 @@ const HomeTabNavigation = (props) => {
             <HomeTabStack.Screen name={ScreenName.language} component={Language} options={{ title: langContext.state.translation.screenTitle.language }} />
             <HomeTabStack.Screen name={ScreenName.continueLearning} component={ListCourses} options={{ headerTitle: langContext.state.translation.screenTitle.continueLearning }} />
             <HomeTabStack.Screen name={ScreenName.favorites} component={ListCourses} options={{ headerTitle: langContext.state.translation.screenTitle.favorites }} />
+            <HomeTabStack.Screen name={ScreenName.coursesRecommend} component={ListCourses} options={{ headerTitle: langContext.state.translation.screenTitle.coursesRecommend }} />
         </HomeTabStack.Navigator>
     )
 }

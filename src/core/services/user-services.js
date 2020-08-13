@@ -102,13 +102,19 @@ export default class UserServices {
     }
 
     // Get list courses user is learning
-    static getProcessCourse = () => {
-        return axios.get(`${requestUrl}/get-process-courses`);
+    static getProcessCourse = (token) => {
+        const instance = axios.create({
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        return instance.get(`${requestUrl}/get-process-courses`);
     }
 
     // Get list courses user liked
-    static getFavoriteCourse = () => {
-        return axios.get(`${requestUrl}/get-favorite-courses`);
+    static getFavoriteCourse = (token) => {
+        const instance = axios.create({
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        return instance.get(`${requestUrl}/get-favorite-courses`);
     }
 
     static getIntroPage = () => {

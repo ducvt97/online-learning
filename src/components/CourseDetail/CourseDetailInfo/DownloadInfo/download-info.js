@@ -91,7 +91,7 @@ const DownloadInfo = (props) => {
         }
     }
 
-    return props.state.totalLessons === null ?<ActivityIndicator color={theme.tintColor} />
+    return authContext.state.authenticated && props.state.userBuyCourse && props.state.totalLessons === null ? <ActivityIndicator color={theme.tintColor} />
     : <TouchableOpacity style={styles.iconButton} disabled={downloadPreparing} onPress={onPressDownload} >
         <Icon reverse type="font-awesome" name="arrow-down" color={Colors.transparent} reverseColor={Colors.dodgerBlue} containerStyle={{borderColor: Colors.dodgerBlue, borderWidth: 1}} />
         {downloading ? <Text style={{color: Colors.dodgerBlue}}>{langContext.state.translation["downloading"]}... {typeof downloadProgress === "number" ? `${Utilities.roundFloat(downloadProgress)} %` : null}</Text> :<Text style={{color: Colors.dodgerBlue}}>{langContext.state.translation["download"]}</Text>}
