@@ -7,6 +7,7 @@ import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import UserServices from '../../../core/services/user-services';
 import { LanguageContext } from '../../../contexts/language-context';
+import { CommonActions } from '@react-navigation/native';
 
 const ForgetPassword = (props) => {
     const [email, setEmail] = useState("");
@@ -91,7 +92,7 @@ const ForgetPassword = (props) => {
         {renderValidation(verificationCode, didVerifyCodeFocus, `${langContext.state.translation["verifyCode"]} ${langContext.state.translation["validationText"]}`)}
         {renderVerifyStatus(verifyCodeStatus)}
         <Button title={langContext.state.translation["verify"]} loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressVerifyCode(verificationCode)} />
-        <Button title={langContext.state.translation["alreadyResetPassBtn"]} type="outline" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressVerifyCode(verificationCode)} />
+        <Button title={langContext.state.translation["alreadyResetPassBtn"]} type="outline" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => props.navigation.dispatch(CommonActions.navigate({ name: ScreenName.login }))} />
     </View>
 }
 

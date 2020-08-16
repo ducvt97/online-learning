@@ -123,7 +123,7 @@ const CourseDetail = (props) => {
         <Icon name="close" size={30} color={Colors.gainsboro} containerStyle={styles.backButton} onPress={onPressCloseBtn} />
         {state.currentLesson ? state.courseInfo.typeUploadVideoLesson === 1 ?
             state.isDownloaded !== null ?
-                <Video source={{uri: !state.isDownloaded ? state.currentLesson.videoUrl : state.currentLesson.id ?
+                <Video source={{uri: state.isDownloaded === false ? state.currentLesson.videoUrl : state.currentLesson.id ?
                         `${FileSystem.documentDirectory}${courseId}/${state.currentLesson.id}.mp4` : `${FileSystem.documentDirectory}${courseId}/${state.currentLesson.lessonId}.mp4`}} 
                     posterSource={{uri: state.courseInfo.imageUrl}} rate={1.0} volume={1.0} shouldCorrectPitch={true} resizeMode="contain"
                     shouldPlay useNativeControls isMuted={false} style={styles.video} ref={videoPlayer} progressUpdateIntervalMillis={1000000}

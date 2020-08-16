@@ -122,7 +122,8 @@ const CourseDetailInfo = (props) => {
                 startingValue={props.state.courseInfo.averagePoint !== "NaN" ? Number(props.state.courseInfo.averagePoint) : 1} readonly />
             <Text style={[theme.textColor, {marginLeft: 5}]}>({props.state.courseInfo.ratedNumber})</Text>
         </View>
-        <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["process"]}:  {props.state.process} / {props.state.courseInfo.totalHours} {langContext.state.translation["hour"]}</Text>
+        {props.state.userBuyCourse ? <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["process"]}:  {props.state.process} / {props.state.courseInfo.totalHours} {langContext.state.translation["hour"]}</Text>
+            : <Text style={[{color: Colors.green}, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["price"]}:  {props.state.courseInfo.price}đ</Text>}
         <View style={[styles.rowContainer, styles.buttonGroup]}>
             <TouchableOpacity style={styles.iconButton} onPress={() => onPressLikeCourse(props.state.courseInfo.id)} disabled={likeCourseLoading}>
                 {likeCourseLoading ? <ActivityIndicator color={theme.tintColor} />

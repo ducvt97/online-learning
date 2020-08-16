@@ -135,7 +135,7 @@ const HomeTab = (props) => {
             {continueLearningLoading
             ? <><Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, CommonStyles.shortMarginVertical]}>{langContext.state.translation["continueLearning"]}</Text>
                 <ActivityIndicator color={theme.tintColor} /></>
-            : errMsgLoadContinueLearning ? <Text style={theme.titleColor}>{homeContext.state.errMsgLoadContinueLearning}</Text>
+            : errMsgLoadContinueLearning ? <Text style={theme.titleColor}>{errMsgLoadContinueLearning}</Text>
                 : <ListCoursesHorizontal navigation={props.navigation} theme={theme} data={continueLearning}
                     headerTitle={langContext.state.translation["continueLearning"]}
                     onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.continueLearning}
@@ -143,7 +143,7 @@ const HomeTab = (props) => {
             {favoritesLoading
             ? <><Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, CommonStyles.shortMarginVertical]}>{langContext.state.translation["favorites"]}</Text>
                 <ActivityIndicator color={theme.tintColor} /></>
-            : errMsgLoadFavorites ? <Text style={theme.titleColor}>{homeContext.state.errMsgLoadFavorites}</Text>
+            : errMsgLoadFavorites ? <Text style={theme.titleColor}>{errMsgLoadFavorites}</Text>
                 : <ListCoursesHorizontal navigation={props.navigation} theme={theme} data={favorites}
                     headerTitle={langContext.state.translation["favorites"]}
                     onPressHeaderButton={onPressHeaderButton} headerScreenName={ScreenName.favorites}

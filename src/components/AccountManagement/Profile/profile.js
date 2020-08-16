@@ -115,8 +115,8 @@ const Profile = (props) => {
             </View>
             <Text h4 style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, CommonStyles.shortMarginVertical]}>{authContext.state.userInfo && authContext.state.userInfo.type}</Text>
             <Text h4 style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["favoriteCategory"]}</Text>
-            <FlatList data={authContext.state.userInfo.favoriteCategories} keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.item]}>&#8226; {item}</Text>} />
+            {authContext.state.userInfo ? <FlatList data={authContext.state.userInfo.favoriteCategories} keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.item]}>&#8226; {item}</Text>} /> : null}
             <Button title={langContext.state.translation["changePass"]} buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
                 titleStyle={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]} onPress={() => props.navigation.navigate(ScreenName.changePassword)} />
             <Button title={langContext.state.translation["logout"]} type="outline" buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
