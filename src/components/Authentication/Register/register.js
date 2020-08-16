@@ -23,6 +23,7 @@ const Register = (props) => {
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // Check if user register new account success, navigate to login screen
         if (status && status.status === 200) {
             alert(langContext.state.translation["registerSuccessMsg"]);
             props.navigation.navigate(ScreenName.login);
@@ -45,7 +46,7 @@ const Register = (props) => {
             UserServices.register(name, email, phone, password)
                 .then(response => {
                     if (status === 200) {
-                        UserServices.sendActivateEmail(email)
+                        UserServices.sendActivateEmail(email)   // If register success, send link activate to user email
                             .then(response1 => {
                                 setStatus({status: response1.status, message: response1.data.message});
                             })

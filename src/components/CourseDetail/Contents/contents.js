@@ -21,6 +21,7 @@ const Contents = (props) => {
     const [exercisesLoading, setExercisesLoading] = useState(true);
     const [errMsgExercises, setErrMsgExercises] = useState(null);
 
+    // Button group tab name
     const buttons = [langContext.state.translation["lesson"], langContext.state.translation["exercise"]];
     const [currentTab, setCurrentTab] = useState(0);
 
@@ -29,11 +30,13 @@ const Contents = (props) => {
             const loadSections = async () => {
                 let sections = [];
                 let totalLessons = 0;
+                // For loop to get more information from each lesson
                 for (const section of props.state.courseInfo.section) {
                     let lessons = [];
                     for (const lesson of section.lesson) {
                         let temp = {};
                         totalLessons += 1;
+                        // Get user status of lesson
                         await LessonServices.getVideoStatus(props.state.courseInfo.id, lesson.id)
                             .then(response => {
                                 if (response.status === 200)
@@ -47,6 +50,7 @@ const Contents = (props) => {
                                 setErrMsgSections(error.message);
                                 LessonServices.handleError(error);
                             });
+                        // Get exercises of lesson
                         await ExerciseServices.getByLessonId(lesson.id)
                             .then(response => {
                                 if (response.status === 200)

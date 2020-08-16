@@ -14,6 +14,7 @@ const Theme = (props) => {
     const [isLightTheme, setIsLightTheme] = useState(theme === themes.light ? true : false);
     const [themeLoading, setThemeLoading] = useState(false);
 
+    // User choose light theme
     const onPressLightTheme = async () => {
         if (theme != themes.light) {
             setThemeLoading(true);
@@ -23,6 +24,7 @@ const Theme = (props) => {
         }
     }
 
+    // User choose dark theme
     const onPressDarkTheme = async () => {
         if (theme != themes.dark) {
             setThemeLoading(true);

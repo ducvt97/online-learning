@@ -16,6 +16,7 @@ const RatingsAndReviews = (props) => {
     const [reviewLoading, setReviewLoading] = useState(false);
     const [isEditReview, setIsEditReview] = useState(false);
 
+    // Render comments and reviews of user for this course
     const renderItem = ({item}) => (
         <View style={[styles.row, props.style]}>
             <AvatarTitle imageUrl={item.user.avatar} title={item.user.name} style={styles.column} size="medium" titleStyle={theme.textColor} />
@@ -36,6 +37,7 @@ const RatingsAndReviews = (props) => {
             setReviewLoading(false);
             alert(langContext.state.translation["ratingValidationText"]);
         } else
+            // User rating course
             CoursesServices.ratingCourse(props.state.courseInfo.id, rating, review)
                 .then(response => {
                     setReviewLoading(false);
@@ -52,6 +54,7 @@ const RatingsAndReviews = (props) => {
                 })
     }
 
+    // If user had rated course, can also edit it
     const onPressEditReview = () => {
         setRating((props.state.userRatingCourse.formalityPoint + props.state.userRatingCourse.contentPoint + props.state.userRatingCourse.presentationPoint) / 3);
         setReview(props.state.userRatingCourse.content);

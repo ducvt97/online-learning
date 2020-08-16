@@ -21,13 +21,7 @@ export const CommonStyles = StyleSheet.create({
     shortPaddingHorizontal: {
         paddingHorizontal: 15
     },
-    // Style for text: color, font-weight, font-size
-    titleColor: {
-        color: Colors.white
-    },
-    textColor: {
-        color: Colors.gainsboro
-    },
+    // Style for text: font-weight, font-size (text color is defined in theme-context)
     fontWeightBold: {
         fontWeight: "bold"
     },
@@ -88,38 +82,3 @@ export const CommonStyles = StyleSheet.create({
         marginBottom: 5
     }
 });
-
-// Some style for container
-export const containerStyle = {
-    generalContainer: {
-        flex: 1,
-        padding: 15,
-        backgroundColor: Colors.black
-    },
-    searchTabContainer: {
-        paddingTop: 100
-    },
-    flex: {
-        flex: 1
-    }
-}
-
-// Style for text: font-weight, font-size (text color is defined in theme-context)
-export const textStyles = {
-    fontWeightBold: {
-        fontWeight: "bold"
-    },
-    fontSizeSmall: {
-        fontSize: 12
-    },
-    fontSizeAverage: {
-        fontSize: 16
-    },
-    fontSizeBig: {
-        fontSize: 20
-    },
-    validationText: {
-        color: Colors.red,
-        marginBottom: 5
-    }
-}

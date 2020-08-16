@@ -13,6 +13,7 @@ const CoursesRecommend = (props) => {
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
+        // Get top course rating
         CoursesServices.getTopRate()
             .then(response => {
                 setIsLoading(false);

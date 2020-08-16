@@ -17,6 +17,7 @@ const PopularSkills = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // Get list categories
         CategoryServices.getAll()
             .then(response => {
                 setIsLoading(false);

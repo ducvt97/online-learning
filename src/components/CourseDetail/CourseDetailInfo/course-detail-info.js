@@ -32,6 +32,7 @@ const CourseDetailInfo = (props) => {
         if (authContext.state.authenticated) {
             setPaymentLoadingStatus(true);
             setLikeCourseLoading(true);
+            // Get user payment status of this course
             PaymentServices.getPaymentStatus(props.state.courseInfo.id)
                 .then(response => {
                     setPaymentLoadingStatus(false);
@@ -44,6 +45,7 @@ const CourseDetailInfo = (props) => {
                     setErrMsgPaymentStatus(error.message);
                     PaymentServices.handleError(error);
                 });
+            // Get user like status of this course
             UserServices.getCourseLikeStatus(props.state.courseInfo.id)
                 .then(response => {
                     setLikeCourseLoading(false);
@@ -60,6 +62,7 @@ const CourseDetailInfo = (props) => {
     }, []);
 
     useEffect(() => {
+        // Get user's process of this course
         CoursesServices.getCourseProcess(props.state.courseInfo.id)
             .then(response => {
                 if (response.status === 200)

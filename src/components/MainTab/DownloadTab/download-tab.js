@@ -18,6 +18,7 @@ const DownloadTab = (props) => {
     const downloadContext = useContext(DownloadContext);
     const authContext = useContext(AuthenticationContext);
 
+    // Each downloaded course has an action button that you can press
     const onPressActionButton = (title, courseId) => {
         Alert.alert(langContext.state.translation["removeFromDownload"], title, [
             { text: langContext.state.translation["remove"], onPress: () => downloadContext.removeDownloadedCourse(courseId) },

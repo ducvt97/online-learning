@@ -13,6 +13,7 @@ import Utilities from '../../../core/fwk/utilities';
 const LessonsTab = (props) => {
     const {theme} = useContext(ThemeContext);
 
+    // Render section course
     const renderSection = (section, theme) => {
         return <FlatList data={section.lesson} ItemSeparatorComponent={() => <Divider style={CommonStyles.divider} />}
             keyExtractor={(item, index) => index.toString()} showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
@@ -29,18 +30,22 @@ const LessonsTab = (props) => {
         </View>
     }
 
+    // Update time of last seen for video lesson
     const updateVideoCurrentTime = (lessonId, time) => {
         LessonServices.updateVideoCurrentTime(lessonId, time)
             .then(reponse => {})
             .catch(error => { LessonServices.handleError(error); });
     }
 
+    // Press lesson to change current watching lesson
     const onPressItem = async (item) => {
         if (item.id !== props.state.currentLesson.id && item.id !== props.state.currentLesson.lessonId) {
+            // Set learn status of lesson to finish if not
             if (!props.state.currentLesson.isFinish)
-            LessonServices.updateLessonStatus(props.state.currentLesson.id || props.state.currentLesson.lessonId)
-                .then(reponse => {})
-                .catch(error => { LessonServices.handleError(error); });
+                LessonServices.updateLessonStatus(props.state.currentLesson.id || props.state.currentLesson.lessonId)
+                    .then(reponse => {})
+                    .catch(error => { LessonServices.handleError(error); });
+            // Update time of last seen for video lesson base on player type (Youtube Player or Video Player)
             if (props.state.courseInfo.typeUploadVideoLesson === 1)
                 props.videoPlayer.current.setOnPlaybackStatusUpdate(status => updateVideoCurrentTime(props.state.currentLesson.id || props.state.currentLesson.lessonId, status.positionMillis));
             else
@@ -49,6 +54,7 @@ const LessonsTab = (props) => {
         }
     }
 
+    // Render lesson
     const renderItem = (item, theme) => {
         return <ListItem title={item.name} titleStyle={theme.titleColor} containerStyle={[styles.item, theme.background]}
             leftIcon={item.id === props.state.currentLesson.id || item.id === props.state.currentLesson.lessonId

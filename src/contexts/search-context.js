@@ -20,6 +20,7 @@ const SearchProvider = (props) => {
 
     useEffect(() => {
         const checkAndSetRecentSearches = async () => {
+            // Get search history of user if singed in
             if (authContext.state.token) {
                 CoursesServices.getSearchHistoryWithToken(authContext.state.token)
                     .then(response => {
@@ -30,6 +31,7 @@ const SearchProvider = (props) => {
                     }).catch(error => CoursesServices.handleError(error));
             } else {
                 try {
+                    // Get search history from Storage (search history when not signed is stored in Storage)
                     const value = await AsyncStorage.getItem("recentSearches");
                     if (value !== null) {
                         const recentSearches = JSON.parse(value);

@@ -16,6 +16,7 @@ const CoursesOfCategory = (props) => {
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // Get list courses of specific category by given category id
         CoursesServices.searchByCategory(props.route.params.category.id)
             .then(response => {
                 setIsLoading(false);

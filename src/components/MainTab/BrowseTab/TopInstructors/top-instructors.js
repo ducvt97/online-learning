@@ -16,6 +16,7 @@ const TopInstructors = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // Get list instructors
         InstructorServices.getAll()
             .then(response => {
                 setIsLoading(false);
@@ -35,6 +36,7 @@ const TopInstructors = (props) => {
         props.navigation.navigate(screenName, {itemId: itemId});
     }
 
+    // If more than 10 results, navigate to different screen to see full list
     const onPressHeaderRightButton = (data, theme, style) => {
         props.navigation.navigate(ScreenName.topInstructor, {data: data, theme: theme, style: style})
     }

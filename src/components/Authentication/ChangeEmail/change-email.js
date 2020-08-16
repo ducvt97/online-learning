@@ -21,6 +21,7 @@ const ChangeEmail = (props) => {
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // If user change email success, force user to login again
         if (status && status.status === 200) {
             authContext.logout();
             alert(langContext.state.translation["changeEmailSuccessMsg"]);

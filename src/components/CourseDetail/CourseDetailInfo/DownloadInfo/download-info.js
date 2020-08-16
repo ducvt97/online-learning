@@ -19,8 +19,8 @@ const DownloadInfo = (props) => {
 
     const [downloadPreparing, setDownloadPreparing] = useState(false);
     const [downloading, setDownloading] = useState(false);
-    const [downloadProgress, setDownloadProgress] = useState(null);
-    const [downloadedLessons, setDownloadedLessons] = useState(0);
+    const [downloadProgress, setDownloadProgress] = useState(null); // current lesson download progress
+    const [downloadedLessons, setDownloadedLessons] = useState(0);  // Number of downloaded lesson
 
     useEffect(() => {
         if (props.state.totalLessons)
@@ -28,7 +28,7 @@ const DownloadInfo = (props) => {
                 setIsDownloaded(props.dispatch, true);
                 setDownloadedLessons(props.state.totalLessons);
             } else setIsDownloaded(props.dispatch, false);
-    }, [props.state.totalLessons])
+    }, [props.state.totalLessons]);
 
     const onPressDownload = async () => {
         if (!authContext.state.authenticated) {

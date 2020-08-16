@@ -26,6 +26,7 @@ const ChangePassword = (props) => {
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
+        // If user change password success, force user to login again
         if (status && status.status === 200) {
             authContext.logout();
             alert(langContext.state.translation["changePassSuccessMsg"]);

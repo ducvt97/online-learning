@@ -10,6 +10,7 @@ import { ThemeContext } from '../../../contexts/theme-context';
 import UserServices from '../../../core/services/user-services';
 import { LanguageContext } from '../../../contexts/language-context';
 
+// Configurations for Google Sign in
 const googleSignInConfig = {
     iosClientId: "33913581111-firjd69m8h8lm4rs554rp7s79csq6aet.apps.googleusercontent.com",
     androidClientId: "33913581111-m7vraqef24d1j6o7cmu06mmkuovtlnu6.apps.googleusercontent.com"
@@ -29,6 +30,7 @@ const Login = (props) => {
     const {theme} = useContext(ThemeContext);
 
     React.useLayoutEffect(() => {
+        // Check if user use 'Explore without Signin' and is in HomeTab
         if (props.isInHomeTab)
             props.navigation.setOptions({ title: langContext.state.translation.screenTitle.login,
                 headerLeft: () => <Icon name="settings" color={theme.tintColor} size={30} containerStyle={styles.headerButton}
@@ -37,8 +39,9 @@ const Login = (props) => {
     }, [{...theme}]);
 
     useEffect(() => {
+        // Check user login status
         if (authContext.state.authenticated)
-            if (props.isInHomeTab)
+            if (props.isInHomeTab)  
                 props.navigation.navigate(ScreenName.homeTab);
             else
                 props.navigation.navigate(ScreenName.mainTab);
@@ -90,7 +93,6 @@ const Login = (props) => {
                     });
             }
         } catch ({message}) {
-            console.log(message);
             alert(langContext.state.translation["loginGoogleErrMsg"]);
         }
     }

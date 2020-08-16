@@ -26,7 +26,8 @@ const SearchResults = (props) => {
         CoursesServices.search(item, authContext.state.token)
             .then(async response => {
                 if (response.status === 200) {
-                    let searchHistory = 0;
+                    let searchHistory = 0;  // Variable to save search history of user
+                    // Get search history of user. If not login, action 'search' of SearchContext will check and return suitable result
                     await CoursesServices.getSearchHistory()
                         .then(response1 => {
                             if (response1.status === 200) {
@@ -35,6 +36,7 @@ const SearchResults = (props) => {
                                 console.log(response1.data.message);
                         })
                         .catch(error1 => CoursesServices.handleError(error1));
+                    // Update state of SearchContext
                     await searchContext.search({
                         searchText: item,
                         searchResult: {

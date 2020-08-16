@@ -1,3 +1,4 @@
+// Screen name for navigation define
 export const ScreenName = {
     startScreen: "StartScreen",
     splashScreen: "SplashScreen",
@@ -36,6 +37,7 @@ export const ScreenName = {
     searchInstructorsTab: "SearchInstructorsTab"
 }
 
+// Color code define
 export const Colors = {
     transparent: "transparent",
     black: "black",

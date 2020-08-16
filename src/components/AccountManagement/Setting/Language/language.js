@@ -13,6 +13,7 @@ const Language = (props) => {
     const langContext = useContext(LanguageContext);
     const [languageLoading, setLanguageLoading] = useState(false);
 
+    // User choose English
     const onPressEnglish = async () => {
         if (langContext.state.locale !== "en") {
             setLanguageLoading(true);
@@ -21,6 +22,7 @@ const Language = (props) => {
         }
     }
 
+    // User choose Vietnamese
     const onPressVietnamese = async () => {
         if (langContext.state.locale !== "vi") {
             setLanguageLoading(true);

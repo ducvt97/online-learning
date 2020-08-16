@@ -42,6 +42,7 @@ const HomeTab = (props) => {
 
     useEffect(() => {
         if (authContext.state.token) {
+            // Get list courses user bought
             UserServices.getProcessCourse(authContext.state.token)
                 .then(response => {
                     setContinueLearningLoading(false);
@@ -53,6 +54,7 @@ const HomeTab = (props) => {
                     setErrMsgLoadContinueLearning(error.message);
                     UserServices.handleError(error);
                 });
+            // Get list courses user liked
             UserServices.getFavoriteCourse(authContext.state.token)
                 .then(response => {
                     setFavoritesLoading(false);
@@ -68,6 +70,7 @@ const HomeTab = (props) => {
     }, [authContext.state.token]);
 
     useEffect(() => {
+        // Should reload when user buy a course, call API to get data
         if (homeContext.shouldContinueLearningReload) {
             UserServices.getProcessCourse(authContext.state.token)
                 .then(response => {
@@ -85,6 +88,7 @@ const HomeTab = (props) => {
     }, [homeContext.shouldContinueLearningReload]);
 
     useEffect(() => {
+        // Should reload when user like or unlike a course, call API to get data
         if (homeContext.shouldFavoritesReload) {
             UserServices.getFavoriteCourse(authContext.state.token)
                 .then(response => {
@@ -103,6 +107,7 @@ const HomeTab = (props) => {
 
     useEffect(() => {
         if (authContext.state.userInfo) {
+            // Get list courses recommend for user
             UserServices.recommendCourse(authContext.state.userInfo.id, 10, 0)
                 .then(response => {
                     if (response.status === 200)

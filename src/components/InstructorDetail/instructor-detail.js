@@ -21,6 +21,7 @@ const InstructorDetail = (props) => {
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // Get detail of instructor by given id
         InstructorServices.getDetailById(instructorId)
             .then(reponse => {
                 setIsLoading(false);

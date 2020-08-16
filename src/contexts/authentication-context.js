@@ -15,6 +15,7 @@ const AuthenticationContext = React.createContext();
 const AuthenticationProvider = (props) => {
     const [state, dispatch] = useReducer(authenticationReducer, initialState);
 
+    // Set token for axios if token state change
     useEffect(() => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
     }, [state.token])

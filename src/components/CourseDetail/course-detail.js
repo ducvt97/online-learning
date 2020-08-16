@@ -62,11 +62,13 @@ const CourseDetail = (props) => {
 
     useEffect(() => {
         if (authContext.state.authenticated && state.userBuyCourse) {
+            // Get user rating of this course
             CoursesServices.getRating(courseId)
                 .then(response => {
                     if (response.status === 200)
                         setUserRatingCourse(dispatch, response.data.payload);
                 }).catch(error => { CoursesServices.handleError(error); });
+            // Get last lesson video user watch
             CoursesServices.getLastWatchLesson(courseId)
                 .then(response => {
                     if (response.status === 200)
@@ -75,21 +77,25 @@ const CourseDetail = (props) => {
         }
     }, [state.userBuyCourse]);
 
+    // Update time of watch video
     const updateVideoCurrentTime = (lessonId, time) => {
         LessonServices.updateVideoCurrentTime(lessonId, time)
             .then(reponse => {})
             .catch(error => { LessonServices.handleError(error); });
     }
 
+    // Trigger when Youtube Player state is change
     const onChangeStateYtPlayer = async (event) => {
         if (event === "ended")
             updateVideoCurrentTime(state.currentLesson.id || state.currentLesson.lessonId, 0);
     }
 
+    // Trigger when Youtube Player resource is ready
     const ytPlayerOnReady = () => {
         ytPlayer.current.seekTo(Utilities.milsecondToSecond(state.currentLesson.currentTime), true);
     }
 
+    // Trigger when Video Player state is change
     const videoPlayerStatusUpdate = (status) => {
         if (status.didJustFinish)
             updateVideoCurrentTime(state.currentLesson.id || state.currentLesson.lessonId, 0);

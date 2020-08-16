@@ -21,11 +21,13 @@ const ForgetPassword = (props) => {
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // If code is sent to user's email, change screen for user to enter code
         if (sendEmailStatus && sendEmailStatus.status === 200)
             setIsCodeSent(true);
     }, [sendEmailStatus])
 
     useEffect(() => {
+        // If user enter correct code, navigate to login screen
         if (verifyCodeStatus && verifyCodeStatus.status === 200)
             props.navigation.navigate(ScreenName.resetPassword, { userId: verifyCodeStatus.userId });
     }, [verifyCodeStatus])

@@ -21,6 +21,7 @@ const ResetPassword = (props) => {
     const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // Check if user reset password success, navigate to start screen
         if (status && status.status === 200) {
             alert(langContext.state.translation["resetPassSuccessMsg"]);
             props.navigation.navigate(ScreenName.startScreen);
