@@ -9,14 +9,16 @@ import SearchResults from './SearchResults/search-results';
 import SearchHeader from './SearchHeader/search-header';
 
 import { CommonStyles } from '../../../globals/styles';
-import { ScreenName, ScreenTitle, Colors } from '../../../globals/constants';
+import { ScreenName, Colors } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const SearchTab = createStackNavigator();
 const SearchResultsTab = createMaterialTopTabNavigator();
 
 const SearchResultsTabNavigation = (props) => {
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     return (
         <SearchResultsTab.Navigator initialRouteName={ScreenName.searchAllTab}
@@ -29,15 +31,15 @@ const SearchResultsTabNavigation = (props) => {
         >
             <SearchResultsTab.Screen name={ScreenName.searchAllTab} component={SearchAllTab}
                 options={{ headerShown: false,
-                    tabBarLabel: ScreenTitle.searchAllTab
+                    tabBarLabel: langContext.state.translation.screenTitle.searchAllTab
             }} />
             <SearchResultsTab.Screen name={ScreenName.searchCoursesTab} component={SearchCoursesTab}
                 options={{ headerShown: false,
-                    tabBarLabel: ScreenTitle.searchCoursesTab
+                    tabBarLabel: langContext.state.translation.screenTitle.searchCoursesTab
             }} />
             <SearchResultsTab.Screen name={ScreenName.searchInstructorsTab} component={SearchInstructorsTab}
                 options={{ headerShown: false,
-                    tabBarLabel: ScreenTitle.searchInstructorsTab
+                    tabBarLabel: langContext.state.translation.screenTitle.searchInstructorsTab
             }} />
         </SearchResultsTab.Navigator>
     )

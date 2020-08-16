@@ -12,7 +12,7 @@ export default class LessonServices {
     }
 
     static updateVideoCurrentTime = (lessonId, currentTime) => {
-        return axios.post(`${requestUrl}/update-current-time-learn-video`, {
+        return axios.put(`${requestUrl}/update-current-time-learn-video`, {
             lessonId: lessonId,
             currentTime: currentTime
         });

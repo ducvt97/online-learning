@@ -8,6 +8,7 @@ import { ScreenName } from '../../../globals/constants';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import { ThemeContext } from '../../../contexts/theme-context';
 import UserServices from '../../../core/services/user-services';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const ChangePassword = (props) => {
     const [oldPassword, setOldPassword] = useState("");
@@ -21,19 +22,21 @@ const ChangePassword = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
+        // If user change password success, force user to login again
         if (status && status.status === 200) {
             authContext.logout();
-            alert("Password changed successfully!! Please login again.");
+            alert(langContext.state.translation["changePassSuccessMsg"]);
             props.navigation.dispatch(CommonActions.navigate({ name: ScreenName.startScreen }));
         }
     }, [status])
 
     const renderValidationText = (textInput, shouldDisplay, message) => {
         return shouldDisplay && textInput === "" ? <Text style={CommonStyles.validationText}>{message}</Text>
-             : shouldDisplay && message.includes("match") ? <Text style={CommonStyles.validationText}>{message}</Text> : null;
+            : shouldDisplay && (message.includes("match") || message.includes("giống")) ? <Text style={CommonStyles.validationText}>{message}</Text> : null;
     }
 
     const renderChangePasswordStatus = (status) => {
@@ -58,26 +61,27 @@ const ChangePassword = (props) => {
     }
 
     return <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
-        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Old password</Text>
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["oldPass"]}</Text>
         <View style={styles.inputField}>
             <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showOldPassword} onChangeText={text => setOldPassword(text)} />
             <Icon containerStyle={CommonStyles.inputIcon} name={showOldPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowOldPassword(!showOldPassword)} />
         </View>
-        {renderValidationText(oldPassword, shouldDisplayValidationText, "Old password cannot be empty")}
-        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>New password</Text>
+        {renderValidationText(oldPassword, shouldDisplayValidationText, `${langContext.state.translation["oldPass"]} ${langContext.state.translation["validationText"]}`)}
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["newPass"]}</Text>
         <View style={styles.inputField}>
             <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showNewPassword} onChangeText={text => setNewPassword(text)} />
             <Icon containerStyle={CommonStyles.inputIcon} name={showNewPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowNewPassword(!showNewPassword)} />
         </View>
-        {renderValidationText(newPassword, shouldDisplayValidationText, "New password cannot be empty")}
-        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Verify new password</Text>
+        {renderValidationText(newPassword, shouldDisplayValidationText, `${langContext.state.translation["newPass"]} ${langContext.state.translation["validationText"]}`)}
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["verify"]} {langContext.state.translation["newPass"]}</Text>
         <View style={styles.inputField}>
             <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showVerifyPassword} onChangeText={text => setVerifyNewPassword(text)} />
             <Icon containerStyle={CommonStyles.inputIcon} name={showVerifyPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowVerifyPassword(!showVerifyPassword)} />
         </View>
-        {renderValidationText(verifyNewPassword, shouldDisplayValidationText, newPassword !== verifyNewPassword ? "Verify new password must match new password" : "Verify new password cannot be empty")}
+        {renderValidationText(verifyNewPassword, shouldDisplayValidationText, newPassword !== verifyNewPassword ?
+            langContext.state.translation["verifyPassValidationText"] : `${langContext.state.translation["verify"]} ${langContext.state.translation["newPass"]} ${langContext.state.translation["validationText"]}`)}
         {renderChangePasswordStatus(status)}
-        <Button title="Change password" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressChangePassword(oldPassword, newPassword, verifyNewPassword)} />
+        <Button title={langContext.state.translation["changePass"]} loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressChangePassword(oldPassword, newPassword, verifyNewPassword)} />
     </View>
 }
 

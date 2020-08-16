@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "online-learning",
+    "name": "Online Learning",
     "slug": "online-learning",
     "platforms": [
       "ios",
@@ -9,7 +9,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
@@ -22,7 +22,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "se.hcmus.onlineLearning",
+      "buildNumber": "1.0.0",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "33913581111-firjd69m8h8lm4rs554rp7s79csq6aet.apps.googleusercontent.com"
+        }
+      }
+    },
+    "android": {
+      "package": "se.hcmus.onlineLearning",
+      "versionCode": 1
     }
   }
 }

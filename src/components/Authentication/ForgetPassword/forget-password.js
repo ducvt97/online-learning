@@ -6,6 +6,8 @@ import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import UserServices from '../../../core/services/user-services';
+import { LanguageContext } from '../../../contexts/language-context';
+import { CommonActions } from '@react-navigation/native';
 
 const ForgetPassword = (props) => {
     const [email, setEmail] = useState("");
@@ -17,13 +19,16 @@ const ForgetPassword = (props) => {
     const [sendEmailStatus, setSendEmailStatus] = useState(null);
     const [verifyCodeStatus, setVerifyCodeStatus] = useState(null);
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // If code is sent to user's email, change screen for user to enter code
         if (sendEmailStatus && sendEmailStatus.status === 200)
             setIsCodeSent(true);
     }, [sendEmailStatus])
 
     useEffect(() => {
+        // If user enter correct code, navigate to login screen
         if (verifyCodeStatus && verifyCodeStatus.status === 200)
             props.navigation.navigate(ScreenName.resetPassword, { userId: verifyCodeStatus.userId });
     }, [verifyCodeStatus])
@@ -73,22 +78,22 @@ const ForgetPassword = (props) => {
     }
 
     return !isCodeSent ? <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
-            <Text style={[styles.description, theme.titleColor]}>Enter your email address. We will send you a verification code.</Text>
-            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email address</Text>
-            <TextInput style={[CommonStyles.input, theme.inputBackground]} onEndEditing={() => setDidEmailFocus(true)} onChangeText={text => setEmail(text)} />
-            {renderValidation(email, didEmailFocus, "Email address cannot be empty")}
-            {renderVerifyStatus(sendEmailStatus)}
-            <Button title="Send verification code" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressSendCode(email)} />
-        </View>
-        : <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
-            <Text style={[styles.description, theme.titleColor]}>We have sent a verification code to your email. Please enter code to continue.</Text>
-            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Veification code</Text>
-            <TextInput style={[CommonStyles.input, theme.inputBackground]} onEndEditing={() => setDidVerifyCodeFocus(true)} onChangeText={text => setVerificationCode(text)} value={verificationCode} />
-            {renderValidation(verificationCode, didVerifyCodeFocus, "Verification code cannot be empty")}
-            {renderVerifyStatus(verifyCodeStatus)}
-            <Button title="Verify" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressVerifyCode(verificationCode)} />
-            <Button title={"I had already reset password via web.\nLogin again."} type="outline" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressVerifyCode(verificationCode)} />
-        </View>
+        <Text style={[styles.description, theme.titleColor]}>{langContext.state.translation["forgetPassSendEmailDescription"]}</Text>
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Email</Text>
+        <TextInput style={[CommonStyles.input, theme.inputBackground]} onEndEditing={() => setDidEmailFocus(true)} onChangeText={text => setEmail(text)} />
+        {renderValidation(email, didEmailFocus, `Email ${langContext.state.translation["validationText"]}`)}
+        {renderVerifyStatus(sendEmailStatus)}
+        <Button title={`${langContext.state.translation["send"]} ${langContext.state.translation["verifyCode"]}`} loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressSendCode(email)} />
+    </View>
+    : <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
+        <Text style={[styles.description, theme.titleColor]}>{langContext.state.translation["forgetPassSendCodeDescription"]}</Text>
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["verifyCode"]}</Text>
+        <TextInput style={[CommonStyles.input, theme.inputBackground]} onEndEditing={() => setDidVerifyCodeFocus(true)} onChangeText={text => setVerificationCode(text)} value={verificationCode} />
+        {renderValidation(verificationCode, didVerifyCodeFocus, `${langContext.state.translation["verifyCode"]} ${langContext.state.translation["validationText"]}`)}
+        {renderVerifyStatus(verifyCodeStatus)}
+        <Button title={langContext.state.translation["verify"]} loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressVerifyCode(verificationCode)} />
+        <Button title={langContext.state.translation["alreadyResetPassBtn"]} type="outline" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => props.navigation.dispatch(CommonActions.navigate({ name: ScreenName.login }))} />
+    </View>
 }
 
 export default ForgetPassword;
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
         paddingTop: 20
     },
     description: {
-        marginBottom: 30,
+        marginBottom: 10,
         fontSize: 20,
     }
 });

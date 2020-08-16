@@ -6,7 +6,7 @@ import { CommonStyles } from '../../globals/styles';
 
 const SectionHeader = (props) => {
     return (
-        <View style={[props.style, styles.container]}>
+        <View style={[styles.container, props.style]}>
             <Text style={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, props.titleStyle]}>{props.title}</Text>
             {props.rightButtonTitle ? 
                 <Button type="clear" title={props.rightButtonTitle} 

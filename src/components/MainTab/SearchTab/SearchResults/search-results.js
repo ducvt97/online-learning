@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, AsyncStorage } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -11,63 +11,46 @@ import { Colors, ScreenName } from '../../../../globals/constants';
 import { ThemeContext } from '../../../../contexts/theme-context';
 import { SearchContext } from '../../../../contexts/search-context';
 import CoursesServices from '../../../../core/services/courses-services';
-import InstructorServices from '../../../../core/services/instructor-service';
+import { LanguageContext } from '../../../../contexts/language-context';
+import { AuthenticationContext } from '../../../../contexts/authentication-context';
 
 const SearchResults = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const {theme} = useContext(ThemeContext);
     const searchContext = useContext(SearchContext);
-
-    const searchInstructors = async (instructors, searchText) => {
-        if (!searchText)
-            return instructors;
-        else {
-            let result = [];
-            searchText = searchText.toLowerCase();
-            await instructors.every(async instructor => {
-                await instructor.skills.every(skill => {
-                    if (skill.toLowerCase().includes(searchText)) {
-                        result.push(instructor);
-                        return;
-                    }
-                });
-            });
-            return result;
-        }
-    }
+    const langContext = useContext(LanguageContext);
+    const authContext = useContext(AuthenticationContext);
 
     const onPressListItem = (item) => {
         setIsLoading(true);
-        CoursesServices.search(item)
-            .then(reponse => {
-                if (reponse.status === 200)
-                    InstructorServices.getAll()
-                        .then(async reponse1 => {
-                            if (reponse1.status === 200) {
-                                const instructors = await searchInstructors(reponse1.data.payload, item);
-                                await searchContext.search({
-                                    searchText: item,
-                                    searchResult: {
-                                        courses: reponse.data.payload.rows,
-                                        instructors: instructors
-                                    }
-                                });
-                                setIsLoading(false);
-                                props.navigation.navigate(ScreenName.searchResultsTabNavigation);
+        CoursesServices.search(item, authContext.state.token)
+            .then(async response => {
+                if (response.status === 200) {
+                    let searchHistory = 0;  // Variable to save search history of user
+                    // Get search history of user. If not login, action 'search' of SearchContext will check and return suitable result
+                    await CoursesServices.getSearchHistory()
+                        .then(response1 => {
+                            if (response1.status === 200) {
+                                searchHistory = response1.data.payload.data;
                             } else
-                                alert(reponse.data.message);
-                            setIsLoading(false);
+                                console.log(response1.data.message);
                         })
-                        .catch(error1 => {
-                            setIsLoading(false);
-                            alert(error1);
-                            InstructorServices.handleError(error1);
-                        });
-                else
-                    alert(reponse.data.message);
+                        .catch(error1 => CoursesServices.handleError(error1));
+                    // Update state of SearchContext
+                    await searchContext.search({
+                        searchText: item,
+                        searchResult: {
+                            courses: response.data.payload.courses.data,
+                            instructors: response.data.payload.instructors.data
+                        },
+                        recentSearches: searchHistory
+                    });
+                    setIsLoading(false);
+                    props.navigation.navigate(ScreenName.searchResultsTabNavigation);
+                } else
+                    alert(response.data.message);
                 setIsLoading(false);
-            })
-            .catch(error => {
+            }).catch(error => {
                 setIsLoading(false);
                 alert(error);
                 CoursesServices.handleError(error);
@@ -75,20 +58,41 @@ const SearchResults = (props) => {
     }
 
     const renderItem = ({item}) => (
-        <ListItem containerStyle={styles.item} title={item}
+        <ListItem containerStyle={styles.item} title={item.content}
             titleStyle={[CommonStyles.fontSizeAverage, theme.textColor]}
-            onPress={() => onPressListItem(item)}
+            onPress={() => onPressListItem(item.content)}
             leftIcon={{ name: "search", color: theme.inactiveTintColor }}
-            bottomDivider
-        />
+            bottomDivider />
     )
 
-return <View style={[CommonStyles.generalContainer, theme.background]}>
-    <Spinner visible={isLoading} color={theme.tintColor} />
+    const onPressClearRecentSearches = async () => {
+        if (authContext.state.authenticated) {
+            for (const search of searchContext.state.recentSearches) {
+                CoursesServices.deleteSearchHistory(search.id)
+                    .then(response => {
+                        if (response.status === 200) {
+                            searchHistory = response.data.payload;
+                        } else
+                            console.log(response.data.message);
+                    })
+                    .catch(error => CoursesServices.handleError(error));
+            }
+        } else {
+            try {
+                await AsyncStorage.setItem("recentSearches", JSON.stringify([]));
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        searchContext.clearRecentSearches();
+    }
+
+    return <View style={[CommonStyles.generalContainer, theme.background]}>
+        <Spinner visible={isLoading} color={theme.tintColor} />
         {searchContext.state.currentSearchText === "" ? searchContext.state.recentSearches.length > 0 ?
-            <SectionHeader style={theme.background} title="Recent searches" titleStyle={theme.titleColor} rightButtonTitle="Clear"
-                onPressRightButton={searchContext.clearRecentSearches} />
-            : <ListEmptyView theme={theme} title="Search by title, instructor, or subject." subtitle="Over 7000 courses at your fingertips." />
+            <SectionHeader style={theme.background} title={langContext.state.translation["recentSearch"]} titleStyle={theme.titleColor} 
+                rightButtonTitle={langContext.state.translation["clear"]} onPressRightButton={onPressClearRecentSearches} />
+            : <ListEmptyView theme={theme} title={langContext.state.translation["searchResultEmptyTitle"]} subtitle={langContext.state.translation["searchResultEmptySubtitle"]} />
         : null}
         <FlatList keyExtractor={(item, index) => index.toString()} data={searchContext.state.recentSearches} renderItem={renderItem} />
     </View>

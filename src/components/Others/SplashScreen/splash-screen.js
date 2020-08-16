@@ -5,11 +5,13 @@ import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import { ThemeContext } from '../../../contexts/theme-context';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const SplashScreen = (props) => {
     const [loading, setLoading] = useState(0);
 
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const SplashScreen = (props) => {
     return (
         <View style={[CommonStyles.generalContainer, styles.container, theme.background]}>
             <Image style={styles.logo} source={require("../../../../assets/logo.png")} />
-            <Text style={theme.titleColor}>Loading... {loading} %</Text>
+            <Text style={theme.titleColor}>{langContext.state.translation['loading']}... {loading} %</Text>
         </View>
     )
 }

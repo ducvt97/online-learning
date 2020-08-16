@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, View, FlatList, ScrollView, Text, ActivityIndicator } from 'react-native';
-import { Button, Tile } from 'react-native-elements';
 
 import SectionHeader from '../../../common/section-header';
+import ImageText from '../../../common/image-text';
+
 import { CommonStyles } from '../../../../globals/styles';
-import { Colors } from '../../../../globals/constants';
+import { Colors, ScreenName } from '../../../../globals/constants';
 import CategoryServices from '../../../../core/services/category-services';
+import { LanguageContext } from '../../../../contexts/language-context';
 
 const PopularSkills = (props) => {
     const theme = props.theme;
-    const skills = ["Angular", "JavaScript", "C#", "Java", "React", "VueJS"];
+    const langContext = useContext(LanguageContext);
     const [categories, setCategories] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // Get list categories
         CategoryServices.getAll()
             .then(response => {
                 setIsLoading(false);
@@ -28,17 +31,14 @@ const PopularSkills = (props) => {
                 setErrorMessage(error);
                 CategoryServices.handleError(error);
             })
-    }, [])
+    }, []);
+
+    const onPressCategoryBtn = (item) => {
+        props.navigation.navigate(ScreenName.coursesOfCategory, { category: item });
+    }
 
     return <View>
-        <SectionHeader style={theme ? theme.background : null} title={props.headerTitle} titleStyle={theme ? theme.titleColor : null} />
-        <FlatList style={styles.listContainer} horizontal={true} data={skills}
-            keyExtractor={(item, index) => index.toString()}
-            showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => 
-                <Button title={item} buttonStyle={[CommonStyles.buttonListItem, styles.item]}
-                    titleStyle={[{color: Colors.light}, CommonStyles.fontSizeSmall]} /> }
-        />
+        <SectionHeader title={langContext.state.translation["popularCategory"]} style={[theme ? theme.background : null, styles.header]} titleStyle={theme ? theme.titleColor : null} />
         {isLoading ? <ActivityIndicator color={theme ? theme.tintColor : null} style={styles.indicator} />
         : categories && categories.length > 0 ?
             <ScrollView horizontal={true}>
@@ -47,11 +47,11 @@ const PopularSkills = (props) => {
                     keyExtractor={(item, index) => index.toString()}
                     numColumns={Math.ceil(categories.length / 2)}
                     renderItem={({item}) => 
-                        <Tile featured title={item.name}
+                        <ImageText title={item.name}
                             imageSrc={require("../../../../../assets/images/background/conference.jpg")}
-                            containerStyle={[CommonStyles.imageButtonSmall, styles.item]}
-                            imageContainerStyle={CommonStyles.imageButtonSmall}
-                            titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontSizeAverage]}
+                            style={[CommonStyles.imageButtonSmall, styles.item]}
+                            titleStyle={[{color: Colors.gainsboro}, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}
+                            onPress={() => onPressCategoryBtn(item)}
                         />
                     }
                 />
@@ -63,6 +63,9 @@ const PopularSkills = (props) => {
 export default PopularSkills;
 
 const styles = StyleSheet.create({
+    header: {
+        marginBottom: 10
+    },
     listContainer: {
         marginTop: 10,
         marginBottom: 20

@@ -7,9 +7,10 @@ import ListCourses from '../Courses/ListCourses/list-courses';
 
 import { CommonStyles } from '../../globals/styles';
 import { ThemeContext } from '../../contexts/theme-context';
-import { ScreenName, Colors } from '../../globals/constants';
+import { Colors } from '../../globals/constants';
 import InstructorServices from '../../core/services/instructor-service';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { LanguageContext } from '../../contexts/language-context';
 
 const InstructorDetail = (props) => {
     const instructorId = props.route.params.itemId;
@@ -17,8 +18,10 @@ const InstructorDetail = (props) => {
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // Get detail of instructor by given id
         InstructorServices.getDetailById(instructorId)
             .then(reponse => {
                 setIsLoading(false);
@@ -35,7 +38,7 @@ const InstructorDetail = (props) => {
     }, []);
 
     return <ScrollView style={[CommonStyles.generalContainer, theme.background]} nestedScrollEnabled >
-        {isLoading ? <Spinner visible={isLoading} textContent="Loading..." textStyle={styles.indicatorText} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
+        {isLoading ? <Spinner visible={isLoading} textContent={`${langContext.state.translation["loading"]}...`} textStyle={styles.indicatorText} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
         : instructor ? <View style={{paddingBottom: 20}}>
             <View style={styles.container}>
                 <Avatar rounded source={{uri: instructor.avatar}} size="xlarge" />
@@ -52,12 +55,12 @@ const InstructorDetail = (props) => {
             </View>
             <Description style={CommonStyles.shortMarginVertical} content={instructor.intro} theme={theme} />
             {instructor.skills ? <View>
-                <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>Skills</Text>
+                <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>{langContext.state.translation["skill"]}</Text>
                 <FlatList data={instructor.skills} keyExtractor={(item, index) => index.toString()}
                     renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.skill]}>&#8226; {item}</Text>} />
             </View>: null}
             <Divider style={CommonStyles.divider} />
-            <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>Courses</Text>
+            <Text style={[theme.titleColor, CommonStyles.fontWeightBold, CommonStyles.fontSizeBig]}>{langContext.state.translation["courses"]}</Text>
             <ListCourses data={instructor.courses} theme={theme} {...props} />
         </View>
         : <Text>{message}</Text>}

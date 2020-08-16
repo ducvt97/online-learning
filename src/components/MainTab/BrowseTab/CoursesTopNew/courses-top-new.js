@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 
 import ListCourses from '../../../Courses/ListCourses/list-courses';
 import { CommonStyles } from '../../../../globals/styles';
@@ -14,6 +14,7 @@ const CoursesTopNew = (props) => {
     const {theme} = useContext(ThemeContext);
 
     useEffect(() => {
+        // Get list courses have just been publish
         CoursesServices.getTopNew()
             .then(response => {
                 setIsLoading(false);

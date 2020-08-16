@@ -1,12 +1,12 @@
-import { CourseDeatailActionTypes } from '../globals/constants';
+import { CourseDetailActionTypes } from '../globals/constants';
 
 const courseDetailReducer = (prevState, action) => {
     switch (action.type) {
-        case CourseDeatailActionTypes.setCourseInfo:
+        case CourseDetailActionTypes.setCourseInfo:
             return {...prevState, courseInfo: action.data, courseInfoLoading: false};
-        case CourseDeatailActionTypes.setCourseSection:
+        case CourseDetailActionTypes.setCourseSection:
             return {...prevState, courseSection: action.data};
-        case CourseDeatailActionTypes.closeCourseDetail:
+        case CourseDetailActionTypes.closeCourseDetail:
             return {...prevState, courseInfo: null,
                 courseInfoLoading: true,
                 userBuyCourse: null,
@@ -15,18 +15,22 @@ const courseDetailReducer = (prevState, action) => {
                 courseSection: null,
                 currentLesson: null
             };
-        case CourseDeatailActionTypes.setUserBuyCourse:
+        case CourseDetailActionTypes.setUserBuyCourse:
             return {...prevState, userBuyCourse: action.data};
-        case CourseDeatailActionTypes.setUserLikeCourse:
+        case CourseDetailActionTypes.setUserLikeCourse:
             return {...prevState, userLikeCourse: action.data};
-        case CourseDeatailActionTypes.setUserRatingCourse:
+        case CourseDetailActionTypes.setUserRatingCourse:
             return {...prevState, userRatingCourse: action.data};
-        case CourseDeatailActionTypes.setCurrentLesson:
+        case CourseDetailActionTypes.setCurrentLesson:
             return {...prevState, currentLesson: action.data};
-        case CourseDeatailActionTypes.setCurrentTimePlayingVideo:
+        case CourseDetailActionTypes.setCurrentTimePlayingVideo:
             return {...prevState, currentTimePlayingVideo: action.data};
-        case CourseDeatailActionTypes.setVideoPlaying:
-            return {...prevState, videoPlaying: action.data};
+        case CourseDetailActionTypes.setProcess:
+            return {...prevState, process: action.data};
+        case CourseDetailActionTypes.setIsDownloaded:
+            return {...prevState, isDownloaded: action.data};
+        case CourseDetailActionTypes.setTotalLessons:
+            return {...prevState, totalLessons: action.data};
         default:
             throw new Error(`Action ${action.type} not recognized.`);
     }

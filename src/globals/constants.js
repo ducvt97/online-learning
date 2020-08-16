@@ -1,3 +1,4 @@
+// Screen name for navigation define
 export const ScreenName = {
     startScreen: "StartScreen",
     splashScreen: "SplashScreen",
@@ -10,10 +11,9 @@ export const ScreenName = {
     profile: "Profile",
     setting: "Setting",
     theme: "Theme",
+    language: "Language",
     courseDetail: "CourseDetail",
     instructorDetail: "InstructorDetail",
-    contentsTab: "ContentsTab",
-    transcriptTab: "TranscriptTab",
     mainTab: "MainTab",
     homeTabNavigation: "HomeTabNavigation",
     homeTab: "HomeTab",
@@ -23,6 +23,7 @@ export const ScreenName = {
     downloadTab: "DownloadTab",
     browseTabNavigation: "BrowseTabNavigation",
     browseTab: "BrowseTab",
+    coursesOfCategory: "CoursesOfCategory",
     coursesTopNew: "CoursesTopNew",
     coursesTopSell: "CoursesTopSell",
     coursesTopRate: "CoursesTopRate",
@@ -36,36 +37,7 @@ export const ScreenName = {
     searchInstructorsTab: "SearchInstructorsTab"
 }
 
-export const ScreenTitle = {
-    login: "Sign In",
-    forgetPassword: "Forget Password",
-    resetPassword: "Reset Password",
-    changePassword: "Change Password",
-    changeEmail: "Change Email",
-    register: "Register",
-    profile: "Profile",
-    setting: "Setting",
-    theme: "Theme",
-    courseDetail: "Course Detail",
-    instructorDetail: "Instructor",
-    contentsTab: "Contents",
-    transcriptTab: "Transcript",
-    homeTab: "Home",
-    continueLearning: "Continue Learning",
-    favorites: "Favorites",
-    downloadTab: "Download",
-    browseTab: "Browse",
-    coursesTopNew: "Top New",
-    coursesTopSell: "Top Sell",
-    coursesTopRate: "Top Rate",
-    coursesRecommend: "Recommend",
-    topInstructor: "Top Instructor",
-    searchTab: "Search",
-    searchAllTab: "All",
-    searchCoursesTab: "Courses",
-    searchInstructorsTab: "Instructors"
-}
-
+// Color code define
 export const Colors = {
     transparent: "transparent",
     black: "black",
@@ -92,10 +64,11 @@ export const AuthenticationActionTypes = {
 export const SearchActionTypes = {
     search: "SEARCH",
     changeSearchText: "CHANGE_SEARCH_TEXT",
-    clearRecentSearch: "CLEAR_RECENT_SEARCH"
+    clearRecentSearch: "CLEAR_RECENT_SEARCH",
+    setRecentSearch: "SET_RECENT_SEARCH"
 }
 
-export const CourseDeatailActionTypes = {
+export const CourseDetailActionTypes = {
     setDidUserBuyCourse: "SET_DID_USER_BUY_COURSE",
     setCourseInfo: "SET_COURSE_INFO",
     setCourseSection: "SET_COURSE_SECTION",
@@ -104,6 +77,15 @@ export const CourseDeatailActionTypes = {
     setUserRatingCourse: "SET_USER_RATING_COURSE",
     setCurrentLesson: "SET_CURRENT_LESSON",
     setCurrentTimePlayingVideo: "SET_CURRENT_TIME_PLAYING_VIDEO",
-    setVideoPlaying: "SET_VIDEO_PLAYING",
-    closeCourseDetail: "CLOSE_COURSE_DETAIL",
+    setProcess: "SET_PROCESS",
+    setIsDownloaded: "SET_IS_DOWNLOADED",
+    setTotalLessons: "SET_TOTAL_LESSONS",
+    closeCourseDetail: "CLOSE_COURSE_DETAIL"
+}
+
+export const DownloadActionTypes = {
+    setDownloadedCourses: "SET_DOWNLOADED_COURSES",
+    startDownload: "START_DOWNLOAD",
+    removeDownloadedCourse: "REMOVE_DOWNLOADED_COURSE",
+    removeAllDownloadedCourses: "REMOVE_ALL_DOWNLOADED_COURSES"
 }

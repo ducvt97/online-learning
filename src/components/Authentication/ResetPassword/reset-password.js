@@ -6,6 +6,7 @@ import { CommonStyles } from '../../../globals/styles';
 import { ScreenName } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import UserServices from '../../../core/services/user-services';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const ResetPassword = (props) => {
     const [newPassword, setNewPassword] = useState("");
@@ -17,10 +18,12 @@ const ResetPassword = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const {theme} = useContext(ThemeContext);
+    const langContext = useContext(LanguageContext);
 
     useEffect(() => {
+        // Check if user reset password success, navigate to start screen
         if (status && status.status === 200) {
-            alert("Reset password successfully. Now you can login with your new password.");
+            alert(langContext.state.translation["resetPassSuccessMsg"]);
             props.navigation.navigate(ScreenName.startScreen);
         }
     }, [status])
@@ -51,21 +54,22 @@ const ResetPassword = (props) => {
     }
 
     return <View style={[CommonStyles.generalContainer, styles.container]}>
-            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>New password</Text>
-            <View style={styles.inputField}>
-                <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showNewPassword} onChangeText={text => setNewPassword(text)} />
-                <Icon containerStyle={CommonStyles.inputIcon} name={showNewPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowNewPassword(!showNewPassword)} />
-            </View>
-            {renderValidationText(newPassword, shouldDisplayValidationText, "New password cannot be empty")}
-            <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>Verify new password</Text>
-            <View style={styles.inputField}>
-                <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showVerifyPassword} onChangeText={text => setVerifyNewPassword(text)} />
-                <Icon containerStyle={CommonStyles.inputIcon} name={showVerifyPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowVerifyPassword(!showVerifyPassword)} />
-            </View>
-            {renderValidationText(verifyNewPassword, shouldDisplayValidationText, newPassword !== verifyNewPassword ? "Verify new password must match new password" : "Verify new password cannot be empty")}
-            {renderResetPasswordStatus(status)}
-            <Button title="Reset password" loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressResetPassword(newPassword, verifyNewPassword, props.route.params.userId)} />
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["newPass"]}</Text>
+        <View style={styles.inputField}>
+            <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showNewPassword} onChangeText={text => setNewPassword(text)} />
+            <Icon containerStyle={CommonStyles.inputIcon} name={showNewPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowNewPassword(!showNewPassword)} />
         </View>
+        {renderValidationText(newPassword, shouldDisplayValidationText, `${langContext.state.translation["newPass"]} ${langContext.state.translation["validationText"]}`)}
+        <Text style={[theme.textColor, CommonStyles.fontSizeAverage, CommonStyles.shortMarginVertical]}>{langContext.state.translation["verify"]} {langContext.state.translation["newPass"]}</Text>
+        <View style={styles.inputField}>
+            <TextInput style={[CommonStyles.input, theme.inputBackground, CommonStyles.flex]} secureTextEntry={!showVerifyPassword} onChangeText={text => setVerifyNewPassword(text)} />
+            <Icon containerStyle={CommonStyles.inputIcon} name={showVerifyPassword ? "visibility-off" : "visibility"} size={20} onPress={() => setShowVerifyPassword(!showVerifyPassword)} />
+        </View>
+        {renderValidationText(verifyNewPassword, shouldDisplayValidationText, newPassword !== verifyNewPassword ?
+            langContext.state.translation["verifyPassValidationText"] : `${langContext.state.translation["verify"]} ${langContext.state.translation["newPass"]} ${langContext.state.translation["validationText"]}`)}
+        {renderResetPasswordStatus(status)}
+        <Button title={langContext.state.translation["resetPass"]} loading={isLoading} buttonStyle={CommonStyles.shortMarginVertical} onPress={() => onPressResetPassword(newPassword, verifyNewPassword, props.route.params.userId)} />
+    </View>
 }
 
 export default ResetPassword;

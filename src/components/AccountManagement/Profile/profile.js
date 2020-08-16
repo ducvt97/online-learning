@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
-import { Avatar, Icon, Button, Text } from 'react-native-elements';
+import { StyleSheet, ScrollView, View, TextInput, Dimensions, FlatList } from 'react-native';
+import { Avatar, Icon, Button, Text, Overlay } from 'react-native-elements';
 import { CommonActions } from '@react-navigation/native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -10,11 +10,17 @@ import { ScreenName, Colors } from '../../../globals/constants';
 import { ThemeContext } from '../../../contexts/theme-context';
 import { AuthenticationContext } from '../../../contexts/authentication-context';
 import UserServices from '../../../core/services/user-services';
+import { LanguageContext } from '../../../contexts/language-context';
 
 const Profile = (props) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isChangeAvatar, setIsChangeAvatar] = useState(false);
+    const [avatarLink, setAvatarLink] = useState("");
+    const [errMessage, setErrMessage] = useState("");
+    const [shouldDisplayValidationText, setShouldDisplayValidationText] = useState(false);
     const {theme} = useContext(ThemeContext);
     const authContext = useContext(AuthenticationContext);
+    const langContext = useContext(LanguageContext);
 
     const changeName = (name) => {
         setIsLoading(true);
@@ -24,8 +30,7 @@ const Profile = (props) => {
                 if (response.status === 200)
                     authContext.updateProfile(response.data.payload);
                 return { status: response.status, message: response.data.message };
-            })
-            .catch(error => {
+            }).catch(error => {
                 setIsLoading(false);
                 UserServices.handleError(error);
                 return { status: 503, message: error.message };
@@ -40,12 +45,37 @@ const Profile = (props) => {
                 if (response.status === 200)
                     authContext.updateProfile(response.data.payload);
                 return { status: response.status, message: response.data.message };
-            })
-            .catch(error => {
+            }).catch(error => {
                 setIsLoading(false);
                 UserServices.handleError(error);
                 return { status: 503, message: error.message };
             });
+    }
+
+    const onPressSubmitAvatarLink = (avatarLink) => {
+        if (avatarLink) {
+            setIsLoading(true);
+            return UserServices.updateProfile(authContext.state.userInfo.name, avatarLink, authContext.state.userInfo.phone)
+                .then(response => {
+                    setIsLoading(false);
+                    if (response.status === 200) {
+                        authContext.updateProfile(response.data.payload);
+                        onPressCancelChangeAvatar();
+                    } else
+                        setErrMessage(response.data.message);
+                }).catch(error => {
+                    setIsLoading(false);
+                    UserServices.handleError(error);
+                    setErrMessage(error.message);
+                });
+        } else
+            setShouldDisplayValidationText(true);
+    }
+
+    const onPressCancelChangeAvatar = () => {
+        setAvatarLink("");
+        setShouldDisplayValidationText(false);
+        setIsChangeAvatar(false);
     }
 
     const onPressSignOut = () => {
@@ -54,10 +84,22 @@ const Profile = (props) => {
     }
 
     return <ScrollView style={theme.background}>
-        <View style={[CommonStyles.generalContainer, theme.background]}>
-            <Spinner visible={isLoading} textContent="Updating..." textStyle={styles.indicatorText} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
+        <View style={[CommonStyles.generalContainer]}>
+            <Overlay isVisible={isChangeAvatar}>
+                <View style={styles.overlay}>
+                    <Text style={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, CommonStyles.shortMarginVertical]}>{langContext.state.translation["enterAvtLink"]}</Text>
+                    <TextInput style={[CommonStyles.input, theme.inputBackground]} value={avatarLink} onChangeText={text => setAvatarLink(text)} />
+                    {shouldDisplayValidationText ? <Text style={CommonStyles.validationText}>{langContext.state.translation["avtLink"]} {langContext.state.translation["validationText"]}</Text> : null}
+                    {errMessage ? <Text style={CommonStyles.validationText}>{errMessage}</Text> : null}
+                    <Button title={`${langContext.state.translation["submit"]} ${langContext.state.translation["avtLink"]}`} buttonStyle={[CommonStyles.shortMarginVertical, styles.button]} disabled={isLoading}
+                        titleStyle={[CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} onPress={() => onPressSubmitAvatarLink(avatarLink)} />
+                    <Button title={langContext.state.translation["cancel"]} type="outline" buttonStyle={[CommonStyles.shortMarginVertical, styles.button]} disabled={isLoading}
+                        titleStyle={[CommonStyles.fontSizeAverage, CommonStyles.fontWeightBold]} onPress={onPressCancelChangeAvatar} />
+                </View>
+            </Overlay>
+            <Spinner visible={isLoading} textContent={langContext.state.translation["updating"]} textStyle={styles.indicatorText} color={Colors.ghostWhite} overlayColor="rgba(0, 0, 0, 0.6)" />
             <View style={styles.container}>
-                <Avatar rounded showAccessory source={authContext.state.userInfo && {uri: authContext.state.userInfo.avatar}} size="xlarge" />
+                <Avatar rounded showAccessory source={authContext.state.userInfo && {uri: authContext.state.userInfo.avatar}} size="xlarge" onAccessoryPress={() => setIsChangeAvatar(true)} />
                 <InfoEditable style={CommonStyles.shortMarginVertical} big={true} text={authContext.state.userInfo && authContext.state.userInfo.name} theme={theme} onSave={changeName} />
                 <View style={[CommonStyles.shortMarginVertical, styles.rowContainer]}>
                     <Icon name="phone" color={theme.tintColor} />
@@ -68,15 +110,16 @@ const Profile = (props) => {
                         <Icon name="mail" color={theme.tintColor} />
                         <Text style={[theme.titleColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, styles.content]}>{authContext.state.userInfo && authContext.state.userInfo.email}</Text>
                     </View>
-                    <Button title="Change email" type="clear" onPress={() => props.navigation.navigate(ScreenName.changeEmail)} />
+                    <Button title={langContext.state.translation["changeEmail"]} type="clear" onPress={() => props.navigation.navigate(ScreenName.changeEmail)} />
                 </View>
             </View>
             <Text h4 style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold, CommonStyles.shortMarginVertical]}>{authContext.state.userInfo && authContext.state.userInfo.type}</Text>
-            <Text h4 style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>FAVORITE CATEGORIES</Text>
-            <Text style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.shortMarginVertical]}>{authContext.state.userInfo && authContext.state.userInfo.favoriteCategories}</Text>
-            <Button title="Change password" buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
+            <Text h4 style={[theme.textColor, CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]}>{langContext.state.translation["favoriteCategory"]}</Text>
+            {authContext.state.userInfo ? <FlatList data={authContext.state.userInfo.favoriteCategories} keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => <Text style={[theme.textColor, CommonStyles.fontSizeAverage, styles.item]}>&#8226; {item}</Text>} /> : null}
+            <Button title={langContext.state.translation["changePass"]} buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
                 titleStyle={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]} onPress={() => props.navigation.navigate(ScreenName.changePassword)} />
-            <Button title="Sign out" type="outline" buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
+            <Button title={langContext.state.translation["logout"]} type="outline" buttonStyle={[CommonStyles.shortMarginVertical, styles.button]}
                 titleStyle={[CommonStyles.fontSizeBig, CommonStyles.fontWeightBold]} onPress={onPressSignOut} />
         </View>
     </ScrollView>
@@ -101,5 +144,12 @@ const styles = StyleSheet.create({
         color: Colors.ghostWhite,
         fontSize: 30,
         fontWeight: "bold"
+    },
+    overlay: {
+        width: Dimensions.get('window').width * 0.88
+    },
+    item: {
+        marginVertical: 3,
+        marginLeft: 5
     }
 });

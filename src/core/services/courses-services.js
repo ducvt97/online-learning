@@ -44,6 +44,10 @@ export default class CoursesServices {
         return axios.get(`${requestUrl}/process-course/${courseId}`);
     }
 
+    static getLastWatchLesson = (courseId) => {
+        return axios.get(`${requestUrl}/last-watched-lesson/${courseId}`);
+    }
+
     static ratingCourse = (courseId, ratingNumber, content) => {
         return axios.post(`${requestUrl}/rating-course`, {
             courseId: courseId,
@@ -66,8 +70,35 @@ export default class CoursesServices {
         });
     }
 
-    static search = (keyword) => {
-        return axios.post(`${requestUrl}/search`, { keyword: keyword });
+    static search = (keyword, token) => {
+        return axios.post(`${requestUrl}/searchV2`, {
+            keyword: keyword,
+            token: token
+        });
+    }
+
+    static searchByCategory = (categoryId) => {
+        return axios.post(`${requestUrl}/search`, { 
+            keyword: "",
+            opt: {
+                category: [ categoryId ],
+            }
+        });
+    }
+
+    static getSearchHistory = () => {
+        return axios.get(`${requestUrl}/search-history`);
+    }
+
+    static getSearchHistoryWithToken = (token) => {
+        const instance = axios.create({
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        return instance.get(`${requestUrl}/search-history`);
+    }
+
+    static deleteSearchHistory = (searchId) => {
+        return axios.delete(`${requestUrl}/delete-search-history/${searchId}`);
     }
 
     static handleError = (error) => {

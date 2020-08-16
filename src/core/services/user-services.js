@@ -10,6 +10,16 @@ export default class UserServices {
         });
     }
 
+    // Login with Google account
+    static loginWithGoogle = (email, googleId) => {
+        return axios.post(`/user/login-google-mobile`, {
+            user: {
+                email: email,
+                id: googleId
+            }
+        });
+    }
+
     static register = (name, email, phone, password) => {
         return axios.post(`${requestUrl}/register`, {
             name: name,
@@ -19,6 +29,7 @@ export default class UserServices {
         });
     }
 
+    // Send active link to user's email
     static sendActivateEmail = (email) => {
         return axios.post(`${requestUrl}/send-activate-email`, { email: email });
     }
@@ -28,7 +39,6 @@ export default class UserServices {
     }
 
     static getInfo = (token) => {
-        // return axios.get(`${requestUrl}/me`);
         const instance = axios.create({
             headers: {"Authorization": `Bearer ${token}`}
         });
@@ -60,6 +70,7 @@ export default class UserServices {
         });
     }
 
+    // Update user information: name, avatar, phone
     static updateProfile = (name, avatar, phone) => {
         return axios.put(`${requestUrl}/update-profile`, {
             name : name,
@@ -68,6 +79,7 @@ export default class UserServices {
         });
     }
 
+    // Change user email that had been registered
     static changeEmail = (newEmail) => {
         return axios.put(`${requestUrl}/change-user-email`, { newEmail : newEmail });
     }
@@ -84,16 +96,25 @@ export default class UserServices {
         return axios.post(`${requestUrl}/like-course`, { courseId : courseId });
     }
 
+    // Get user like status with a specific course
     static getCourseLikeStatus = (courseId) => {
         return axios.get(`${requestUrl}/get-course-like-status/${courseId}`, { courseId : courseId });
     }
 
-    static getProcessCourse = () => {
-        return axios.get(`${requestUrl}/get-process-courses`);
+    // Get list courses user is learning
+    static getProcessCourse = (token) => {
+        const instance = axios.create({
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        return instance.get(`${requestUrl}/get-process-courses`);
     }
 
-    static getFavoriteCourse = () => {
-        return axios.get(`${requestUrl}/get-favorite-courses`);
+    // Get list courses user liked
+    static getFavoriteCourse = (token) => {
+        const instance = axios.create({
+            headers: {"Authorization": `Bearer ${token}`}
+        });
+        return instance.get(`${requestUrl}/get-favorite-courses`);
     }
 
     static getIntroPage = () => {
